@@ -3,8 +3,23 @@ import { NextResponse } from "next/server";
 export async function POST() {
   const response = NextResponse.json({ message: "Logged out" }, { status: 200 });
   
-  // Set the 'Set-Cookie' header to clear the cookie
-  response.headers.set('Set-Cookie', 'token=; HttpOnly; Path=/; Max-Age=0; Secure');
+  try {
+    const response = NextResponse.json(
+      { message: "Logout successful", success: true },
+      { status: 200 }
+    );
+
+    response.cookies.set("token", "", {
+      httpOnly: true,
+      secure: true,
+      expires: new Date(0),
+    });
+
+    return response;
+  } catch (error: any) {
+    console.log("🚀 ~ GET ~ error:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
   
   return response;
 }

@@ -10,13 +10,15 @@ export default function LayoutWrapper({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const isLoginPage = pathname === "/auth/signup"; // Add the leading slash
+  // const isLoginPage = pathname === "/auth/signup"; // Add the leading slash
 
   return (
     <>
-      {!isLoginPage && <NavBar />}
+      {/* {!isLoginPage && <NavBar />} */}
+      <NavBar />
       <main className="flex-grow">{children}</main>
-      {!isLoginPage && <Footer />}
+      <Footer />
+      {/* {!isLoginPage && <Footer />} */}
     </>
   );
 }
