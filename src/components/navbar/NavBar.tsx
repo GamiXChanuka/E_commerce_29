@@ -69,10 +69,10 @@ export default function NavBar(){
     }
   
   return (
-    <nav className="py-4 bg-blue-600 shadow-md">
+    <nav className="py-4 bg-gray-800 shadow-md">
       <div className="container flex items-center justify-between mx-auto">
         {/* Logo */}
-        <div className="text-3xl font-bold text-black">
+        <div className="text-3xl font-bold text-white ">
           <a href="./">Shopzy</a>
         </div>
 
@@ -83,18 +83,19 @@ export default function NavBar(){
           <Link href="./about" className="text-lg font-medium text-white hover:text-gray-300">About</Link>
           
         </div>
-
+{/* ---------------------------------Searchbox--------------------------------------------------------------- */}
         {/* Search Bar and Icons */}
         <div className="flex">
             <input
                 type="search"
                 name="search"
                 placeholder="Search..."
-                className="h-10 px-4 pr-10 text-sm text-white bg-gray-800 rounded-full "
+                className="h-10 px-4 pr-10 text-sm text-white bg-gray-400 rounded-full "
             />
-        
-            <div className="dropdown dropdown-end">
+            
+{/* -----------------------------------Card Button--------------------------------------------------------------- */}
 
+            <div className="dropdown dropdown-end dropdown-hover">
                 <div tabIndex={0} role="button" className="ml-4 mr-2 btn btn-ghost btn-circle">
                     <div className="indicator">
                     <svg
@@ -111,9 +112,8 @@ export default function NavBar(){
                     </svg>
                     <span className="badge badge-sm indicator-item">8</span>
                     </div>
-
                 </div>
-
+                {/* ----------------Dropdown menu of card---------------------------------- */}
                 <div
                     tabIndex={0}
                     className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 min-w-12 shadow ">
@@ -121,13 +121,11 @@ export default function NavBar(){
                             <span className="text-lg font-bold">8 Items</span>
                             <span className="text-info">Subtotal: $999</span>
                             <div className="card-actions">
-                            <button className="btn btn-primary btn-block">View cart</button>
+                              <button className="btn btn-primary btn-block">View cart</button>
                             </div>
-                        </div>
-
-                        
-                        {/* ================================== */}
+                        </div>                        
                 </div>
+
             </div>
 
             <div className="ml-6 dropdown dropdown-end">
@@ -168,7 +166,7 @@ export default function NavBar(){
                     <div className="text-center">
                     <Link href="/auth/signup">
                         <button className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600">
-                        Login/Signup
+                        Login | Signup
                         </button>
                     </Link>
                     </div>
