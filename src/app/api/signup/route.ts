@@ -1,57 +1,64 @@
-import { NextResponse, NextRequest } from "next/server";
-import mysql from "mysql2/promise";
-import bcrypt from 'bcrypt';
-
-const connectionParams = {
-  host: process.env.DB_Host,
-  port: Number(process.env.DB_Port),
-  user: process.env.DB_User,
-  password: process.env.DB_Password,
-  database: process.env.DB_Name,
-};
+import { NextResponse, NextRequest } from 'next/server';
+import bcryptjs from 'bcryptjs';
+import { createUser, getUserByEmail } from '@/models/userModel';
 
 export async function POST(request: NextRequest) {
-  let connection;
-  try {
-    // Parse the request body
-    const { username, email, password } = await request.json();
+    try {
+        const reqBody = await request.json();
+        const {
+            firstName,
+            lastName,
+            userName,
+            phoneNumber,
+            email,
+            password,
+            confirmPassword,
+            addressNumber,
+            lane,
+            city,
+            postalCode,
+            district,
+        } = reqBody;
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            return NextResponse.json({ message: 'Passwords do not match' }, { status: 400 });
+        }
 
-    // Create MySQL connection
-    connection = await mysql.createConnection(connectionParams);
+        // Check if the user already exists
+        const existingUser = await getUserByEmail(email);
+        if (existingUser) {
+            return NextResponse.json({ message: 'User already exists' }, { status: 409 });
+        }
 
-    // Check if username or email already exists
-    const [existingUser]: [any[], any] = await connection.execute(
-      `SELECT * FROM users WHERE username = ? OR email = ?`,
-      [username, email]
-    );
+        // Hash the password
+        const salt = await bcryptjs.genSalt(10);
+        const hashedPassword = await bcryptjs.hash(password, salt);
 
-    if (existingUser.length > 0) {
-      if (existingUser[0].username === username) {
-        return NextResponse.json({ message: 'Username already taken' }, { status: 400 });
-      }
-      if (existingUser[0].email === email) {
-        return NextResponse.json({ message: 'Email already registered' }, { status: 400 });
-      }
+        // Prepare user data for insertion
+        const userData = {
+            firstName,
+            lastName,
+            userName,
+            phoneNumber,
+            email,
+            password: hashedPassword, // Store hashed password
+            addressNumber,
+            lane,
+            city,
+            postalCode,
+            district,
+        };
+
+        // Create a new user with address and registered customer details
+        const newUser = await createUser(userData);
+
+        return NextResponse.json({
+            message: 'User created successfully',
+            userId: newUser.userId,
+            addressId: newUser.addressId,
+        }, { status: 201 });
+    } catch (error: any) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
     }
-
-    // Insert new user into the database
-    await connection.execute(
-      `INSERT INTO users (username, email, password) VALUES (?, ?, ?)`,
-      [username, email, hashedPassword]
-    );
-
-    // Return success response
-    return NextResponse.json({ message: 'User registered successfully' }, { status: 200 });
-  } catch (error) {
-    console.error('Error registering user:', error);
-    return NextResponse.json({ message: 'Error registering user', error: (error as Error).message }, { status: 500 });
-  } finally {
-    if (connection) {
-      // Close the MySQL connection
-      await connection.end();
-    }
-  }
 }
