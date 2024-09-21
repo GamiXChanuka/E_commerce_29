@@ -19,7 +19,6 @@ export async function POST(request: NextRequest) {
             postalCode,
             district,
         } = reqBody;
-
         // Check if passwords match
         if (password !== confirmPassword) {
             return NextResponse.json({ message: 'Passwords do not match' }, { status: 400 });

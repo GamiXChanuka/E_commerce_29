@@ -124,3 +124,18 @@ export const getUserNameById = async (userId) => {
         throw error;
     }
 };
+
+
+
+// Fetch products from the database
+export const getProducts = async () => {
+    try {
+        const query = 'SELECT image_url, title, short_description FROM products';
+        const [rows] = await pool.execute(query); // Execute the query to fetch all products
+        return rows; // Return all rows (products)
+    } catch (error) {
+        console.error('Error fetching products from database:', error);
+        return error;
+        throw error;
+    }
+};

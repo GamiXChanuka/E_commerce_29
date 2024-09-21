@@ -86,17 +86,29 @@ export default function NavBar() {
             About
           </Link>
         </div>
-{/* ---------------------------------Searchbox--------------------------------------------------------------- */}
-        {/* Search Bar and Icons */}
-        <div className="flex">
-            <input
-                type="search"
-                name="search"
-                placeholder="Search..."
-                className="h-10 px-4 pr-10 text-sm text-white bg-gray-400 rounded-full "
-            />
-            
-{/* -----------------------------------Card Button--------------------------------------------------------------- */}
+        
+        {/*--------------------------------------------- Search -------- Card ------------Profile Icon---------------------- */}
+        <div className="flex justify-between">
+            {/* ---------------------------------Searchbox--------------------------------------------------------------- */}
+            <div className="relative flex items-center">
+              <input
+                  type="search"
+                  name="search"
+                  placeholder="Search..."
+                  className="h-12 pl-5 text-sm text-white placeholder-white transition-all duration-300 ease-in-out transform rounded-full shadow-lg min-w-48 pr-14 bg-gradient-to-r from-gray-500 via-gray-600 to-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 hover:scale-105"
+              />
+              <svg
+                  className="absolute w-6 h-6 text-gray-300 pointer-events-none right-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+              >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+                
+            {/* -----------------------------------Card Button--------------------------------------------------------------- */}
 
             <div className="dropdown dropdown-end dropdown-hover">
                 <div tabIndex={0} role="button" className="ml-4 mr-2 btn btn-ghost btn-circle">
@@ -130,77 +142,79 @@ export default function NavBar() {
                 </div>
 
             </div>
-
-          <div className="ml-6 dropdown dropdown-end">
-            {loggedIn? (
-              <>
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className="btn btn-ghost btn-circle avatar ml-7"
-                >
-                  <div className="rounded-full w-11">
-                    <img
-                      alt="User Avatar"
-                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                    />
-                    {/* <Image
-                      src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                      alt="User Avatar"
-                      width={20}
-                      height={20}
-                      className="rounded-badge"
-                    /> */}
-                  </div>
-                </div>
-                <div>
-                  <ul
+            {/* ------------------------profile icon or login button--------------------------------- */}
+            <div className="ml-6 dropdown dropdown-end">
+              {loggedIn? (
+                <>
+                  <div
                     tabIndex={0}
-                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p- shadow bg-slate-600"
+                    role="button"
+                    className="ml-1 btn btn-ghost btn-circle avatar"
                   >
-                    <li>
-                      <div>
-                        <FaUserCircle className="inline-block w-6 h-6" />
+                    <div className="rounded-full w-11">
+                      <img
+                        alt="User Avatar"
+                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                      />
+                      {/* <Image
+                        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                        alt="User Avatar"
+                        width={20}
+                        height={20}
+                        className="rounded-badge"
+                      /> */}
+                    </div>
+                  </div>
+                  <div>
+                    <ul
+                      tabIndex={0}
+                      className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p- shadow bg-slate-600"
+                    >
+                      <li>
+                        <div>
+                          <FaUserCircle className="inline-block w-6 h-6" />
 
-                        <Link href="/profile">
-                          <div className="justify-between">
-                            {userName}
-                            {/* <span className="badge">New</span> */}
-                          </div>
-                        </Link>
-                      </div>
-                    </li>
-                    <li>
-                      <a>Settings</a>
-                    </li>
-                    <li>
-                      <button
-                        onClick={handleLogout}
-                        className="w-full px-3 py-2 text-center text-white transition duration-300 bg-red-500 rounded-lg hover:bg-red-600 focus:ring-2 focus:ring-red-400"
-                      >
-                        Logout
-                      </button>
-                    </li>
-                  </ul>
+                          <Link href="/profile">
+                            <div className="justify-between">
+                              {userName}
+                              {/* <span className="badge">New</span> */}
+                            </div>
+                          </Link>
+                        </div>
+                      </li>
+                      <li>
+                        <a>Settings</a>
+                      </li>
+                      <li>
+                        <button
+                          onClick={handleLogout}
+                          className="w-full px-3 py-2 text-center text-white transition duration-300 bg-red-500 rounded-lg hover:bg-red-600 focus:ring-2 focus:ring-red-400"
+                        >
+                          Logout
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </>
+              ) : (
+                <div className="text-center ">
+                  <Link href="/auth/signup">
+                    <button className="px-4 py-2 mx-1 text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+                      Signup
+                    </button>
+                  </Link>
+                  <Link href="/auth/login">
+                    <button className="px-4 py-2 mx-1 text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+                      Login
+                    </button>
+                  </Link>
                 </div>
-              </>
-            ) : (
-              <div className="text-center ">
-                <Link href="/auth/signup">
-                  <button className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 mx-1">
-                    Signup
-                  </button>
-                </Link>
-                <Link href="/auth/login">
-                  <button className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 mx-1">
-                    Login
-                  </button>
-                </Link>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
         </div>
-      </div>
+
+
+        </div>
     </nav>
   );
 }
