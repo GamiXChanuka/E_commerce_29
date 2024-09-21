@@ -1,258 +1,66 @@
-import React from 'react'
+"use client";
+import React, { useState, useEffect } from 'react';
 
-function page() {
-  return (
-    <>
-          <div className="px-10 bg-slate-600">
-        <div className="text-sm breadcrumbs">
-          <ul>
-            <li><a>Home</a></li>
-            <li><a>Marketplace</a></li>
-          </ul>
-        </div>
-      </div>
-      
-    <div className="flex flex-col my-3">
-
-          <div className='flex flex-row flex-auto mx-4'>
-            <div className="m-3 card glass w-96">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  alt="car!" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">Life hack</h2>
-                <p>How to park your car at your garage?</p>
-                <div className="justify-end card-actions">
-                  <button className="btn btn-primary">Learn now!</button>
-                </div>
-              </div>
-            </div>
-            <div className="m-3 card glass w-96">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  alt="car!" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">Life hack</h2>
-                <p>How to park your car at your garage?</p>
-                <div className="justify-end card-actions">
-                  <button className="btn btn-primary">Learn now!</button>
-                </div>
-              </div>
-            </div>
-            <div className="m-3 card glass w-96">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  alt="car!" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">Life hack</h2>
-                <p>How to park your car at your garage?</p>
-                <div className="justify-end card-actions">
-                  <button className="btn btn-primary">Learn now!</button>
-                </div>
-              </div>
-            </div>
-            <div className="m-3 card glass w-96">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  alt="car!" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">Life hack</h2>
-                <p>How to park your car at your garage?</p>
-                <div className="justify-end card-actions">
-                  <button className="btn btn-primary">Learn now!</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className='flex flex-row flex-auto mx-4'>
-            <div className="m-3 card glass w-96">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  alt="car!" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">Life hack</h2>
-                <p>How to park your car at your garage?</p>
-                <div className="justify-end card-actions">
-                  <button className="btn btn-primary">Learn now!</button>
-                </div>
-              </div>
-            </div>
-            <div className="m-3 card glass w-96">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  alt="car!" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">Life hack</h2>
-                <p>How to park your car at your garage?</p>
-                <div className="justify-end card-actions">
-                  <button className="btn btn-primary">Learn now!</button>
-                </div>
-              </div>
-            </div>
-            <div className="m-3 card glass w-96">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  alt="car!" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">Life hack</h2>
-                <p>How to park your car at your garage?</p>
-                <div className="justify-end card-actions">
-                  <button className="btn btn-primary">Learn now!</button>
-                </div>
-              </div>
-            </div>
-            <div className="m-3 card glass w-96">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  alt="car!" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">Life hack</h2>
-                <p>How to park your car at your garage?</p>
-                <div className="justify-end card-actions">
-                  <button className="btn btn-primary">Learn now!</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className='flex flex-row flex-auto mx-4'>
-            <div className="m-3 card glass w-96">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  alt="car!" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">Life hack</h2>
-                <p>How to park your car at your garage?</p>
-                <div className="justify-end card-actions">
-                  <button className="btn btn-primary">Learn now!</button>
-                </div>
-              </div>
-            </div>
-            <div className="m-3 card glass w-96">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  alt="car!" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">Life hack</h2>
-                <p>How to park your car at your garage?</p>
-                <div className="justify-end card-actions">
-                  <button className="btn btn-primary">Learn now!</button>
-                </div>
-              </div>
-            </div>
-            <div className="m-3 card glass w-96">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  alt="car!" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">Life hack</h2>
-                <p>How to park your car at your garage?</p>
-                <div className="justify-end card-actions">
-                  <button className="btn btn-primary">Learn now!</button>
-                </div>
-              </div>
-            </div>
-            <div className="m-3 card glass w-96">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  alt="car!" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">Life hack</h2>
-                <p>How to park your car at your garage?</p>
-                <div className="justify-end card-actions">
-                  <button className="btn btn-primary">Learn now!</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className='flex flex-row flex-auto mx-4'>
-            <div className="m-3 card glass w-96">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  alt="car!" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">Life hack</h2>
-                <p>How to park your car at your garage?</p>
-                <div className="justify-end card-actions">
-                  <button className="btn btn-primary">Learn now!</button>
-                </div>
-              </div>
-            </div>
-            <div className="m-3 card glass w-96">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  alt="car!" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">Life hack</h2>
-                <p>How to park your car at your garage?</p>
-                <div className="justify-end card-actions">
-                  <button className="btn btn-primary">Learn now!</button>
-                </div>
-              </div>
-            </div>
-            <div className="m-3 card glass w-96">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  alt="car!" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">Life hack</h2>
-                <p>How to park your car at your garage?</p>
-                <div className="justify-end card-actions">
-                  <button className="btn btn-primary">Learn now!</button>
-                </div>
-              </div>
-            </div>
-            <div className="m-3 card glass w-96">
-              <figure>
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
-                  alt="car!" />
-              </figure>
-              <div className="card-body">
-                <h2 className="card-title">Life hack</h2>
-                <p>How to park your car at your garage?</p>
-                <div className="justify-end card-actions">
-                  <button className="btn btn-primary">Learn now!</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-    </div>
-    </>
-  )
+interface Item {
+  image_url: string;
+  title: string;
+  short_description: string;
 }
 
-export default page
+function Page() {
+  const [items, setItems] = useState<Item[]>([]);
+
+  // Fetch data from the backend API
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch('/api/products');
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+        const data = await response.json();
+
+        // Ensure the structure of the API response
+        if (Array.isArray(data)) {
+          setItems(data); // Set the fetched data to state
+        } else if (data.products) {
+          setItems(data.products); // In case data is wrapped in an object
+        } else {
+          console.error('Unexpected API response format:', data);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchItems();
+  }, []);
+
+  return (
+    <div className="flex flex-col my-3">
+      {/* Grid layout with 6 columns and gap */}
+      <div className="grid grid-cols-1 gap-4 mx-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        {items.map((item, index) => (
+          <div key={index} className="w-full m-3 card glass">
+            <figure>
+              <img
+                src={item.image_url}
+                alt={item.title}
+                className="object-cover"
+              />
+            </figure>
+            <div className="card-body">
+              <h2 className="card-title">{item.title}</h2>
+              <p>{item.short_description}</p>
+              <div className="justify-end card-actions">
+                <button className="btn btn-primary">Buy Now</button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default Page;
