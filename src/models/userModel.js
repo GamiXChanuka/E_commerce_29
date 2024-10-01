@@ -22,11 +22,11 @@ export const createUser = async (userData) => {
 
         // Insert the new user into the User table
         const userQuery = `
-            INSERT INTO User (UserName, FirstName, LastName, Role) 
+            INSERT INTO User (PhoneNumber, FirstName, LastName, Role) 
             VALUES (?, ?, ?, 'Registered')
         `;
         const [userResult] = await connection.execute(userQuery, [
-            userName,
+            phoneNumber,
             firstName,
             lastName,
         ]);
@@ -35,35 +35,37 @@ export const createUser = async (userData) => {
 
         // Insert the user's address into the Address table
         const addressQuery = `
-            INSERT INTO Address (AddressNumber, Lane, City, PostalCode, District, UserID) 
-            VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO Address (AddressNumber, Lane, City, PostalCode, District) 
+        VALUES (?, ?, ?, ?, ?)
         `;
         const [addressResult] = await connection.execute(addressQuery, [
             addressNumber,
             lane,
             city,
             postalCode,
-            district,
-            userId,
+            district
         ]);
-
+        
+        const addressId = addressResult.insertId;
+        
         // Insert the user into the RegisteredCustomer table
         const registeredCustomerQuery = `
-            INSERT INTO RegisteredCustomer (UserID, PhoneNumber, Email, Password)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO RegisteredCustomer (UserID, UserName, Email, Password, AddressID)
+            VALUES (?, ?, ?, ?, ?)
         `;
         const [registeredCustomerResult] = await connection.execute(registeredCustomerQuery, [
             userId,
-            phoneNumber,
+            userName,
             email,
             password, // Password is already hashed before this function call
+            addressId
         ]);
-
+        
         await connection.commit(); // Commit the transaction
 
         return {
             userId,
-            addressId: addressResult.insertId,
+            addressId,
             registeredCustomerId: registeredCustomerResult.insertId,
         };
     } catch (error) {
@@ -116,7 +118,7 @@ export const getUserInfo = async (userId) => {
 // get username by user id
 export const getUserNameById = async (userId) => {
     try {
-        const query = 'SELECT UserName FROM User WHERE UserID = ?';
+        const query = 'SELECT UserName FROM registeredcustomer WHERE UserID = ?';
         const [rows] = await pool.execute(query, [userId]);
         return rows[0].UserName;
     } catch (error) {
