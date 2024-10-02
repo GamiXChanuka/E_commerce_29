@@ -1,69 +1,84 @@
 "use client";
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation"; // Replace useRouter with useSearchParams
 
-interface Product {
-  ProductID: number;
-  Title: string;
-  CategoryID: number;
-  category_name: string;
-}
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function MarketplacePage() {
+const MarketplacePage = () => {
+  const searchParams = useSearchParams();
+  const searchQuery = searchParams.get('search'); // Get the search query from the URL
+  
+  interface Product {
+    ProductID: number;
+    Title: string;
+    CategoryID: number;
+    category_name: string;
+  }
+  
   const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const searchParams = useSearchParams(); // Use useSearchParams instead of useRouter
-  const searchQuery = searchParams.get('search'); // Get the 'search' query parameter
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
+    // Fetch products based on the search query using axios POST
     const fetchProducts = async () => {
-      setLoading(true);
       try {
-        // Send the search query in the request body as JSON
-        const response = await fetch("/api/marketPlace", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ search: searchQuery || "" }),
+        setLoading(true);
+        
+        const response = await axios.post('/api/marketPlace', {
+          category: searchQuery, // Send the search query as JSON
         });
-
-        const data = await response.json();
-
-        if (data.products) {
-          setProducts(data.products); // Set the products from the API
-        } else {
-          console.error('Unexpected API response format:', data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      } finally {
+        
+        setProducts(response.data.products); // Assuming the API returns an object with a products array
+        setLoading(false);
+      } catch (err) {
+        setError('Error fetching products');
         setLoading(false);
       }
     };
 
-    fetchProducts();
+    if (searchQuery) {
+      fetchProducts();
+    } else {
+      // Fetch all products if no search query is provided
+      const fetchAllProducts = async () => {
+        try {
+          setLoading(true);
+          
+          const response = await axios.post('/api/marketPlace');
+          
+          setProducts(response.data.products); // Fetch all products if no search query is provided
+          setLoading(false);
+        } catch (err) {
+          setError('Error fetching products');
+          setLoading(false);
+        }
+      };
+      
+      fetchAllProducts();
+    }
   }, [searchQuery]);
 
-  if (loading) return <div>Loading...</div>;
-
   return (
-    <div className="flex flex-col my-3">
-      <div className="grid grid-cols-1 gap-4 mx-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {products.map((product) => (
-          <div key={product.ProductID} className="w-full m-3 card glass">
-            <div className="card-body">
-              <h2 className="card-title">{product.Title}</h2>
+    <div>
+      <h1>Marketplace</h1>
+      {loading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
+      <div>
+        {products.length > 0 ? (
+          products.map((product) => (
+            <div key={product.ProductID}>
+              <h2>{product.Title}</h2>
               <p>Category: {product.category_name}</p>
-              <div className="justify-end card-actions">
-                <button className="btn btn-primary">Buy Now</button>
-              </div>
+              <p>Product ID: {product.ProductID}</p>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          !loading && <p>No products found</p>
+        )}
       </div>
     </div>
   );
-}
+};
 
 export default MarketplacePage;
