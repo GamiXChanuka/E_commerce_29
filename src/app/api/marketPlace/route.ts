@@ -1,29 +1,31 @@
-// src/app/api/getproduct/route.ts
-
-import { getProducts } from "@/models/productAction";
-import { NextResponse } from "next/server";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { getProductsByCategory, getAllProducts } from "@/models/productAction";
 
 export async function POST(request: NextRequest) {
   try {
-    // Extract the 'category' query parameter from the request URL
-    const reqBody = await request.json();
-    const { category  } = reqBody;
+    // Check if there is a request body (JSON object)
+    let products;
 
-    // Fetch the items from the database (products)
-    const products = await getProducts(category);
+    const reqBody = await request.json().catch(() => null); // Catch if no JSON body
+    if (reqBody && reqBody.category) {
+      const { category } = reqBody;
 
-    // Return the items as a JSON response
+      // Fetch products by category if category is provided
+      products = await getProductsByCategory(category);
+    } else {
+      // Fetch all products if no category is provided
+      products = await getAllProducts();
+    }
+
+    // Return products as a JSON response
     return NextResponse.json({ products }, { status: 200 });
-    
   } catch (error: any) {
-    console.error('Error fetching data:', error);
-    return new NextResponse(
-      JSON.stringify({ message: 'Error fetching data' }),
-      {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' },
-      }
+    console.error("Error fetching products:", error);
+
+    // Return error response with detailed message
+    return NextResponse.json(
+      { message: "Error fetching products.", error: error.message },
+      { status: 500 }
     );
   }
 }

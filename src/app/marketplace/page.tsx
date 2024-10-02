@@ -1,57 +1,60 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation"; // Replace useRouter with useSearchParams
 
-interface Item {
-  image_url: string;
-  title: string;
-  short_description: string;
+interface Product {
+  ProductID: number;
+  Title: string;
+  CategoryID: number;
+  category_name: string;
 }
 
-function Page() {
-  const [items, setItems] = useState<Item[]>([]);
+function MarketplacePage() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const searchParams = useSearchParams(); // Use useSearchParams instead of useRouter
+  const searchQuery = searchParams.get('search'); // Get the 'search' query parameter
 
-  // Fetch data from the backend API
   useEffect(() => {
-    const fetchItems = async () => {
+    const fetchProducts = async () => {
+      setLoading(true);
       try {
-        const response = await fetch('/api/products');
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
-        }
+        // Send the search query in the request body as JSON
+        const response = await fetch("/api/marketPlace", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ search: searchQuery || "" }),
+        });
+
         const data = await response.json();
 
-        // Ensure the structure of the API response
-        if (Array.isArray(data)) {
-          setItems(data); // Set the fetched data to state
-        } else if (data.products) {
-          setItems(data.products); // In case data is wrapped in an object
+        if (data.products) {
+          setProducts(data.products); // Set the products from the API
         } else {
           console.error('Unexpected API response format:', data);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchItems();
-  }, []);
+    fetchProducts();
+  }, [searchQuery]);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="flex flex-col my-3">
-      {/* Grid layout with 6 columns and gap */}
       <div className="grid grid-cols-1 gap-4 mx-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-        {items.map((item, index) => (
-          <div key={index} className="w-full m-3 card glass">
-            <figure>
-              <img
-                src={item.image_url}
-                alt={item.title}
-                className="object-cover"
-              />
-            </figure>
+        {products.map((product) => (
+          <div key={product.ProductID} className="w-full m-3 card glass">
             <div className="card-body">
-              <h2 className="card-title">{item.title}</h2>
-              <p>{item.short_description}</p>
+              <h2 className="card-title">{product.Title}</h2>
+              <p>Category: {product.category_name}</p>
               <div className="justify-end card-actions">
                 <button className="btn btn-primary">Buy Now</button>
               </div>
@@ -63,4 +66,4 @@ function Page() {
   );
 }
 
-export default Page;
+export default MarketplacePage;

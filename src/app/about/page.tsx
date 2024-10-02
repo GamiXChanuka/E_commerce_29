@@ -1,4 +1,5 @@
 import React from 'react'
+import NavBar from "@/components/search/Search";
 
 function page() {
   return (
@@ -11,6 +12,8 @@ function page() {
           </ul>
         </div>
       </div>
+      <NavBar/>
+
 
     </>
   )
