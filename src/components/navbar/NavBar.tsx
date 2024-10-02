@@ -68,8 +68,8 @@ export default function NavBar() {
         {/* Navigation Links */}
         <div className="flex items-center space-x-6">
           <Link
-            href="./"
             className="text-lg font-medium text-white hover:text-gray-300"
+            href="./"
           >
             Home
           </Link>
