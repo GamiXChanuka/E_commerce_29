@@ -92,11 +92,11 @@ export const getUserInfo = async (userId) => {
     try {
         const query = `
             SELECT 
-                User.UserName,
-                User.FirstName,
-                User.LastName,
-                RegisteredCustomer.PhoneNumber,
-                RegisteredCustomer.Email,
+                user.FirstName,
+                user.LastName,
+                user.PhoneNumber,
+                registeredcustomer.UserName,
+                registeredcustomer.Email,
                 Address.AddressNumber,
                 Address.Lane,
                 Address.City,
@@ -104,7 +104,7 @@ export const getUserInfo = async (userId) => {
                 Address.District
             FROM User
             JOIN RegisteredCustomer ON User.UserID = RegisteredCustomer.UserID
-            JOIN Address ON User.UserID = Address.UserID
+            JOIN Address ON registeredcustomer.AddressID = Address.AddressID
             WHERE User.UserID = ?
         `;
         const [rows] = await pool.execute(query, [userId]);
