@@ -93,7 +93,7 @@ const LoginPage = () => {
 
         <p className="mt-4 text-sm text-center text-black">
           Already have an account?{" "}
-          <Link href="/auth/signup" className="font-semibold text-blue-500 hover:underline">
+          <Link href="/signup" className="font-semibold text-blue-500 hover:underline">
             Signup here
           </Link>
         </p>
