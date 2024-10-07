@@ -1,0 +1,7 @@
+### Test POST endpoint
+POST http://localhost:3000/api/getOrders
+Content-Type: application/json
+
+{
+  "userId": 1
+}

@@ -1,0 +1,72 @@
+/* CartItem.module.css */
+
+.card {
+    display: flex; /* Use flexbox to arrange items in a row */
+    justify-content: space-between; /* Space between item details and buttons */
+    align-items: center; /* Center items vertically */
+    border: 5px solid #0dc47d;
+    border-radius: 10px;
+    padding: 15px 20px; /* Padding around the card */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #e7e1e1; /* Background for cards */
+    width: 100%; /* Full width for the card */
+    min-height: 100px; /* Increased minimum height */
+  }
+  
+  .image {
+    width: 100px; /* Fixed width for the image */
+    height: 100px; /* Fixed height for the image */
+    object-fit: cover; /* Maintain aspect ratio */
+    border-radius: 5px; /* Rounded corners for the image */
+    margin-right: 20px; /* Space between image and details */
+  }
+  
+  .itemDetails {
+    flex: 1; /* Allow the details to take up available space */
+  }
+  
+  .title {
+    font-size: 1.5rem; /* Slightly larger title */
+    color: #333;
+    margin: 0; /* Remove default margin */
+  }
+  
+  .price {
+    font-size: 1.2rem; /* Slightly larger price */
+    color: #28a745; /* Green color for price */
+    margin: 5px 0; /* Margin for spacing */
+  }
+  
+  .quantity {
+    font-size: 1rem;
+    color: #555;
+    margin: 5px 0; /* Margin for spacing */
+  }
+  
+  .buttonGroup {
+    display: flex; /* Align buttons in a row */
+  }
+  
+  .button {
+    padding: 10px 20px; /* Increased padding for buttons */
+    margin-left: 10px; /* Space between buttons */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    opacity: 0.8; /* Change opacity on hover */
+  }
+  
+  .button:first-child {
+    background-color: #dc3545; /* Red for Remove */
+    color: white;
+  }
+  
+  .button:last-child {
+    background-color: #28a745; /* Green for Add */
+    color: white;
+  }
+  
