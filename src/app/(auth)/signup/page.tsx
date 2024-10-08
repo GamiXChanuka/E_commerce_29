@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
-import styles from './page.module.css'; // Only use if CSS modules are needed
 
 // Interface for form inputs
 interface SignUpFormInputs {
@@ -38,7 +37,7 @@ const SignUpPage = () => {
     try {
       const response = await axios.post("/api/signup", data);
       console.log("Signup successful", response.data);
-      router.push("/auth/login");
+      router.push("/login");
       toast.success(response.data.message);
     } catch (error: any) {
       console.log(error);
