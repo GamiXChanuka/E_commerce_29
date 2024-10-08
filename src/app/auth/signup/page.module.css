@@ -1,14 +1,4 @@
-.heroImage {
-    min-height: 85vh; /* Or any desired height */
-    display: flex; /* Enables Flexbox */
-    align-items: center; /* Vertically centers the content */
-    justify-content: center; /* Horizontally centers the content */
-    background-image: url('header_2_III.jpg');
-    background-size: cover; /* Ensure the image covers the entire div */
-    background-position: center; /* Center the background image */
-    color: white; /* Ensure text color is visible */
-  }
-  
+
   .heroText {
     text-align: center;
     color: white;
