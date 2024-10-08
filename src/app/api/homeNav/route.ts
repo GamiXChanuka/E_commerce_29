@@ -1,7 +1,7 @@
 // File: /app/api/user/route.ts
 import { NextResponse, NextRequest } from "next/server";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
-import { getUserNameById } from "@/models/userModel";
+import { getUserNameById } from "@/models/userAction";
 
 
 export async function GET(request: NextRequest) {

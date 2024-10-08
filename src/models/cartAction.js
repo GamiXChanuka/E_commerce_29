@@ -8,7 +8,7 @@ export async function getCart(id) {
         `SELECT ci.*, p.Title, v.Price ,i.ImageLink
       FROM CartItem ci
       JOIN Variant v ON ci.VariantID = v.VariantID
-      JOIN Product p ON v.ProductID = p.ProductID
+      JOIN Product p ON v.ProductCategoryID = p.ProductCategoryID
       join image i on i.VariantID= v.VariantID
       WHERE ci.CartID = ? ;`,
         [`${id}`]

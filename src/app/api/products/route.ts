@@ -1,4 +1,4 @@
-import { getProducts } from "@/models/userModel";
+import { getProducts } from "@/models/userAction";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
