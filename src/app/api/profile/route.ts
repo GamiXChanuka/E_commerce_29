@@ -1,5 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getUserInfo } from "@/models/userModel";
+import { getUserInfo } from "@/models/userAction";
 import { getDataFromToken } from "@/helpers/getDataFromToken";
 
 export async function GET(request: NextRequest) {

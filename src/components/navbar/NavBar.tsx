@@ -198,12 +198,12 @@ export default function NavBar() {
                 </>
               ) : (
                 <div className="text-center ">
-                  <Link href="/auth/signup">
+                  <Link href="/signup">
                     <button className="px-4 py-2 mx-1 text-white bg-blue-500 rounded-lg hover:bg-blue-600">
                       Signup
                     </button>
                   </Link>
-                  <Link href="/auth/login">
+                  <Link href="/login">
                     <button className="px-4 py-2 mx-1 text-white bg-blue-500 rounded-lg hover:bg-blue-600">
                       Login
                     </button>
