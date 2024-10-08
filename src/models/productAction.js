@@ -23,7 +23,7 @@ export async function getProducts(category) {
               p.Title, 
               p.CategoryID, 
               c.CategoryName,
-              i.ImageLink AS category_name,
+              i.ImageLink as image_link,
               
               ROW_NUMBER() OVER (PARTITION BY p.ProductCategoryID ORDER BY p.ProductID) AS row_num
             FROM 
@@ -40,7 +40,7 @@ export async function getProducts(category) {
                 Title, 
                 CategoryID, 
                 CategoryName, 
-                category_name,
+                image_link,
                 VariantID,
                 Price
               FROM 
