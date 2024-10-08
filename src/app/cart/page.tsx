@@ -15,23 +15,103 @@ export default function CartPage() {
   const [error, setError] = useState<string | null>(null);
   const cartId = 1; // Set your cart ID here
 
+  var isRegistered = false;
+
   // Fetch cart data
+  // const fetchData = async () => {
+  //   try {
+  //     if(isRegistered){
+
+  //     const response = await fetch("/api/cart", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ id: cartId }),
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! Status: ${response.status}`);
+  //     }
+  //     const result = await response.json();
+  //     console.log("Cart data:", result);
+  //     setData(result);}
+  //     else{
+  //       const cart = JSON.parse(localStorage.getItem('internalCart') || '[]');
+  //       for (const item of cart) {
+  //         const response = await fetch("/api/UnRegCart", {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({ VariantID: item.VariantID }),
+  //         });
+    
+  //         if (!response.ok) {
+  //           throw new Error(`HTTP error! Status: ${response.status}`);
+  //         }
+    
+  //         const result = await response.json();
+  //         console.log("Cart data:", result);
+  //       setData(cart);
+  //     }
+  //   } catch (err) {
+  //     console.error("Error fetching data:", err);
+  //     setError(err instanceof Error ? err.message : "An error occurred");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   const fetchData = async () => {
     try {
-      const response = await fetch("/api/cart", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id: cartId }),
-      });
+      if (isRegistered) {
+        const response = await fetch("/api/cart", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: cartId }),
+        });
+  
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const result = await response.json();
+        console.log("Cart data:", result);
+        setData(result);
+      } else {
+        const cart = JSON.parse(localStorage.getItem('internalCart') || '[]');
+        const updatedCart = [];
+  
+        for (const item of cart) {
+          const response = await fetch("/api/UnRegCart", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ VariantID: item.VariantID }),
+          });
+  
+          console.log("Response: = ", item);
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+  
+          const variantDetailsArray = await response.json();
+        const variantDetails = variantDetailsArray[0]; // Assuming the response is an array with one object
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        updatedCart.push({
+          VariantID: variantDetails.VariantID,
+          VariantName: variantDetails.VariantName,
+          Price: variantDetails.Price,
+          Quantity: item.quantity,
+          ImageLink: variantDetails.ImageLink,
+        });
+        }
+  
+        console.log("Cart data:=", updatedCart);
+        setData(updatedCart);
       }
-      const result = await response.json();
-      console.log("Cart data:", result);
-      setData(result);
     } catch (err) {
       console.error("Error fetching data:", err);
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -44,45 +124,92 @@ export default function CartPage() {
     fetchData();
   }, []);
 
-  // Remove item from cart
+
+
   const removeFromCart = async (id: number) => {
     try {
-      const response = await fetch("/api/setCart", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ op: "remove", VariantID: id, cartId }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to remove product from cart");
+      if (isRegistered) {
+        const response = await fetch("/api/setCart", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ op: "remove", VariantID: id, cartId }),
+        });
+  
+        if (!response.ok) {
+          throw new Error("Failed to remove product from cart");
+        }
+  
+        console.log(`Removed item with id: ${id}`);
+        fetchData();
+      } else {
+        // Retrieve the current cart from localStorage
+        const cart = JSON.parse(localStorage.getItem('internalCart') || '[]');
+  
+        // Find the item in the cart
+        const itemIndex = cart.findIndex((item: any) => item.VariantID === id);
+  
+        if (itemIndex !== -1) {
+          // If the item exists, decrease the quantity
+          cart[itemIndex].quantity -= 1;
+  
+          // If the quantity becomes 0, remove the item from the cart
+          if (cart[itemIndex].quantity === 0) {
+            cart.splice(itemIndex, 1);
+          }
+        }
+  
+        // Save the updated cart back to localStorage
+        localStorage.setItem('internalCart', JSON.stringify(cart));
+  
+        console.log(`Removed item with id: ${id} from internal cart`);
+        fetchData();
       }
-
-      console.log(`Removed item with id: ${id}`);
-      fetchData();
     } catch (error) {
       console.error("Error removing from cart:", error);
     }
   };
 
-  // Add item to cart
   const addToCart = async (id: number) => {
     try {
-      const response = await fetch("/api/setCart", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ op: "add", VariantID: id, cartId }),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to add product to cart");
+      if (isRegistered) {
+        const response = await fetch("/api/setCart", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ op: "add", VariantID: id, cartId }),
+        });
+  
+        if (!response.ok) {
+          throw new Error("Failed to add product to cart");
+        }
+  
+        console.log(`Added to cart: ${id}`);
+        fetchData();
+      } else {
+        // Retrieve the current cart from localStorage
+        const cart = JSON.parse(localStorage.getItem('internalCart') || '[]');
+  
+        // Find the item in the cart
+        const itemIndex = cart.findIndex((item: any) => item.VariantID === id);
+  
+        if (itemIndex !== -1) {
+          // If the item exists, increase the quantity
+          cart[itemIndex].quantity += 1;
+        } else {
+          // If the item does not exist, add it with quantity 1
+          cart.push({ VariantID: id, quantity: 1 });
+          
+        }
+  
+        // Save the updated cart back to localStorage
+        localStorage.setItem('internalCart', JSON.stringify(cart));
+  
+        console.log(`Added to internal cart: ${id}`);
+        fetchData();
       }
-
-      console.log(`Added to cart: ${id}`);
-      fetchData();
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
