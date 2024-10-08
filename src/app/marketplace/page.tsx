@@ -60,24 +60,41 @@ const MarketplacePage = () => {
   }, [searchQuery]);
 
   return (
-    <div>
-      <h1>Marketplace</h1>
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
-      <div>
-        {products.length > 0 ? (
-          products.map((product) => (
-            <div key={product.ProductID}>
-              <h2>{product.Title}</h2>
-              <p>Category: {product.category_name}</p>
-              <p>Product ID: {product.ProductID}</p>
+<div className="flex flex-col my-6">
+  <h1 className="mb-8 text-4xl font-bold text-center text-gray-800">Marketplace</h1>
+  {loading && <p className="text-center text-gray-500">Loading...</p>}
+  {error && <p className="text-center text-red-500">{error}</p>}
+  
+  {/* Grid layout with 6 columns and gap */}
+  <div className="grid grid-cols-1 gap-6 mx-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+    {products.length > 0 ? (
+      products.map((product) => (
+        <div key={product.ProductID} className="m-3 transition-transform duration-300 transform bg-white rounded-lg shadow-lg card hover:scale-105 glass">
+          <figure>
+            <img
+              src="https://img.drz.lazcdn.com/static/lk/p/8b2d5fdf01f0562a6c7c2065e0c2ff9d.jpg_400x400q75.jpg_.webp"
+              alt={product.Title}
+              className="object-cover w-full h-64 rounded-t-lg"
+            />
+          </figure>
+          <div className="p-4 card-body">
+            <h2 className="text-lg font-semibold text-gray-800 card-title">{product.Title}</h2>
+            <p className="text-gray-600">Category: {product.category_name}</p>
+            <p className="text-sm text-gray-500">Product ID: {product.ProductID}</p>
+            <div className="justify-end mt-4 card-actions">
+              <button className="px-4 py-2 text-white transition-colors duration-300 bg-blue-500 rounded-lg btn hover:bg-blue-600">
+                Buy Now
+              </button>
             </div>
-          ))
-        ) : (
-          !loading && <p>No products found</p>
-        )}
-      </div>
-    </div>
+          </div>
+        </div>
+      ))
+    ) : (
+      !loading && <p className="text-center text-gray-500">No products found</p>
+    )}
+  </div>
+</div>
+
   );
 };
 
