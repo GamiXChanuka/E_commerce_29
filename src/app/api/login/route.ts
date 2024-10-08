@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import bcryptjs from "bcryptjs";
-import { getUserByEmail } from "@/models/userModel";
+import { getUserByEmail } from "@/models/userAction";
 import jwt from "jsonwebtoken";
 
 export async function POST(request: NextRequest) {
