@@ -1,14 +1,15 @@
 "use client";
 
-import Link from "next/link";
-import React from "react";
-import { useRouter } from "next/navigation";
-import axios from "axios";
+import React, { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { motion } from "framer-motion";
 
-// Interface for form inputs
-interface SignUpFormInputs {
+// Define types for form inputs
+type FormData = {
   firstName: string;
   lastName: string;
   userName: string;
@@ -19,23 +20,55 @@ interface SignUpFormInputs {
   addressNumber: string;
   lane: string;
   city: string;
-  postalCode: string;
   district: string;
-}
+  postalCode: string;
+};
 
-const SignUpPage = () => {
+// Motion variants for animating transitions
+const variants = {
+  enter: {
+    opacity: 0,
+    x: 100,
+  },
+  center: {
+    opacity: 1,
+    x: 0,
+  },
+  exit: {
+    opacity: 0,
+    x: -100,
+  },
+};
+
+const SignupPage = () => {
+  const [currentStep, setCurrentStep] = useState(0);
   const router = useRouter();
 
+  // Hook form setup
   const {
     register,
     handleSubmit,
-    formState: { errors },
     watch,
-  } = useForm<SignUpFormInputs>();
+    formState: { errors },
+  } = useForm<FormData>();
 
-  const onSignUp = async (data: SignUpFormInputs) => {
+  const nextStep = (data: FormData) => {
+    console.log("Step data validated:", data);
+    setCurrentStep((prev) => prev + 1);
+  };
+
+  const prevStep = () => setCurrentStep((prev) => prev - 1);
+
+  const onSignUp: SubmitHandler<FormData> = async (data) => {
+    console.log("Form data submitted:", data);
+
+    // Convert undefined values to null
+    const sanitizedData = Object.fromEntries(
+      Object.entries(data).map(([key, value]) => [key, value ?? null])
+    );
+
     try {
-      const response = await axios.post("/api/signup", data);
+      const response = await axios.post("/api/signup", sanitizedData);
       console.log("Signup successful", response.data);
       router.push("/login");
       toast.success(response.data.message);
@@ -45,233 +78,388 @@ const SignUpPage = () => {
     }
   };
 
-  const password = watch("password");
-
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-900">
-      <div className="w-full max-w-4xl p-6 bg-gray-800 rounded-lg shadow-lg">
-        <h1 className="mb-6 text-3xl font-bold text-center text-white">Sign Up</h1>
-        <hr className="mb-6 border-gray-600" />
-        <form onSubmit={handleSubmit(onSignUp)} className="space-y-6">
-          <div className="flex gap-8">
-            {/* Right Column */}
-            <div className="w-1/2">
-              <div className="flex gap-4">
-                <div className="w-1/2 ">
-                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-200">
-                    First Name
-                  </label>
-                  <input
-                    className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    id="firstName"
-                    type="text"
-                    {...register("firstName", { required: "First name is required" })}
-                    placeholder="First Name"
-                  />
-                  {errors.firstName && (
-                    <p className="text-sm text-red-500">{errors.firstName.message}</p>
-                  )}
-                </div>
-                <div className="w-1/2">
-                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-200">
-                    Last Name
-                  </label>
-                  <input
-                    className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    id="lastName"
-                    type="text"
-                    {...register("lastName", { required: "Last name is required" })}
-                    placeholder="Last Name"
-                  />
-                  {errors.lastName && (
-                    <p className="text-sm text-red-500">{errors.lastName.message}</p>
-                )}
-                </div>
-              {/* ------------------------------------------------------------------------------------------------------------------------ */}
-              </div>
-
-
-              <label htmlFor="userName" className="block mt-4 text-sm font-medium text-gray-200">
-                Username
-              </label>
-              <input
-                className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                id="userName"
-                type="text"
-                {...register("userName", { required: "Username is required" })}
-                placeholder="Username"
-              />
-              {errors.userName && (
-                <p className="text-sm text-red-500">{errors.userName.message}</p>
-              )}
-
-              <label htmlFor="phoneNumber" className="block mt-4 text-sm font-medium text-gray-200">
-                Phone Number
-              </label>
-              <input
-                className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                id="phoneNumber"
-                type="text"
-                {...register("phoneNumber", { required: "Phone number is required" })}
-                placeholder="Phone Number"
-              />
-              {errors.phoneNumber && (
-                <p className="text-sm text-red-500">{errors.phoneNumber.message}</p>
-              )}
-
-              <label htmlFor="email" className="block mt-4 text-sm font-medium text-gray-200">
-                Email
-              </label>
-              <input
-                className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                id="email"
-                type="email"
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                    message: "Invalid email format",
-                  },
-                })}
-                placeholder="Email"
-              />
-              {errors.email && (
-                <p className="text-sm text-red-500">{errors.email.message}</p>
-              )}
-
-              <div className="flex gap-6 mt-4">
-                <div className="w-1/2">
-                  <label htmlFor="password" className="block text-sm font-medium text-gray-200">
-                    Password
-                  </label>
-                  <input
-                    className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    id="password"
-                    type="password"
-                    {...register("password", {
-                      required: "Password is required",
-                      minLength: { value: 6, message: "Password must be at least 6 characters long" },
-                    })}
-                    placeholder="Password"
-                  />
-                  {errors.password && (
-                    <p className="text-sm text-red-500">{errors.password.message}</p>
-                  )}
-                </div>
-
-                <div className="w-1/2">
-                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-200">
-                    Confirm Password
-                  </label>
-                  <input
-                    className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    id="confirmPassword"
-                    type="password"
-                    {...register("confirmPassword", {
-                      required: "Please confirm your password",
-                      validate: (value) =>
-                        value === password || "Passwords do not match",
-                    })}
-                    placeholder="Confirm Password"
-                  />
-                  {errors.confirmPassword && (
-                    <p className="text-sm text-red-500">{errors.confirmPassword.message}</p>
-                  )}
-                </div>
-              </div>
-            </div>
-            
-            {/* Left Column */}
-            <div className="w-1/2">
-              <label htmlFor="addressNumber" className="block text-sm font-medium text-gray-200">
-                Address Number
-              </label>
-              <input
-                className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                id="addressNumber"
-                type="text"
-                {...register("addressNumber", { required: "Address number is required" })}
-                placeholder="Address Number"
-              />
-              {errors.addressNumber && (
-                <p className="text-sm text-red-500">{errors.addressNumber.message}</p>
-              )}
-
-              <label htmlFor="lane" className="block mt-4 text-sm font-medium text-gray-200">
-                Lane
-              </label>
-              <input
-                className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                id="lane"
-                type="text"
-                {...register("lane", { required: "Lane is required" })}
-                placeholder="Lane"
-              />
-              {errors.lane && <p className="text-sm text-red-500">{errors.lane.message}</p>}
-
-              <label htmlFor="city" className="block mt-4 text-sm font-medium text-gray-200">
-                City
-              </label>
-              <input
-                className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                id="city"
-                type="text"
-                {...register("city", { required: "City is required" })}
-                placeholder="City"
-              />
-              {errors.city && <p className="text-sm text-red-500">{errors.city.message}</p>}
-
-              <label htmlFor="postalCode" className="block mt-4 text-sm font-medium text-gray-200">
-                Postal Code
-              </label>
-              <input
-                className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                id="postalCode"
-                type="text"
-                {...register("postalCode", { required: "Postal code is required" })}
-                placeholder="Postal Code"
-              />
-              {errors.postalCode && (
-                <p className="text-sm text-red-500">{errors.postalCode.message}</p>
-              )}
-
-              <label htmlFor="district" className="block mt-4 text-sm font-medium text-gray-200">
-                District
-              </label>
-              <input
-                className="w-full p-3 text-white bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                id="district"
-                type="text"
-                {...register("district", { required: "District is required" })}
-                placeholder="District"
-              />
-              {errors.district && (
-                <p className="text-sm text-red-500">{errors.district.message}</p>
-              )}
-            </div>
-
-
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      {/* Outer container with sidebar and form content */}
+      <div className="bg-white rounded-lg shadow-xl w-4/5 max-w-3xl flex">
+        {/* Sidebar */}
+        <div className="w-1/3 bg-gray-200 text-gray-800 p-8 rounded-l-lg flex flex-col justify-between overflow-y-auto">
+          <div>
+            <h2 className="text-3xl font-bold mb-8">Sign Up</h2>
+            <ul className="space-y-5">
+              <li
+                className={`flex items-center space-x-2 transition-colors duration-300 ${
+                  currentStep === 0 ? "bg-gray-800 text-white" : "text-gray-500 hover:bg-gray-300"
+                } p-2 rounded-md cursor-pointer`}
+                onClick={() => setCurrentStep(0)}
+              >
+                <span className="text-1xl">1</span>
+                <span>Welcome!</span>
+              </li>
+              <li
+                className={`flex items-center space-x-2 transition-colors duration-300 ${
+                  currentStep === 1 ? "bg-gray-800 text-white" : "text-gray-500 hover:bg-gray-300"
+                } p-2 rounded-md cursor-pointer`}
+                onClick={() => setCurrentStep(1)}
+              >
+                <span className="text-1xl">2</span>
+                <span>Personal Information</span>
+              </li>
+              <li
+                className={`flex items-center space-x-2 transition-colors duration-300 ${
+                  currentStep === 2 ? "bg-gray-800 text-white" : "text-gray-500 hover:bg-gray-300"
+                } p-2 rounded-md cursor-pointer`}
+                onClick={() => setCurrentStep(2)}
+              >
+                <span className="text-1xl">3</span>
+                <span>Set Your Password</span>
+              </li>
+              <li
+                className={`flex items-center space-x-2 transition-colors duration-300 ${
+                  currentStep === 3 ? "bg-gray-800 text-white" : "text-gray-500 hover:bg-gray-300"
+                } p-2 rounded-md cursor-pointer`}
+                onClick={() => setCurrentStep(3)}
+              >
+                <span className="text-1xl">4</span>
+                <span>Address Information</span>
+              </li>
+            </ul>
           </div>
-
-          <button
-            type="submit"
-            className="w-full py-3 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-500"
-          >
-            Sign Up
-          </button>
-        </form>
-
-        <div className="mt-4 text-center">
-          <p className="text-sm text-gray-400">
-            Already have an account?{" "}
-            <Link href="/login" className="text-blue-400 hover:underline">
-              Login
+          {/* Persistent "Do you have an account?" link */}
+          <div className="mt-6">
+            <Link
+              href="/login"
+              className="text-gray-600 hover:underline text-[14px]"
+            >
+              Do you have an account? Login here
             </Link>
-          </p>
+          </div>
+          {/* if currentStep != 0 do not render button */}
+          {currentStep === 0 && (
+            <button
+              onClick={() => nextStep({} as FormData)}
+              className="mt-6 px-8 py-3 bg-gray-800 text-gray-300 rounded-md shadow hover:bg-gray-400 transition-colors duration-300"
+            >
+              Get Started
+            </button>
+          )}
+        </div>
+
+        {/* Form section */}
+        <div className="w-2/3 min-h-[500px] relative overflow-hidden">
+          <motion.div
+            key={currentStep}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.5 }}
+            className="absolute w-full h-full"
+          >
+            {currentStep === 0 && (
+              <div className="text-center">
+                <div className="w-full h-full flex justify-center items-center">
+                  <img
+                    src="signup.png"
+                    alt="Welcome Image"
+                    className="w-full h-full object-cover rounded-md shadow"
+                  />
+                </div>
+              </div>
+            )}
+
+            {currentStep === 1 && (
+              <div className="max-h-[80vh] overflow-y-auto">
+                <form className="space-y-6 p-8" onSubmit={handleSubmit(nextStep)}>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600">
+                      First Name
+                    </label>
+                    <input
+                      type="text"
+                      {...register("firstName", {
+                        required: "First name is required",
+                      })}
+                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    />
+                    {errors.firstName && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.firstName.message}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600">
+                      Last Name
+                    </label>
+                    <input
+                      type="text"
+                      {...register("lastName", {
+                        required: "Last name is required",
+                      })}
+                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    />
+                    {errors.lastName && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.lastName.message}
+                      </p>
+                    )}
+                  </div>
+                  {/* user name  */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600">
+                      User Name
+                    </label>
+                    <input
+                      type="text"
+                      {...register("userName", {
+                        required: "User name is required",
+                      })}
+                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    />
+                    {errors.userName && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.userName.message}
+                      </p>
+                    )}
+                  </div>
+                  {/* phone number */}
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600">
+                      Phone Number
+                    </label>
+                    <input
+                      type="text"
+                      {...register("phoneNumber", {
+                        required: "Phone number is required",
+                      })}
+                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    />
+                    {errors.phoneNumber && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.phoneNumber.message}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      {...register("email", {
+                        required: "Email is required",
+                      })}
+                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    />
+                    {errors.email && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.email.message}
+                      </p>
+                    )}
+                  </div>
+            
+                  {/* Step navigation */}
+                  <div className="flex justify-between">
+                    <button
+                      type="button"
+                      className="px-4 py-2 bg-gray-300 text-gray-600 rounded-md hover:bg-gray-400"
+                      onClick={prevStep}
+                    >
+                      Back
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}            
+           {currentStep === 2 && (
+              <div className="max-h-[80vh] overflow-y-auto">
+                <form className="space-y-6 p-8" onSubmit={handleSubmit(nextStep)}>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600">
+                      Password
+                    </label>
+                    <input
+                      type="password"
+                      {...register("password", {
+                        required: "Password is required",
+                        minLength: {
+                          value: 8,
+                          message: "Password must be at least 8 characters long",
+                        },
+                        pattern: {
+                          value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                          message:
+                            "Password must include uppercase, lowercase, number, and special character",
+                        },
+                      })}
+                      className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    />
+                    {errors.password && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.password.message}
+                      </p>
+                    )}
+                  </div>
+            
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600">
+                      Confirm Password
+                    </label>
+                    <input
+                      type="password"
+                      {...register("confirmPassword", {
+                        required: "Please confirm your password",
+                        validate: (value) =>
+                          value === watch("password") || "Passwords do not match",
+                      })}
+                      className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    />
+                    {errors.confirmPassword && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.confirmPassword.message}
+                      </p>
+                    )}
+                  </div>
+            
+                  <div className="flex justify-between">
+                    <button
+                      type="button"
+                      className="px-4 py-2 bg-gray-300 text-gray-600 rounded-md hover:bg-gray-400"
+                      onClick={prevStep}
+                    >
+                      Back
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
+            
+            {currentStep === 3 && (
+              <div className="max-h-[80vh] overflow-y-auto">
+                <form className="space-y-6 p-8" onSubmit={handleSubmit(onSignUp)}>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600">
+                      Address Number
+                    </label>
+                    <input
+                      type="text"
+                      {...register("addressNumber", {
+                        required: "Address number is required",
+                      })}
+                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    />
+                    {errors.addressNumber && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.addressNumber.message}
+                      </p>
+                    )}
+                  </div>
+            
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600">
+                      Lane
+                    </label>
+                    <input
+                      type="text"
+                      {...register("lane", {
+                        required: "Lane is required",
+                      })}
+                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    />
+                    {errors.lane && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.lane.message}
+                      </p>
+                    )}
+                  </div>
+            
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600">
+                      City
+                    </label>
+                    <input
+                      type="text"
+                      {...register("city", {
+                        required: "City is required",
+                      })}
+                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    />
+                    {errors.city && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.city.message}
+                      </p>
+                    )}
+                  </div>
+            
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600">
+                      District
+                    </label>
+                    <input
+                      type="text"
+                      {...register("district", {
+                        required: "District is required",
+                      })}
+                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    />
+                    {errors.district && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.district.message}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-600">
+                      Postal Code
+                    </label>
+                    <input
+                      type="text"
+                      {...register("postalCode", {
+                        required: "Postal Code is required",
+                      })}
+                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                    />
+                    {errors.postalCode && (
+                      <p className="text-red-500 text-sm mt-1">
+                        {errors.postalCode.message}
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex justify-between">
+                    <button
+                      type="button"
+                      className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
+                      onClick={prevStep}
+                    >
+                      Prev
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-6 py-3 bg-gray-600 text-white rounded-md shadow hover:bg-gray-700"
+                    >
+                      Signup
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}        </motion.div>
         </div>
       </div>
     </div>
   );
 };
 
-export default SignUpPage;
+export default SignupPage;
