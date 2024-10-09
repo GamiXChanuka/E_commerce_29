@@ -53,9 +53,7 @@ export default function NavBar() {
       toast.error("Failed to logout");
     }
   };
-  if (loading) {
-    return <p>Loading...</p>;
-  }
+
 
   return (
     <nav className="py-4 bg-gray-800 shadow-md">
