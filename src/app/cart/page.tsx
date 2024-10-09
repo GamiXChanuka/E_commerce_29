@@ -15,7 +15,7 @@ export default function CartPage() {
   const [error, setError] = useState<string | null>(null);
   const cartId = 1; // Set your cart ID here
 
-  var isRegistered = false;
+  var isRegistered = true;
 
   // Fetch cart data
   // const fetchData = async () => {

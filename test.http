@@ -1,7 +1,7 @@
-### Test POST endpoint
-POST http://localhost:3000/api/getOrders
+### Get product variants
+POST http://localhost:3000/api/getProductVariants
 Content-Type: application/json
 
 {
-  "userId": 1
+  "ProductCategoryID": 1
 }
