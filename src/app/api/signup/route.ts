@@ -58,6 +58,6 @@ export async function POST(request: NextRequest) {
             addressId: newUser.addressId,
         }, { status: 201 });
     } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ message: 'Make sure you fill all the feilds' }, { status: 500 });
     }
 }
