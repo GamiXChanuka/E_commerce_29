@@ -68,18 +68,18 @@ export default function NavBar() {
         <div className="flex items-center space-x-6">
           <Link
             className="text-lg font-medium text-white hover:text-gray-300"
-            href="./"
+            href="/"
           >
             Home
           </Link>
           <Link
-            href="./marketplace"
+            href="/marketplace"
             className="text-lg font-medium text-white hover:text-gray-300"
           >
             Marketplace
           </Link>
           <Link
-            href="./about"
+            href="/about"
             className="text-lg font-medium text-white hover:text-gray-300"
           >
             About

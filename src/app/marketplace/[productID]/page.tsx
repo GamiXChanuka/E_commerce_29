@@ -150,6 +150,7 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 interface Variant {
   VariantID: number;
@@ -251,13 +252,16 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
         const data = await response.json();
         
         if (response.ok) {
+          toast.success("Product added to cart!");
           console.log("Cart updated successfully:", data);
           // You can add additional logic here, such as showing a success message
         } else {
+          toast.error(data.error || "Failed to add product to cart");
           console.error("Error updating cart:", data.error);
           // Handle error here, such as showing an error message to the user
         }
       } catch (error) {
+        toast.error("An error occurred while adding to cart");
         console.error("An error occurred while adding to the cart:", error);
         // Handle fetch errors here
       }
@@ -298,7 +302,7 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
             </p>
             <div className="mt-4 sm:items-center sm:gap-4 sm:flex">
               <p className="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-black">
-                €{selectedVariant?.Price}
+                Rs.{selectedVariant?.Price}
               </p>
 
               <div className="flex items-center gap-2 mt-2 sm:mt-0">
@@ -319,14 +323,14 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
                   <h3 className="text-lg font-semibold text-black">Choose a variant:</h3>
                   {productVariants.map((variant, index) => (
                     <button
-  key={index}
-  className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 focus:ring-blue-800"
-  onClick={() => handleVariantClick(variant)} // When clicked, call handleVariantClick with the variant
->
-  {variant.Attributes?.map(
-    (attr) => `${attr.AttributeName}: ${attr.AttributeValue}`
-  ).join(", ")}
-</button>
+                    key={index}
+                    className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 focus:ring-blue-800"
+                    onClick={() => handleVariantClick(variant)} // When clicked, call handleVariantClick with the variant
+                  >
+                    {variant.Attributes?.map(
+                      (attr) => `${attr.AttributeName}: ${attr.AttributeValue}`
+                    ).join(", ")}
+                  </button>
 
                   ))}
                 </div>
