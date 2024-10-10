@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"; // Use useRouter from next/navigati
 // import Image from "next/image";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Search from "@/components/search/Search";
 
 export default function NavBar() {
   //----------------------------------------------------------------------------------------------------------------------------
@@ -88,7 +89,7 @@ export default function NavBar() {
         {/*--------------------------------------------- Search -------- Card ------------Profile Icon---------------------- */}
         <div className="flex justify-between">
             {/* ---------------------------------Searchbox--------------------------------------------------------------- */}
-            <div className="relative flex items-center">
+            {/* <div className="relative flex items-center">
               <input
                   type="search"
                   name="search"
@@ -104,7 +105,9 @@ export default function NavBar() {
               >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-            </div>
+            </div> */}
+            <Search />
+
                 
             {/* -----------------------------------Card Button--------------------------------------------------------------- */}
 
