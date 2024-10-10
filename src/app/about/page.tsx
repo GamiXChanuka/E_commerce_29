@@ -14,7 +14,6 @@ function page() {
               <a>About</a>
             </li>
           </ul>
-          <Search />
         </div>
       </div>
     </>

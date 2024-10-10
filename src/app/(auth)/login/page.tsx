@@ -48,6 +48,7 @@ const LoginPage = () => {
         success: <b>Login successful</b>,
         error: <b>Login failed</b>,
       });
+      
       router.push("/");
     } catch (error: any) {
       toast.error(error.response?.data.message || error.message);
@@ -57,21 +58,21 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
       {/* Outer container with sidebar and form content */}
-      <div className="bg-white rounded-lg shadow-xl w-4/5 max-w-3xl flex justify-items-center">
+      <div className="flex w-4/5 max-w-3xl bg-white rounded-lg shadow-xl justify-items-center">
         {/* Sidebar */}
-        <div className="w-1/3 bg-gray-200 text-gray-800 p-8 rounded-l-lg flex flex-col justify-between">
+        <div className="flex flex-col justify-between w-1/3 p-8 text-gray-800 bg-gray-200 rounded-l-lg">
           <div>
-            <h2 className="text-3xl font-bold mb-5">Login</h2>
-            <p className="text-gray-600 mb-6">
+            <h2 className="mb-5 text-3xl font-bold">Login</h2>
+            <p className="mb-6 text-gray-600">
             Welcome back!
               <br />
               <br />
               <Image src="/login.jpg" alt="Login Image" className="object-cover rounded-full" width={150} height={150} />
             </p>
-            <h2 className="text-2xl font-bold mb-2">SHOPZY</h2>
-            <p className="text-gray-600 mb-6">
+            <h2 className="mb-2 text-2xl font-bold">SHOPZY</h2>
+            <p className="mb-6 text-gray-600">
             Where fun meets innovation!.
             </p>
           </div>
@@ -95,9 +96,9 @@ const LoginPage = () => {
             animate="center"
             exit="exit"
             transition={{ duration: 0.5 }}
-            className="absolute w-full h-full flex items-center justify-center"
+            className="absolute flex items-center justify-center w-full h-full"
           >
-            <form className="space-y-6 p-8 w-full" onSubmit={handleSubmit(onLogin)}>
+            <form className="w-full p-8 space-y-6" onSubmit={handleSubmit(onLogin)}>
               <div>
                 <label className="block text-sm font-medium text-gray-600">
                   Email
@@ -110,7 +111,7 @@ const LoginPage = () => {
                   className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                 />
                 {errors.email && (
-                  <p className="text-red-500 text-sm mt-1">
+                  <p className="mt-1 text-sm text-red-500">
                     {errors.email.message}
                   </p>
                 )}
@@ -128,7 +129,7 @@ const LoginPage = () => {
                   className=" w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
                 />
                 {errors.password && (
-                  <p className="text-red-500 text-sm mt-1">
+                  <p className="mt-1 text-sm text-red-500">
                     {errors.password.message}
                   </p>
                 )}
