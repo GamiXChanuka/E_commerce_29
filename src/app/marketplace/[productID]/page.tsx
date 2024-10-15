@@ -193,8 +193,9 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
     setLoading(true);
     try {
       const response = await axios.post("/api/getProductVariants", {
-        ProductCategoryID: productID,
+        ProductID: productID,
       });
+      console.log( "response",response.data);
 
       const variants = response.data;
       setProductVariants(variants);
