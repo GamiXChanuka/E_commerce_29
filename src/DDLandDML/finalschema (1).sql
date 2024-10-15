@@ -497,8 +497,7 @@ DROP TABLE IF EXISTS `productcategory`;
 CREATE TABLE `productcategory` (
   `ProductID` int NOT NULL,
   `CategoryID` int NOT NULL,
-  `ProductCategoryId` int NOT NULL,
-  PRIMARY KEY (`ProductCategoryId`),
+  PRIMARY KEY (`ProductID`,`CategoryID`),
   KEY `ProductID` (`ProductID`),
   KEY `CategoryID` (`CategoryID`),
   CONSTRAINT `productcategory_ibfk_1` FOREIGN KEY (`ProductID`) REFERENCES `product` (`ProductID`),
@@ -512,7 +511,7 @@ CREATE TABLE `productcategory` (
 
 LOCK TABLES `productcategory` WRITE;
 /*!40000 ALTER TABLE `productcategory` DISABLE KEYS */;
-INSERT INTO `productcategory` VALUES (1,2,1),(2,3,2),(3,4,3),(5,5,4),(6,7,5),(7,6,6),(8,8,7),(9,2,8),(1,9,9),(9,2,10),(9,9,11);
+INSERT INTO `productcategory` VALUES (1,2),(1,9),(2,3),(3,4),(5,5),(6,7),(7,6),(8,8),(9,2),(9,9);
 /*!40000 ALTER TABLE `productcategory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -713,4 +712,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-15 14:11:45
+-- Dump completed on 2024-10-15 17:56:12
