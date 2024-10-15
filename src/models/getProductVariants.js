@@ -1,16 +1,16 @@
 import pool from '../lib/dbConfig';
 
-export async function getProductVariants(ProductCategoryID) {
+export async function getProductVariants(ProductID) {
    
       console.log("Using connection pool");
-      console.log("ProductCategoryID",ProductCategoryID);
+      console.log("ProductID",ProductID);
 
       try {
 
         const [rows] = await pool.execute(`
-            select * from variant left outer join product on variant.ProductCategoryID = product.ProductCategoryID
+            select * from variant left outer join product on variant.ProductID = product.ProductID
              left outer join image on variant.VariantID=image.VariantID
-             where product.ProductCategoryID = ?; `, [`${ProductCategoryID}`]);
+             where product.ProductID = ?; `, [`${ProductID}`]);
             console.log("variant details ",rows);
     
         return rows;
