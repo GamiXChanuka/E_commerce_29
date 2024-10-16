@@ -55,6 +55,10 @@ export default function NavBar() {
     }
   };
 
+  const vistCart = () => {
+    router.push("/cart");
+  };
+
 
   return (
     <nav className="py-4 bg-gray-800 shadow-md">
@@ -137,7 +141,7 @@ export default function NavBar() {
                             <span className="text-lg font-bold">8 Items</span>
                             <span className="text-info">Subtotal: $999</span>
                             <div className="card-actions">
-                              <button className="btn btn-primary btn-block">View cart</button>
+                              <button className="btn btn-primary btn-block" onClick={vistCart}>View cart</button>
                             </div>
                         </div>                        
                 </div>
