@@ -12,12 +12,16 @@ export async function GET(request: NextRequest) {
 
     const userId = await getDataFromToken(request);
     const userInfo = await getUserInfo(userId);
+    console.log("🚀 ~ GET ~ userInfo:", userInfo)
 
     return NextResponse.json(userInfo);
-  } catch (error) {
+  } catch (error: any) {
+    if (error.sqlState === '45000') {
+      return NextResponse.json({ message: error.message  }, { status: 404 });
+  }
 
-    console.error("Error fetching user profile:", error);
-    return NextResponse.error();
+  return NextResponse.json({ message: 'Fail to fetch the data' }, { status: 500 });
+
     
   }
 }
