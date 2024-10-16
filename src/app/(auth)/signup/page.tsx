@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import Image from "next/image";
+import { toast } from "react-hot-toast";
 
-// Define types for form inputs
 type FormData = {
   firstName: string;
   lastName: string;
@@ -24,7 +24,6 @@ type FormData = {
   postalCode: string;
 };
 
-// Motion variants for animating transitions
 const variants = {
   enter: {
     opacity: 0,
@@ -44,7 +43,6 @@ const SignupPage = () => {
   const [currentStep, setCurrentStep] = useState(0);
   const router = useRouter();
 
-  // Hook form setup
   const {
     register,
     handleSubmit,
@@ -62,7 +60,6 @@ const SignupPage = () => {
   const onSignUp: SubmitHandler<FormData> = async (data) => {
     console.log("Form data submitted:", data);
 
-    // Convert undefined values to null
     const sanitizedData = Object.fromEntries(
       Object.entries(data).map(([key, value]) => [key, value ?? null])
     );
@@ -79,17 +76,15 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      {/* Outer container with sidebar and form content */}
+    <div className="min-h-screen flex items-center justify-center bg-[#DDE8F0]">
       <div className="bg-white rounded-lg shadow-xl w-4/5 max-w-3xl flex">
-        {/* Sidebar */}
-        <div className="w-1/3 bg-gray-200 text-gray-800 p-8 rounded-l-lg flex flex-col justify-between overflow-y-auto">
+        <div className="w-1/3 bg-[#004581] text-[#97CBDC] p-8 rounded-l-lg flex flex-col justify-between overflow-y-auto">
           <div>
-            <h2 className="text-3xl font-bold mb-8">Sign Up</h2>
+            <h2 className="text-3xl font-bold mb-8 text-white">Sign Up</h2>
             <ul className="space-y-5">
               <li
-                className={`flex items-center space-x-2 transition-colors duration-300 ${
-                  currentStep === 0 ? "bg-gray-800 text-white" : "text-gray-500 hover:bg-gray-300"
+                className={`flex items-center space-x-2 transition-colors duration-300  text-white ${
+                  currentStep === 0 ? "bg-[#018ABD]" : "hover:bg-[#97CBDC]"
                 } p-2 rounded-md cursor-pointer`}
                 onClick={() => setCurrentStep(0)}
               >
@@ -97,8 +92,8 @@ const SignupPage = () => {
                 <span>Welcome!</span>
               </li>
               <li
-                className={`flex items-center space-x-2 transition-colors duration-300 ${
-                  currentStep === 1 ? "bg-gray-800 text-white" : "text-gray-500 hover:bg-gray-300"
+                className={`flex items-center space-x-2 transition-colors duration-300  text-white ${
+                  currentStep === 1 ? "bg-[#018ABD]" : "hover:bg-[#97CBDC]"
                 } p-2 rounded-md cursor-pointer`}
                 onClick={() => setCurrentStep(1)}
               >
@@ -106,8 +101,8 @@ const SignupPage = () => {
                 <span>Personal Information</span>
               </li>
               <li
-                className={`flex items-center space-x-2 transition-colors duration-300 ${
-                  currentStep === 2 ? "bg-gray-800 text-white" : "text-gray-500 hover:bg-gray-300"
+                className={`flex items-center space-x-2 transition-colors duration-300  text-white ${
+                  currentStep === 2 ? "bg-[#018ABD]" : " hover:bg-[#97CBDC]"
                 } p-2 rounded-md cursor-pointer`}
                 onClick={() => setCurrentStep(2)}
               >
@@ -115,8 +110,8 @@ const SignupPage = () => {
                 <span>Set Your Password</span>
               </li>
               <li
-                className={`flex items-center space-x-2 transition-colors duration-300 ${
-                  currentStep === 3 ? "bg-gray-800 text-white" : "text-gray-500 hover:bg-gray-300"
+                className={`flex items-center space-x-2 transition-colors duration-300  text-white ${
+                  currentStep === 3 ? "bg-[#018ABD] " : " hover:bg-[#97CBDC]"
                 } p-2 rounded-md cursor-pointer`}
                 onClick={() => setCurrentStep(3)}
               >
@@ -125,27 +120,24 @@ const SignupPage = () => {
               </li>
             </ul>
           </div>
-          {/* Persistent "Do you have an account?" link */}
           <div className="mt-6">
             <Link
               href="/login"
-              className="text-gray-600 hover:underline text-[14px]"
+              className="text-[#97CBDC] hover:underline text-[14px]"
             >
               Do you have an account? Login here
             </Link>
           </div>
-          {/* if currentStep != 0 do not render button */}
           {currentStep === 0 && (
             <button
               onClick={() => nextStep({} as FormData)}
-              className="mt-6 px-8 py-3 bg-gray-800 text-gray-300 rounded-md shadow hover:bg-gray-400 transition-colors duration-300"
+              className="mt-6 px-8 py-3 bg-[#ffffff] text-[#018ABD] rounded-md shadow hover:bg-[#018ABD] hover:text-[#ffffff] transition-colors duration-300"
             >
               Get Started
             </button>
           )}
         </div>
 
-        {/* Form section */}
         <div className="w-2/3 min-h-[500px] relative overflow-hidden">
           <motion.div
             key={currentStep}
@@ -159,10 +151,12 @@ const SignupPage = () => {
             {currentStep === 0 && (
               <div className="text-center">
                 <div className="w-full h-full flex justify-center items-center">
-                  <img
-                    src="signup.png"
+                  <Image
+                    src="/signup.png"
                     alt="Welcome Image"
-                    className="w-full h-full object-cover rounded-md shadow"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-md shadow"
                   />
                 </div>
               </div>
@@ -170,9 +164,12 @@ const SignupPage = () => {
 
             {currentStep === 1 && (
               <div className="max-h-[80vh] overflow-y-auto">
-                <form className="space-y-6 p-8" onSubmit={handleSubmit(nextStep)}>
+                <form
+                  className="space-y-6 p-8"
+                  onSubmit={handleSubmit(nextStep)}
+                >
                   <div>
-                    <label className="block text-sm font-medium text-gray-600">
+                    <label className="block text-sm font-medium text-[#004581]">
                       First Name
                     </label>
                     <input
@@ -180,16 +177,16 @@ const SignupPage = () => {
                       {...register("firstName", {
                         required: "First name is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
                     />
                     {errors.firstName && (
-                      <p className="text-red-500 text-sm mt-1">
+                      <p className="text-red-500 text-xs mt-1">
                         {errors.firstName.message}
                       </p>
                     )}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-600">
+                    <label className="block text-sm font-medium text-[#004581]">
                       Last Name
                     </label>
                     <input
@@ -197,17 +194,16 @@ const SignupPage = () => {
                       {...register("lastName", {
                         required: "Last name is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
                     />
                     {errors.lastName && (
-                      <p className="text-red-500 text-sm mt-1">
+                      <p className="text-red-500 text-xs mt-1">
                         {errors.lastName.message}
                       </p>
                     )}
                   </div>
-                  {/* user name  */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-600">
+                    <label className="block text-sm font-medium text-[#004581]">
                       User Name
                     </label>
                     <input
@@ -215,17 +211,16 @@ const SignupPage = () => {
                       {...register("userName", {
                         required: "User name is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
                     />
                     {errors.userName && (
-                      <p className="text-red-500 text-sm mt-1">
+                      <p className="text-red-500 text-xs mt-1">
                         {errors.userName.message}
                       </p>
                     )}
                   </div>
-                  {/* phone number */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-600">
+                    <label className="block text-sm font-medium text-[#004581]">
                       Phone Number
                     </label>
                     <input
@@ -233,16 +228,16 @@ const SignupPage = () => {
                       {...register("phoneNumber", {
                         required: "Phone number is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
                     />
                     {errors.phoneNumber && (
-                      <p className="text-red-500 text-sm mt-1">
+                      <p className="text-red-500 text-xs mt-1">
                         {errors.phoneNumber.message}
                       </p>
                     )}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-600">
+                    <label className="block text-sm font-medium text-[#004581]">
                       Email
                     </label>
                     <input
@@ -250,39 +245,42 @@ const SignupPage = () => {
                       {...register("email", {
                         required: "Email is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
                     />
                     {errors.email && (
-                      <p className="text-red-500 text-sm mt-1">
+                      <p className="text-red-500 text-xs mt-1">
                         {errors.email.message}
                       </p>
                     )}
                   </div>
-            
-                  {/* Step navigation */}
-                  <div className="flex justify-between">
+                  <div className="absolute bottom-0 left-0 right-0 flex justify-between p-4 bg-white shadow-md">
+                    {/* back button */}
                     <button
                       type="button"
-                      className="px-4 py-2 bg-gray-300 text-gray-600 rounded-md hover:bg-gray-400"
                       onClick={prevStep}
+                      className="px-4 py-2 bg-[#004581] text-white rounded-md hover:bg-[#018ABD]"
                     >
                       Back
                     </button>
                     <button
                       type="submit"
-                      className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700"
+                      className="px-4 py-2 bg-[#004581] text-white rounded-md hover:bg-[#018ABD]"
                     >
                       Next
                     </button>
                   </div>
                 </form>
               </div>
-            )}            
-           {currentStep === 2 && (
+            )}
+
+            {currentStep === 2 && (
               <div className="max-h-[80vh] overflow-y-auto">
-                <form className="space-y-6 p-8" onSubmit={handleSubmit(nextStep)}>
+                <form
+                  className="space-y-6 p-8"
+                  onSubmit={handleSubmit(nextStep)}
+                >
                   <div>
-                    <label className="block text-sm font-medium text-gray-600">
+                    <label className="block text-sm font-medium text-[#004581]">
                       Password
                     </label>
                     <input
@@ -291,25 +289,26 @@ const SignupPage = () => {
                         required: "Password is required",
                         minLength: {
                           value: 8,
-                          message: "Password must be at least 8 characters long",
+                          message:
+                            "Password must be at least 8 characters long",
                         },
                         pattern: {
-                          value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                          value:
+                            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                           message:
                             "Password must include uppercase, lowercase, number, and special character",
                         },
                       })}
-                      className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                      className="w-full px-4 py-2 mt-1 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
                     />
                     {errors.password && (
-                      <p className="text-red-500 text-sm mt-1">
+                      <p className="text-red-500 text-xs mt-1">
                         {errors.password.message}
                       </p>
                     )}
                   </div>
-            
                   <div>
-                    <label className="block text-sm font-medium text-gray-600">
+                    <label className="block text-sm font-medium text-[#004581]">
                       Confirm Password
                     </label>
                     <input
@@ -319,26 +318,26 @@ const SignupPage = () => {
                         validate: (value) =>
                           value === watch("password") || "Passwords do not match",
                       })}
-                      className="w-full px-4 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                      className="w-full px-4 py-2 mt-1 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
                     />
                     {errors.confirmPassword && (
-                      <p className="text-red-500 text-sm mt-1">
+                      <p className="text-red-500 text-xs mt-1">
                         {errors.confirmPassword.message}
                       </p>
                     )}
                   </div>
-            
-                  <div className="flex justify-between">
+                  <div className="absolute bottom-0 left-0 right-0 flex justify-between p-4 bg-white shadow-md">
+                    {/* back button */}
                     <button
                       type="button"
-                      className="px-4 py-2 bg-gray-300 text-gray-600 rounded-md hover:bg-gray-400"
                       onClick={prevStep}
+                      className="px-4 py-2 bg-[#004581] text-white rounded-md hover:bg-[#018ABD]"
                     >
                       Back
                     </button>
                     <button
                       type="submit"
-                      className="px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700"
+                      className="px-4 py-2 bg-[#004581] text-white rounded-md hover:bg-[#018ABD]"
                     >
                       Next
                     </button>
@@ -346,12 +345,15 @@ const SignupPage = () => {
                 </form>
               </div>
             )}
-            
+
             {currentStep === 3 && (
               <div className="max-h-[80vh] overflow-y-auto">
-                <form className="space-y-6 p-8" onSubmit={handleSubmit(onSignUp)}>
+                <form
+                  className="space-y-6 p-8"
+                  onSubmit={handleSubmit(onSignUp)}
+                >
                   <div>
-                    <label className="block text-sm font-medium text-gray-600">
+                    <label className="block text-sm font-medium text-[#004581]">
                       Address Number
                     </label>
                     <input
@@ -359,17 +361,16 @@ const SignupPage = () => {
                       {...register("addressNumber", {
                         required: "Address number is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
                     />
                     {errors.addressNumber && (
-                      <p className="text-red-500 text-sm mt-1">
+                      <p className="text-red-500 text-xs mt-1">
                         {errors.addressNumber.message}
                       </p>
                     )}
                   </div>
-            
                   <div>
-                    <label className="block text-sm font-medium text-gray-600">
+                    <label className="block text-sm font-medium text-[#004581]">
                       Lane
                     </label>
                     <input
@@ -377,17 +378,16 @@ const SignupPage = () => {
                       {...register("lane", {
                         required: "Lane is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
                     />
                     {errors.lane && (
-                      <p className="text-red-500 text-sm mt-1">
+                      <p className="text-red-500 text-xs mt-1">
                         {errors.lane.message}
                       </p>
                     )}
                   </div>
-            
                   <div>
-                    <label className="block text-sm font-medium text-gray-600">
+                    <label className="block text-sm font-medium text-[#004581]">
                       City
                     </label>
                     <input
@@ -395,17 +395,16 @@ const SignupPage = () => {
                       {...register("city", {
                         required: "City is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
                     />
                     {errors.city && (
-                      <p className="text-red-500 text-sm mt-1">
+                      <p className="text-red-500 text-xs mt-1">
                         {errors.city.message}
                       </p>
                     )}
                   </div>
-            
                   <div>
-                    <label className="block text-sm font-medium text-gray-600">
+                    <label className="block text-sm font-medium text-[#004581]">
                       District
                     </label>
                     <input
@@ -413,49 +412,52 @@ const SignupPage = () => {
                       {...register("district", {
                         required: "District is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
                     />
                     {errors.district && (
-                      <p className="text-red-500 text-sm mt-1">
+                      <p className="text-red-500 text-xs mt-1">
                         {errors.district.message}
                       </p>
                     )}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-600">
+                    <label className="block text-sm font-medium text-[#004581]">
                       Postal Code
                     </label>
                     <input
                       type="text"
                       {...register("postalCode", {
-                        required: "Postal Code is required",
+                        required: "Postal code is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
                     />
                     {errors.postalCode && (
-                      <p className="text-red-500 text-sm mt-1">
+                      <p className="text-red-500 text-xs mt-1">
                         {errors.postalCode.message}
                       </p>
                     )}
                   </div>
-                  <div className="flex justify-between">
+                  <div className="absolute bottom-0 left-0 right-0 flex justify-between p-4 bg-white shadow-md">
+                    {/* back button */}
                     <button
                       type="button"
-                      className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l"
                       onClick={prevStep}
+                      className="px-4 py-2 bg-[#004581] text-white rounded-md hover:bg-[#018ABD]"
                     >
-                      Prev
+                      Back
                     </button>
+
                     <button
                       type="submit"
-                      className="px-6 py-3 bg-gray-600 text-white rounded-md shadow hover:bg-gray-700"
+                      className="px-4 py-2 bg-[#004581] text-white rounded-md hover:bg-[#018ABD]"
                     >
-                      Signup
+                      Sign Up
                     </button>
                   </div>
                 </form>
               </div>
-            )}        </motion.div>
+            )}
+          </motion.div>
         </div>
       </div>
     </div>
