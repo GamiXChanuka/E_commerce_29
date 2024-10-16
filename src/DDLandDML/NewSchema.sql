@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `ecommerce2` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `ecommerce2`;
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: ecommerce
+-- Host: 127.0.0.1    Database: ecommerce2
 -- ------------------------------------------------------
--- Server version	9.0.0
+-- Server version	8.0.37
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -30,7 +32,7 @@ CREATE TABLE `address` (
   `PostalCode` varchar(10) DEFAULT NULL,
   `District` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`AddressID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +41,7 @@ CREATE TABLE `address` (
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
-INSERT INTO `address` VALUES (1,'123','Main St','New York','10001','Manhattan'),(2,'456','Elm St','Los Angeles','90001','Downtown'),(3,'789','Maple Ave','Chicago','60601','Loop'),(4,'123','Main St','New York','10001','Manhattan'),(5,'456','Elm St','Los Angeles','90001','Downtown'),(6,'789','Maple Ave','Chicago','60601','Loop');
+INSERT INTO `address` VALUES (1,'123','Main St','New York','10001','Manhattan'),(2,'456','Elm St','Los Angeles','90001','Downtown'),(3,'789','Maple Ave','Chicago','60601','Loop'),(4,'123','Main St','New York','10001','Manhattan'),(5,'456','Elm St','Los Angeles','90001','Downtown'),(6,'789','Maple Ave','Chicago','60601','Loop'),(7,'2','1st lane','colombo','1010','Colombo');
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,7 +180,7 @@ CREATE TABLE `cartitem` (
 
 LOCK TABLES `cartitem` WRITE;
 /*!40000 ALTER TABLE `cartitem` DISABLE KEYS */;
-INSERT INTO `cartitem` VALUES (1,1,3),(2,1,3),(3,1,4),(4,1,3),(7,1,3),(8,1,1);
+INSERT INTO `cartitem` VALUES (1,1,3),(2,1,3),(3,1,4),(4,1,3),(7,1,3),(8,1,1),(9,1,2);
 /*!40000 ALTER TABLE `cartitem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -530,6 +532,7 @@ CREATE TABLE `registeredcustomer` (
   `AddressID` int DEFAULT NULL,
   PRIMARY KEY (`UserID`),
   UNIQUE KEY `Email` (`Email`),
+  UNIQUE KEY `UserName_UNIQUE` (`UserName`),
   KEY `AddressID` (`AddressID`),
   CONSTRAINT `registeredcustomer_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`),
   CONSTRAINT `registeredcustomer_ibfk_2` FOREIGN KEY (`AddressID`) REFERENCES `address` (`AddressID`)
@@ -542,7 +545,7 @@ CREATE TABLE `registeredcustomer` (
 
 LOCK TABLES `registeredcustomer` WRITE;
 /*!40000 ALTER TABLE `registeredcustomer` DISABLE KEYS */;
-INSERT INTO `registeredcustomer` VALUES (1,'johndoe','john@example.com','password123',1),(2,'janesmith','jane@example.com','securepass',2);
+INSERT INTO `registeredcustomer` VALUES (1,'johndoe','john@example.com','password123',1),(2,'janesmith','jane@example.com','securepass',2),(7,'InduwaraB','abc@gmail.com','$2a$10$CGzOQOaykjGp.MuysbIdJetX7V3lVp8Se7VfX1H4B2YrpujSNvfO6',7);
 /*!40000 ALTER TABLE `registeredcustomer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -560,7 +563,7 @@ CREATE TABLE `user` (
   `LastName` varchar(50) NOT NULL,
   `Role` enum('Registered','UnRegistered') NOT NULL,
   PRIMARY KEY (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -569,7 +572,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'1234567890','John','Doe','Registered'),(2,'0987654321','Jane','Smith','Registered'),(3,'1122334455','Alice','Johnson','UnRegistered'),(4,'1234567890','John','Doe','Registered'),(5,'0987654321','Jane','Smith','Registered'),(6,'1122334455','Alice','Johnson','UnRegistered');
+INSERT INTO `user` VALUES (1,'1234567890','John','Doe','Registered'),(2,'0987654321','Jane','Smith','Registered'),(3,'1122334455','Alice','Johnson','UnRegistered'),(4,'1234567890','John','Doe','Registered'),(5,'0987654321','Jane','Smith','Registered'),(6,'1122334455','Alice','Johnson','UnRegistered'),(7,'0772209691','Induwara','Rathnayake','Registered');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -605,11 +608,11 @@ INSERT INTO `variant` VALUES (1,'iPhone 14 Pro - 128GB','The latest iPhone with 
 UNLOCK TABLES;
 
 --
--- Dumping events for database 'ecommerce'
+-- Dumping events for database 'ecommerce2'
 --
 
 --
--- Dumping routines for database 'ecommerce'
+-- Dumping routines for database 'ecommerce2'
 --
 /*!50003 DROP PROCEDURE IF EXISTS `CreateUser` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -652,6 +655,41 @@ BEGIN
     VALUES (userId, userName, email, password, addressId);
 
     COMMIT;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetUserByEmail` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUserByEmail`(IN inputEmail VARCHAR(255))
+BEGIN
+    -- Check if the user exists
+    DECLARE user_exists INT;
+
+    -- Check if email exists in RegisteredCustomer table
+    SELECT COUNT(*) INTO user_exists
+    FROM RegisteredCustomer
+    WHERE Email = inputEmail;
+
+    -- If no user is found, raise an error
+    IF user_exists = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'User email is incorrect';
+    ELSE
+        -- Fetch user details if the email exists
+        SELECT * 
+        FROM RegisteredCustomer
+        WHERE Email = inputEmail;
+    END IF;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -702,6 +740,40 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetUserNameByID` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetUserNameByID`(IN userId INT)
+BEGIN
+    -- Check if the user exists
+    DECLARE user_exists INT;
+
+    SELECT COUNT(*) INTO user_exists
+    FROM User
+    WHERE UserID = userId;
+
+    IF user_exists = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'You are not a registered customer';
+    ELSE
+        SELECT 
+            registeredcustomer.UserName
+        FROM User
+        JOIN RegisteredCustomer ON User.UserID = RegisteredCustomer.UserID
+        WHERE User.UserID = userId;
+    END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -712,4 +784,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-15 17:56:12
+-- Dump completed on 2024-10-17  2:45:32

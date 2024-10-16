@@ -78,11 +78,10 @@ export const createUser = async (userData) => {
 // Function to get a user by email
 export const getUserByEmail = async (email) => {
     try {
-        const query = 'SELECT * FROM RegisteredCustomer WHERE Email = ?';
+        const query = 'CALL getUserByEmail(?)';
         const [rows] = await pool.execute(query, [email]);
-        return rows[0]; 
+        return rows[0][0];  // first[0] is the result of the procedure, second [0] is the first row of the result
     } catch (error) {
-        console.error('Error fetching user from database:', error);
         throw error;
     }
 };
@@ -90,27 +89,10 @@ export const getUserByEmail = async (email) => {
 // Function get user info
 export const getUserInfo = async (userId) => {
     try {
-        const query = `
-            SELECT 
-                user.FirstName,
-                user.LastName,
-                user.PhoneNumber,
-                registeredcustomer.UserName,
-                registeredcustomer.Email,
-                Address.AddressNumber,
-                Address.Lane,
-                Address.City,
-                Address.PostalCode,
-                Address.District
-            FROM User
-            JOIN RegisteredCustomer ON User.UserID = RegisteredCustomer.UserID
-            JOIN Address ON registeredcustomer.AddressID = Address.AddressID
-            WHERE User.UserID = ?
-        `;
+        const query = `CALL GetUserInfo(?)`;
         const [rows] = await pool.execute(query, [userId]);
-        return rows[0]; // Assuming there's only one user with this ID
+        return rows[0][0]; // Assuming there's only one user with this ID
     } catch (error) {
-        console.error('Error fetching user info from database:', error);
         throw error;
     }
 };
@@ -118,26 +100,10 @@ export const getUserInfo = async (userId) => {
 // get username by user id
 export const getUserNameById = async (userId) => {
     try {
-        const query = 'SELECT UserName FROM registeredcustomer WHERE UserID = ?';
+        const query = 'CALL GetUserNameByID(?)';
         const [rows] = await pool.execute(query, [userId]);
-        return rows[0].UserName;
+        return rows[0][0].UserName; //rows[0][0] = {UserName: 'username'} , rows[0][0].UserName = 'username'
     } catch (error) {
-        console.error('Error fetching username from database:', error);
-        throw error;
-    }
-};
-
-
-
-// Fetch products from the database
-export const getProducts = async () => {
-    try {
-        const query = 'SELECT image_url, title, short_description FROM products';
-        const [rows] = await pool.execute(query); // Execute the query to fetch all products
-        return rows; // Return all rows (products)
-    } catch (error) {
-        console.error('Error fetching products from database:', error);
-        return error;
         throw error;
     }
 };
