@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+
     // check if the password is correct
     const isPasswordCorrect = await bcryptjs.compare(
       password,
@@ -54,7 +55,12 @@ export async function POST(request: NextRequest) {
     return response;
 
   } catch (error: any) {
-      console.log("🚀 ~ POST ~ error:", error)
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    console.log("🚀 ~ POST ~ error:", error)
+    if (error.sqlState === '45000') {    
+      return NextResponse.json({ message: error.message }, { status: 404 });
+    }
+    
+    return NextResponse.json({ message: 'Database error occurred' }, { status: 500 });
   }
+
 }

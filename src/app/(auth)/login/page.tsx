@@ -49,7 +49,7 @@ const LoginPage = () => {
         error: <b>Login failed</b>,
       });
       
-      router.push("/");
+      window.location.href = "/"; // Redirect to home page
     } catch (error: any) {
       toast.error(error.response?.data.message || error.message);
     } finally {

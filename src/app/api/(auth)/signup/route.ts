@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import bcryptjs from 'bcryptjs';
-import { createUser, getUserByEmail } from '@/models/userAction';
+import { createUser } from '@/models/userAction';
 
 export async function POST(request: NextRequest) {
     try {
@@ -22,12 +22,6 @@ export async function POST(request: NextRequest) {
         // Check if passwords match
         if (password !== confirmPassword) {
             return NextResponse.json({ message: 'Passwords do not match' }, { status: 400 });
-        }
-
-        // Check if the user already exists
-        const existingUser = await getUserByEmail(email);
-        if (existingUser) {
-            return NextResponse.json({ message: 'User already exists' }, { status: 409 });
         }
 
         // Hash the password
@@ -57,7 +51,11 @@ export async function POST(request: NextRequest) {
             userId: newUser.userId,
             addressId: newUser.addressId,
         }, { status: 201 });
+
     } catch (error: any) {
+        if (error.sqlState === '45000') {
+            return NextResponse.json({ message: "User Already exists" }, { status: 404 });
+        }
         return NextResponse.json({ message: 'Make sure you fill all the feilds' }, { status: 500 });
     }
 }
