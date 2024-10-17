@@ -19,6 +19,7 @@ export async function POST(request: NextRequest) {
             postalCode,
             district,
         } = reqBody;
+
         // Check if passwords match
         if (password !== confirmPassword) {
             return NextResponse.json({ message: 'Passwords do not match' }, { status: 400 });
@@ -35,7 +36,7 @@ export async function POST(request: NextRequest) {
             userName,
             phoneNumber,
             email,
-            password: hashedPassword, // Store hashed password
+            password: hashedPassword, 
             addressNumber,
             lane,
             city,
@@ -53,9 +54,14 @@ export async function POST(request: NextRequest) {
         }, { status: 201 });
 
     } catch (error: any) {
+        console.log('Error creating user:', error);
+
         if (error.sqlState === '45000') {
-            return NextResponse.json({ message: "User Already exists" }, { status: 404 });
+            return NextResponse.json({message: error.message }, { status: 400 });
+        } else if (error.sqlState === '45001') {
+            return NextResponse.json({message: error.message  }, { status: 400 });
         }
-        return NextResponse.json({ message: 'Make sure you fill all the feilds' }, { status: 500 });
+
+        return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }

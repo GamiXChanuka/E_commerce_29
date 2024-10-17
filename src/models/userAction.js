@@ -1,6 +1,5 @@
 import pool from '../lib/dbConfig';
 
-// Function to create a new user
 export const createUser = async (userData) => {
     const connection = await pool.getConnection();
     
@@ -20,53 +19,34 @@ export const createUser = async (userData) => {
             district,
         } = userData;
 
-        // Insert the new user into the User table
-        const userQuery = `
-            INSERT INTO User (PhoneNumber, FirstName, LastName, Role) 
-            VALUES (?, ?, ?, 'Registered')
-        `;
-        const [userResult] = await connection.execute(userQuery, [
-            phoneNumber,
+        // Call the stored procedure and define OUT parameters
+        const createUserQuery = `CALL CreateUser(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, @userId, @addressId)`;
+
+        // Execute the procedure
+        await connection.execute(createUserQuery, [
             firstName,
             lastName,
-        ]);
-        console.log('userResult:', userResult);
-        const userId = userResult.insertId; // Get the newly inserted user ID
-
-        // Insert the user's address into the Address table
-        const addressQuery = `
-        INSERT INTO Address (AddressNumber, Lane, City, PostalCode, District) 
-        VALUES (?, ?, ?, ?, ?)
-        `;
-        const [addressResult] = await connection.execute(addressQuery, [
+            userName,
+            phoneNumber,
+            email,
+            password, // Ensure password is hashed before passing it
             addressNumber,
             lane,
             city,
             postalCode,
             district
         ]);
-        
-        const addressId = addressResult.insertId;
-        
-        // Insert the user into the RegisteredCustomer table
-        const registeredCustomerQuery = `
-            INSERT INTO RegisteredCustomer (UserID, UserName, Email, Password, AddressID)
-            VALUES (?, ?, ?, ?, ?)
-        `;
-        const [registeredCustomerResult] = await connection.execute(registeredCustomerQuery, [
-            userId,
-            userName,
-            email,
-            password, // Password is already hashed before this function call
-            addressId
-        ]);
-        
+
+        // Fetch the OUT parameters (userId and addressId) from the procedure
+        const [rows] = await connection.execute('SELECT @userId AS userId, @addressId AS addressId');
+
+        const { userId, addressId } = rows[0];
+
         await connection.commit(); // Commit the transaction
 
         return {
             userId,
-            addressId,
-            registeredCustomerId: registeredCustomerResult.insertId,
+            addressId
         };
     } catch (error) {
         await connection.rollback(); // Rollback the transaction if an error occurs
@@ -74,6 +54,7 @@ export const createUser = async (userData) => {
         throw error;
     }
 };
+
 
 // Function to get a user by email
 export const getUserByEmail = async (email) => {
