@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 interface CartItemData {
   VariantID: number;
@@ -8,109 +9,61 @@ interface CartItemData {
   Quantity: number;
   ImageLink: string;
 }
+interface AddressDetails {
+  addressNo: string;
+  lane: string;
+  city: string;
+  postalCode: string;
+}
 
 export default function CartPage() {
   const [data, setData] = useState<CartItemData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const cartId = 1; // Set your cart ID here
+  const [address, setAddress] = useState<AddressDetails>({
+    addressNo: "",
+    lane: "",
+    city: "",
+    postalCode: "",
+  });
+  const [selectedCity, setSelectedCity] = useState<string>("");
 
-  var isRegistered = true;
 
-  // Fetch cart data
-  // const fetchData = async () => {
-  //   try {
-  //     if(isRegistered){
+  var isRegistered = true; // Set this based on your auth logic
 
-  //     const response = await fetch("/api/cart", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ id: cartId }),
-  //     });
-
-  //     if (!response.ok) {
-  //       throw new Error(`HTTP error! Status: ${response.status}`);
-  //     }
-  //     const result = await response.json();
-  //     console.log("Cart data:", result);
-  //     setData(result);}
-  //     else{
-  //       const cart = JSON.parse(localStorage.getItem('internalCart') || '[]');
-  //       for (const item of cart) {
-  //         const response = await fetch("/api/UnRegCart", {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({ VariantID: item.VariantID }),
-  //         });
-    
-  //         if (!response.ok) {
-  //           throw new Error(`HTTP error! Status: ${response.status}`);
-  //         }
-    
-  //         const result = await response.json();
-  //         console.log("Cart data:", result);
-  //       setData(cart);
-  //     }
-  //   } catch (err) {
-  //     console.error("Error fetching data:", err);
-  //     setError(err instanceof Error ? err.message : "An error occurred");
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
   const fetchData = async () => {
     try {
       if (isRegistered) {
-        const response = await fetch("/api/cart", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ id: cartId }),
-        });
-  
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const result = await response.json();
+        // For registered users, fetch cart data from backend using token
+        const response = await axios.get("/api/cart");
+
+        const result = response.data;
         console.log("Cart data:", result);
         setData(result);
       } else {
-        const cart = JSON.parse(localStorage.getItem('internalCart') || '[]');
+        // For unregistered users, fetch cart from localStorage
+        const cart = JSON.parse(localStorage.getItem("internalCart") || "[]");
         const updatedCart = [];
-  
-        for (const item of cart) {
-          const response = await fetch("/api/UnRegCart", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ VariantID: item.VariantID }),
-          });
-  
-          console.log("Response: = ", item);
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-  
-          const variantDetailsArray = await response.json();
-        const variantDetails = variantDetailsArray[0]; // Assuming the response is an array with one object
 
-        updatedCart.push({
-          VariantID: variantDetails.VariantID,
-          VariantName: variantDetails.VariantName,
-          Price: variantDetails.Price,
-          Quantity: item.quantity,
-          ImageLink: variantDetails.ImageLink,
-        });
+        for (const item of cart) {
+          const response = await axios.post("/api/UnRegCart", {
+            VariantID: item.VariantID,
+          });
+
+          const variantDetailsArray = response.data;
+          const variantDetails = variantDetailsArray[0]; // Assuming the response is an array with one object
+
+          updatedCart.push({
+            VariantID: variantDetails.VariantID,
+            VariantName: variantDetails.VariantName,
+            Price: variantDetails.Price,
+            Quantity: item.quantity,
+            ImageLink: variantDetails.ImageLink,
+          });
         }
-  
+
         console.log("Cart data:=", updatedCart);
-        setData(updatedCart);
+        setData(updatedCart); // Update state with cart items for unregistered users
       }
     } catch (err) {
       console.error("Error fetching data:", err);
@@ -124,45 +77,30 @@ export default function CartPage() {
     fetchData();
   }, []);
 
-
-
   const removeFromCart = async (id: number) => {
     try {
       if (isRegistered) {
-        const response = await fetch("/api/setCart", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ op: "remove", VariantID: id, cartId }),
+        const response = await axios.post("/api/setCart", {
+          op: "remove",
+          VariantID: id,
         });
-  
-        if (!response.ok) {
-          throw new Error("Failed to remove product from cart");
-        }
-  
+
         console.log(`Removed item with id: ${id}`);
         fetchData();
       } else {
-        // Retrieve the current cart from localStorage
-        const cart = JSON.parse(localStorage.getItem('internalCart') || '[]');
-  
-        // Find the item in the cart
+        // Handle unregistered users' cart
+        const cart = JSON.parse(localStorage.getItem("internalCart") || "[]");
+
         const itemIndex = cart.findIndex((item: any) => item.VariantID === id);
-  
+
         if (itemIndex !== -1) {
-          // If the item exists, decrease the quantity
           cart[itemIndex].quantity -= 1;
-  
-          // If the quantity becomes 0, remove the item from the cart
           if (cart[itemIndex].quantity === 0) {
             cart.splice(itemIndex, 1);
           }
         }
-  
-        // Save the updated cart back to localStorage
-        localStorage.setItem('internalCart', JSON.stringify(cart));
-  
+
+        localStorage.setItem("internalCart", JSON.stringify(cart));
         console.log(`Removed item with id: ${id} from internal cart`);
         fetchData();
       }
@@ -174,45 +112,61 @@ export default function CartPage() {
   const addToCart = async (id: number) => {
     try {
       if (isRegistered) {
-        const response = await fetch("/api/setCart", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ op: "add", VariantID: id, cartId }),
+        const response = await axios.post("/api/setCart", {
+          op: "add",
+          VariantID: id,
         });
-  
-        if (!response.ok) {
-          throw new Error("Failed to add product to cart");
-        }
-  
+
         console.log(`Added to cart: ${id}`);
         fetchData();
       } else {
-        // Retrieve the current cart from localStorage
-        const cart = JSON.parse(localStorage.getItem('internalCart') || '[]');
-  
-        // Find the item in the cart
+        // Handle unregistered users' cart
+        const cart = JSON.parse(localStorage.getItem("internalCart") || "[]");
+
         const itemIndex = cart.findIndex((item: any) => item.VariantID === id);
-  
+
         if (itemIndex !== -1) {
-          // If the item exists, increase the quantity
           cart[itemIndex].quantity += 1;
         } else {
-          // If the item does not exist, add it with quantity 1
           cart.push({ VariantID: id, quantity: 1 });
-          
         }
-  
-        // Save the updated cart back to localStorage
-        localStorage.setItem('internalCart', JSON.stringify(cart));
-  
+
+        localStorage.setItem("internalCart", JSON.stringify(cart));
         console.log(`Added to internal cart: ${id}`);
         fetchData();
       }
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
+  };
+
+  //onclick remove all items from cart
+  const removeAll = async () => {
+    try {
+      if (isRegistered) {
+        const response = await axios.post("/api/setCart", {
+          op: "removeAll",
+        });
+
+        console.log("Removed all items from cart");
+        fetchData();
+      } else {
+        // Handle unregistered users' cart
+        localStorage.removeItem("internalCart");
+        console.log("Removed all items from internal cart");
+        fetchData();
+      }
+    } catch (error) {
+      console.error("Error removing all items from cart:", error);
+    }
+  };
+
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setAddress((prevAddress) => ({
+      ...prevAddress,
+      [name]: value,
+    }));
   };
 
   const placeOrder = async () => {
@@ -222,26 +176,14 @@ export default function CartPage() {
     const AddressID = 1; // Replace with the actual Address ID
 
     try {
-      const response = await fetch("/api/placeOrder", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userid,
-          cartId,
-          DeliveryType,
-          PaymentMethod,
-          AddressID,
-        }),
+      const response = await axios.post("/api/placeOrder", {
+        userid,
+        DeliveryType,
+        PaymentMethod,
+        AddressID,
       });
 
-      if (!response.ok) {
-        throw new Error("Failed to place order");
-      }
-
-      const result = await response.json();
-      console.log("Order placed successfully:", result);
+      console.log("Order placed successfully:", response.data);
     } catch (error) {
       console.error("Error placing the order:", error);
     }
@@ -256,28 +198,28 @@ export default function CartPage() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row bg-[#1f2021] min-h-screen">
+    <div className="flex flex-col md:flex-row  min-h-screen">
       <div className="w-full md:w-2/3 p-8">
-        <h2 className="text-3xl font-bold mb-4 text-white">Shopping Cart</h2>
-        <h3 className="text-lg text-gray-400">{data.length} items</h3>
-        <div className="bg-[#2c2f32] shadow-md rounded-lg p-4 mt-4">
+        <h2 className="text-3xl font-bold mb-4 text-black">Shopping Cart</h2>
+        <h3 className="text-lg text-gray-700">{data.length} items</h3>
+        <div className="bg-white shadow-md rounded-lg p-4 mt-4">
           {data.length > 0 ? (
             data.map((item) => (
               <div
                 key={item.VariantID}
-                className="flex items-center justify-between border border-gray-600 py-2 px-4 mb-2 rounded-lg bg-white"
+                className="flex items-center justify-between border border-black py-2 px-4 mb-2 rounded-lg bg-white shadow-xl"
               >
                 <div className="flex items-center w-1/3">
                   <img
                     src={item.ImageLink}
                     alt={item.VariantName}
-                    className="w-16 h-16 object-cover mr-4"
+                    className="w-16 h-16 object-cover mr-4 rounded-lg"
                   />
                   <h4 className="font-semibold text-black">{item.VariantName}</h4>
                 </div>
                 <div className="flex items-center w-1/3 justify-center">
                   <button
-                    className="px-2 bg-[#3c4144] text-white rounded-lg hover:bg-[#4d5255]"
+                    className="px-2 bg-[#004581] text-white rounded-lg hover:bg-[#018ABD]"
                     onClick={() => removeFromCart(item.VariantID)}
                   >
                     -
@@ -285,42 +227,45 @@ export default function CartPage() {
                   <input
                     type="number"
                     value={item.Quantity}
-                    className="w-12 text-center bg-[#3c4144] text-white border border-gray-600 rounded-lg mx-2"
+                    className="w-12 text-center bg-[#004581] text-white border border-gray-300 rounded-lg mx-2"
                     readOnly
                   />
                   <button
-                    className="px-2 bg-[#3c4144] text-white rounded-lg hover:bg-[#4d5255]"
+                    className="px-2 bg-[#004581] text-white rounded-lg hover:bg-[#018ABD]"
                     onClick={() => addToCart(item.VariantID)}
                   >
                     +
                   </button>
                 </div>
                 <div className="flex items-center w-1/3 justify-end">
-                  <span className="font-bold text-black">
-                    € {item.Price * item.Quantity}
-                  </span>
-                  <button
-                    className="ml-4 text-red-500 hover:text-red-400"
+                    <span className="font-bold text-black">
+                    € {(item.Price * item.Quantity).toFixed(2)}
+                    </span>
+                    <button
+                    className="m-3 px-5 py-2 rounded-full border border-red-600 text-red-600 hover:bg-red-100 transition duration-300 shadow-md"
                     onClick={() => removeFromCart(item.VariantID)}
-                  >
+                    >
                     X
-                  </button>
+                    </button>
                 </div>
               </div>
             ))
           ) : (
-            <p className="text-gray-400">Your cart is empty</p>
+            <p className="text-gray-700">Your cart is empty</p>
           )}
           <div className="flex justify-between mt-4">
             <button
-              className="text-blue-400 hover:text-blue-300"
+              className="px-6 py-2 bg-[#004581] text-white rounded-md hover:bg-[#018ABD] transition duration=300 shadow-md"
               onClick={() => (window.location.href = "/shop")}
             >
               Back to shop
             </button>
             <button
-              className="text-red-400 hover:text-red-300"
-              onClick={() => setData([])}
+              className="px-6 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-100 transition duration-300 shadow-md"
+              onClick={() => {
+                setData([]);
+                removeAll();
+              }}
             >
               Remove all
             </button>
@@ -328,34 +273,79 @@ export default function CartPage() {
         </div>
       </div>
 
-      <div className="w-full md:w-1/3 bg-[#2c2f32] p-8 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-4 text-white">Summary</h2>
-        <div className="flex justify-between mb-2 text-white">
+
+      <div className="w-full md:w-1/3 p-8 rounded-lg shadow-2xl bg-white">
+        <h2 className="text-2xl font-bold mb-4 text-black">Summary</h2>
+        <div className="flex justify-between mb-2 text-black">
           <span>ITEMS</span>
           <span>
             €{" "}
-            {data.reduce(
-              (total, item) => total + item.Price * item.Quantity,
-              0
-            )}
+            {data
+              .reduce((total, item) => total + item.Price * item.Quantity, 0)
+              .toFixed(2)}
           </span>
         </div>
-        <div className="flex justify-between mb-4 text-white">
+        <div className="flex justify-between mb-4 text-black">
           <span>SHIPPING</span>
           <span>Standard Delivery - € 5.00</span>
         </div>
-        <div className="flex justify-between font-bold text-white">
+        <div className="flex justify-between font-bold text-black">
           <span>TOTAL PRICE</span>
           <span>
             €{" "}
-            {data.reduce(
-              (total, item) => total + item.Price * item.Quantity,
-              0
-            ) + 5.0}
+            {(
+              data.reduce(
+                (total, item) => total + item.Price * item.Quantity,
+                0
+              ) + 5.0
+            ).toFixed(2)}
           </span>
         </div>
+        <div className="mt-4 mb-2">
+          <h3 className="text-lg font-bold text-black">Delivery Address</h3>
+          <input
+            type="text"
+            name="addressNo"
+            value={address.addressNo}
+            onChange={handleAddressChange}
+            placeholder="addressNo"
+            className="mt-3 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
+            />
+            <input
+            type="text"
+            name="lane"
+            value={address.lane}
+            onChange={handleAddressChange}
+            placeholder="Lane"
+            className="mt-3 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
+            />
+          <input
+            type="text"
+            name="postalCode"
+            value={address.postalCode}
+            onChange={handleAddressChange}
+            placeholder="Postal Code"
+            className="mt-3 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
+            />
+        </div>
+        <div className="mt-4">
+          <label htmlFor="city" className="block text-black font-bold mb-2">
+            Select City
+          </label>
+          <select
+            id="city"
+            value={selectedCity}
+            onChange={(e) => setSelectedCity(e.target.value)}
+            className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
+            >
+            <option value="">Select a city</option>
+            <option value="City1">City1</option>
+            <option value="City2">City2</option>
+            <option value="City3">City3</option>
+          </select>
+        </div>
         <button
-          className="bg-green-500 text-white p-2 rounded-lg w-full mt-4 hover:bg-green-400"
+          className="bg-[#004581] text-white p-2 rounded-lg w-full mt-4 hover:bg-[#018ABD]"
           onClick={placeOrder}
         >
           Place Order

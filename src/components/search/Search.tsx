@@ -30,7 +30,7 @@ const SearchComponent = () => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder="Search products"
-        className="h-12 pl-5 text-sm text-white placeholder-white transition-all duration-300 ease-in-out transform rounded-full shadow-lg min-w-48 pr-14 bg-gradient-to-r from-gray-500 via-gray-500 to-gray-500 focus:outline-none focus:ring-2"
+        className="h-12 pl-5 text-sm text-white placeholder-white transition-all duration-300 ease-in-out transform rounded-full shadow-lg min-w-48 pr-14 bg-gradient-to-r from-[#004581] via-[#018ABD] to-[#97CBDC] focus:outline-none focus:ring-2"
       />
       <svg
         className="absolute w-6 h-6 text-gray-300 pointer-events-none right-4"

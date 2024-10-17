@@ -1,25 +1,21 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getCart } from "@/models/cartAction";
+import { getDataFromToken } from "@/helpers/getDataFromToken";
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
   try {
-    const reqBody = await request.json();
-    const { id } = reqBody;
+      // Extract token and decode it to get the userId
+      const token = request.cookies.get("token")?.value || "";
+      if (!token) {
+        throw new Error("No token found from backend");
+      }
+  
+      const userId = await getDataFromToken(request);
+      const cartItems = await getCart(userId);
 
-    // get cart details
-    const cartDetails = await getCart(id);
-    if (!cartDetails) {
-      return NextResponse.json(
-        { message: "Cart Empty !" },
-        { status: 409 }
-      );
-    }
-
-    return NextResponse.json(cartDetails);
-    
-
+      return NextResponse.json(cartItems);
   } catch (error: any) {
-      console.log("🚀 ~ POST ~ error:", error)
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      console.error("Error fetching cart:", error);
+      return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }

@@ -58,29 +58,29 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen">
       {/* Outer container with sidebar and form content */}
       <div className="flex w-4/5 max-w-3xl bg-white rounded-lg shadow-xl justify-items-center">
         {/* Sidebar */}
-        <div className="flex flex-col justify-between w-1/3 p-8 text-gray-800 bg-gray-200 rounded-l-lg">
+        <div className="flex flex-col justify-between w-1/3 p-8 text-black bg-[#97CBDC] rounded-l-lg">
           <div>
             <h2 className="mb-5 text-3xl font-bold">Login</h2>
-            <p className="mb-6 text-gray-600">
-            Welcome back!
+            <p className="mb-6 text-black">
+              Welcome back!
               <br />
               <br />
               <Image src="/login.jpg" alt="Login Image" className="object-cover rounded-full" width={150} height={150} />
             </p>
             <h2 className="mb-2 text-2xl font-bold">SHOPZY</h2>
-            <p className="mb-6 text-gray-600">
-            Where fun meets innovation!.
+            <p className="mb-6 text-black">
+              Where fun meets innovation!
             </p>
           </div>
           {/* Persistent "Don't have an account?" link */}
           <div className="mt-6">
             <Link
               href="/signup"
-              className="text-gray-600 hover:underline text-[14px]"
+              className="text-black hover:underline text-[14px]"
             >
               Don&apos;t have an account? Sign up here
             </Link>
@@ -100,7 +100,7 @@ const LoginPage = () => {
           >
             <form className="w-full p-8 space-y-6" onSubmit={handleSubmit(onLogin)}>
               <div>
-                <label className="block text-sm font-medium text-gray-600">
+                <label className="block text-sm font-medium text-black">
                   Email
                 </label>
                 <input
@@ -108,7 +108,7 @@ const LoginPage = () => {
                   {...register("email", {
                     required: "Email is required",
                   })}
-                  className="w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                  className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                 />
                 {errors.email && (
                   <p className="mt-1 text-sm text-red-500">
@@ -118,7 +118,7 @@ const LoginPage = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-600">
+                <label className="block text-sm font-medium text-black">
                   Password
                 </label>
                 <input
@@ -126,7 +126,7 @@ const LoginPage = () => {
                   {...register("password", {
                     required: "Password is required",
                   })}
-                  className=" w-full px-4 py-1.5 mt-0.8 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-400"
+                  className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                 />
                 {errors.password && (
                   <p className="mt-1 text-sm text-red-500">
@@ -138,7 +138,7 @@ const LoginPage = () => {
               <button
                 type="submit"
                 className={`w-full px-4 py-2 text-white rounded-md transition duration-300 ${
-                  loading ? "bg-gray-600" : "bg-gray-800 hover:bg-gray-600"
+                  loading ? "bg-[#97CBDC]" : "bg-[#004581] hover:bg-[#018ABD]"
                 }`}
                 disabled={loading}
               >
