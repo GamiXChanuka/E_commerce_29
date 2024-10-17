@@ -76,15 +76,15 @@ const SignupPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#DDE8F0]">
+    <div className="min-h-screen flex items-center justify-center ">
       <div className="bg-white rounded-lg shadow-xl w-4/5 max-w-3xl flex">
-        <div className="w-1/3 bg-[#004581] text-[#97CBDC] p-8 rounded-l-lg flex flex-col justify-between overflow-y-auto">
+        <div className="w-1/3 bg-[#97CBDC] text-[#000000] p-8 rounded-l-lg flex flex-col justify-between overflow-y-auto">
           <div>
-            <h2 className="text-3xl font-bold mb-8 text-white">Sign Up</h2>
+            <h2 className="text-3xl font-bold mb-8 text-black">Sign Up</h2>
             <ul className="space-y-5">
               <li
-                className={`flex items-center space-x-2 transition-colors duration-300  text-white ${
-                  currentStep === 0 ? "bg-[#018ABD]" : "hover:bg-[#97CBDC]"
+                className={`flex items-center space-x-2 transition-colors duration-300 text-black ${
+                  currentStep === 0 ? "shadow-2xl bg-[#DDE8F0]" : "hover:bg-[#97CBDC]"
                 } p-2 rounded-md cursor-pointer`}
                 onClick={() => setCurrentStep(0)}
               >
@@ -92,8 +92,8 @@ const SignupPage = () => {
                 <span>Welcome!</span>
               </li>
               <li
-                className={`flex items-center space-x-2 transition-colors duration-300  text-white ${
-                  currentStep === 1 ? "bg-[#018ABD]" : "hover:bg-[#97CBDC]"
+                className={`flex items-center space-x-2 transition-colors duration-300 text-black ${
+                  currentStep === 1 ? "shadow-2xl bg-[#DDE8F0]" : "hover:bg-[#97CBDC]"
                 } p-2 rounded-md cursor-pointer`}
                 onClick={() => setCurrentStep(1)}
               >
@@ -101,8 +101,8 @@ const SignupPage = () => {
                 <span>Personal Information</span>
               </li>
               <li
-                className={`flex items-center space-x-2 transition-colors duration-300  text-white ${
-                  currentStep === 2 ? "bg-[#018ABD]" : " hover:bg-[#97CBDC]"
+                className={`flex items-center space-x-2 transition-colors duration-300 text-black ${
+                  currentStep === 2 ? "shadow-2xl bg-[#DDE8F0]" : "hover:bg-[#97CBDC]"
                 } p-2 rounded-md cursor-pointer`}
                 onClick={() => setCurrentStep(2)}
               >
@@ -110,8 +110,8 @@ const SignupPage = () => {
                 <span>Set Your Password</span>
               </li>
               <li
-                className={`flex items-center space-x-2 transition-colors duration-300  text-white ${
-                  currentStep === 3 ? "bg-[#018ABD] " : " hover:bg-[#97CBDC]"
+                className={`flex items-center space-x-2 transition-colors duration-300 text-black ${
+                  currentStep === 3 ? "shadow-2xl bg-[#DDE8F0]" : "hover:bg-[#97CBDC]"
                 } p-2 rounded-md cursor-pointer`}
                 onClick={() => setCurrentStep(3)}
               >
@@ -123,7 +123,7 @@ const SignupPage = () => {
           <div className="mt-6">
             <Link
               href="/login"
-              className="text-[#97CBDC] hover:underline text-[14px]"
+              className="text-[#000000] hover:underline text-[14px]"
             >
               Do you have an account? Login here
             </Link>

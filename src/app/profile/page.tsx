@@ -113,7 +113,7 @@ const ProfilePage = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="flex min-h-screen bg-[#DDE8F0]">
+    <div className="flex min-h-screen bg-[#e6e7eb]">
       {/* Sidebar */}
 
 
@@ -158,7 +158,7 @@ const ProfilePage = () => {
       </aside>
 
       {/* Main Content */}
-      <div className="w-4/5 p-10 bg-white shadow-lg rounded-lg">
+      <div className="w-4/5 p-10 shadow-lg rounded-lg bg-white">
         <div className="flex justify-between mb-4 items-baseline">
           <h1 className="text-3xl font-semibold mb-2 text-[#004581]">
             Hello, <span className="p-12">{formData.userName} !!!!</span>{" "}
@@ -166,7 +166,7 @@ const ProfilePage = () => {
           {/* User Avatar */}
           <motion.img
             alt="User Avatar"
-            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+            src="./user.jpeg"
             className="rounded-full w-28 h-28 border border-[#018ABD] shadow-md hover:scale-105 transition-transform"
           />
         </div>
@@ -206,7 +206,7 @@ const ProfilePage = () => {
                   name={field.name}
                   value={formData[field.name as keyof FormFields]}
                   onChange={handleChange}
-                  className="mt-1 p-3 block w-full bg-white border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
+                  className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                   placeholder={`Enter your ${field.label.toLowerCase()}`}
                   // disable all fields
                   disabled
