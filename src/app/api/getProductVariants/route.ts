@@ -4,10 +4,10 @@ import { getProductVariants } from "@/models/getProductVariants";
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const { ProductCategoryID } = reqBody;
+    const { ProductID } = reqBody;
 
     // get cart details
-    const variantList = await getProductVariants(ProductCategoryID);
+    const variantList = await getProductVariants(ProductID);
     console.log("variant list ",variantList)
     if (!variantList) {
       return NextResponse.json(
