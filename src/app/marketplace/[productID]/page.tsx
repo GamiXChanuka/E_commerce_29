@@ -151,6 +151,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { FaShoppingCart } from "react-icons/fa";
 
 interface Variant {
   VariantID: number;
@@ -339,13 +340,14 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
             </div>
 
             <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-              <button
-                className="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-100 focus:outline-none bg-blue-500 rounded-lg border border-gray-200 hover:bg-blue-700 hover:text-primary-700  "
+                <button
+                className="bg-[#004581] text-white p-2 rounded-lg w-full mt-4 hover:bg-[#018ABD] flex justify-center items-center"
                 onClick={addToCart}
                 disabled={selectedVariant?.StockCount === 0}
-              >
-                Add to Cart
-              </button>
+                >
+                <span>Add to Cart&nbsp;&nbsp;</span>
+                <FaShoppingCart />
+                </button>
             </div>
           </div>
         </div>

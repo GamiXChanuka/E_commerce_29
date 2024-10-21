@@ -185,7 +185,8 @@ const MarketplacePage = () => {
                   <h2 className="text-lg font-semibold text-center text-gray-800 dark:text-gray-600">{product.Title}</h2>
                   <p className="text-center text-gray-600 dark:text-gray-500">Price: € {product.Price}</p>
                   <div className="flex justify-center mt-2">
-                    <button className="px-3 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700">
+                    <button className="bg-[#004581] text-white p-2 rounded-lg w-full mt-4 hover:bg-[#018ABD]"
+                    >
                       <Link href={`/marketplace/${product.ProductID}`} >View Product</Link>
                     </button>
                   </div>

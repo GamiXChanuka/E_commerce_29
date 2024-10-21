@@ -1,6 +1,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import bcryptjs from 'bcryptjs';
-import { createUser, getUserByEmail } from '@/models/userAction';
+import { createUser } from '@/models/userAction';
 
 export async function POST(request: NextRequest) {
     try {
@@ -19,15 +19,10 @@ export async function POST(request: NextRequest) {
             postalCode,
             district,
         } = reqBody;
+
         // Check if passwords match
         if (password !== confirmPassword) {
             return NextResponse.json({ message: 'Passwords do not match' }, { status: 400 });
-        }
-
-        // Check if the user already exists
-        const existingUser = await getUserByEmail(email);
-        if (existingUser) {
-            return NextResponse.json({ message: 'User already exists' }, { status: 409 });
         }
 
         // Hash the password
@@ -41,7 +36,7 @@ export async function POST(request: NextRequest) {
             userName,
             phoneNumber,
             email,
-            password: hashedPassword, // Store hashed password
+            password: hashedPassword, 
             addressNumber,
             lane,
             city,
@@ -57,7 +52,16 @@ export async function POST(request: NextRequest) {
             userId: newUser.userId,
             addressId: newUser.addressId,
         }, { status: 201 });
+
     } catch (error: any) {
-        return NextResponse.json({ message: 'Make sure you fill all the feilds' }, { status: 500 });
+        console.log('Error creating user:', error);
+
+        if (error.sqlState === '45000') {
+            return NextResponse.json({message: error.message }, { status: 400 });
+        } else if (error.sqlState === '45001') {
+            return NextResponse.json({message: error.message  }, { status: 400 });
+        }
+
+        return NextResponse.json({ message: error.message }, { status: 500 });
     }
 }

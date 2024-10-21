@@ -66,3 +66,48 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE GetUserNameByID(IN userId INT)
+BEGIN
+    -- Check if the user exists
+    DECLARE user_exists INT;
+
+    SELECT COUNT(*) INTO user_exists
+    FROM User
+    WHERE UserID = userId;
+
+    IF user_exists = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'You are not a registered customer';
+    ELSE
+        SELECT 
+            registeredcustomer.UserName
+        FROM User
+        JOIN RegisteredCustomer ON User.UserID = RegisteredCustomer.UserID
+        WHERE User.UserID = userId;
+    END IF;
+END $$
+DELIMITER ;
+
+DELIMITER $$
+CREATE PROCEDURE `GetUserByEmail`(IN inputEmail VARCHAR(255))
+BEGIN
+    -- Check if the user exists
+    DECLARE user_exists INT;
+
+    -- Check if email exists in RegisteredCustomer table
+    SELECT COUNT(*) INTO user_exists
+    FROM RegisteredCustomer
+    WHERE Email = inputEmail;
+
+    -- If no user is found, raise an error
+    IF user_exists = 0 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'User email is incorrect';
+    ELSE
+        -- Fetch user details if the email exists
+        SELECT * 
+        FROM RegisteredCustomer
+        WHERE Email = inputEmail;
+    END IF;
+END$$
+DELIMITER ;

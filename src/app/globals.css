@@ -64,7 +64,7 @@
     border: var(--border);
   }
   body {
-    background: black;
+    background: #e6e7eb;
     color: var(--foreground);
   }
 }

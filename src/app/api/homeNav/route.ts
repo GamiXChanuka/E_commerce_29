@@ -13,11 +13,13 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "No token found" }, { status: 401 });
     }
     const userId = await getDataFromToken(request);
-    const Username = await getUserNameById(userId);
-    if (!Username) {
+    console.log("🚀 ~ GET ~ userId:", userId)
+    const UserName = await getUserNameById(userId);
+    console.log("🚀 ~ GET ~ UserName:", UserName)
+    if (!UserName) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
-    return NextResponse.json( { username:Username }, { status: 200 } );
+    return NextResponse.json( { username:UserName }, { status: 200 } );
   } catch (error) {
     console.error("Error fetching user data:", error);
     return NextResponse.json(

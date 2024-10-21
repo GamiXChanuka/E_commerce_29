@@ -85,4 +85,37 @@ $$
 DELIMITER ;
 
 
+DELIMITER $$
+
+CREATE TRIGGER BeforeInsertRegisteredCustomer
+BEFORE INSERT ON RegisteredCustomer
+FOR EACH ROW
+BEGIN
+    -- Check if the email already exists
+    IF (EXISTS (SELECT 1 FROM RegisteredCustomer WHERE Email = NEW.Email)) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Email already exists';
+    END IF;
+
+    -- Check if the username already exists
+    IF (EXISTS (SELECT 1 FROM RegisteredCustomer WHERE UserName = NEW.UserName)) THEN
+        SIGNAL SQLSTATE '45001'
+        SET MESSAGE_TEXT = 'Username already exists';
+    END IF;
+END $$
+
+DELIMITER ;
+
+DELIMITER $$
+
+CREATE TRIGGER AfterInsertRegisteredCustomer
+AFTER INSERT ON RegisteredCustomer
+FOR EACH ROW
+BEGIN
+    -- Insert a new cart for the newly registered user
+    INSERT INTO Cart (UserID)
+    VALUES (NEW.UserID);
+END $$
+
+DELIMITER ;
 

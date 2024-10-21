@@ -60,6 +60,14 @@ export async function setCart(op, VariantID, cartId) {
       }
       return { success: true, status: 200 }; // Return a response after successful removal
     }
+
+    //delete all items from cart
+    else if (op === "removeAll") {
+      await pool.execute(`
+        DELETE FROM CartItem WHERE CartID = ?
+      `, [cartId]);
+      return { success: true, status: 200 }; // Return a response after successful deletion
+    }
   } catch (error) {
     console.error('Error in cart operation:', error);
     return { error: 'Failed to perform cart operation', status: 500 };
