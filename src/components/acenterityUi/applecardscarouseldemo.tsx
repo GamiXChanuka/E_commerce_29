@@ -10,7 +10,7 @@ export function AppleCardsCarouselDemo() {
 
   return (
     <div className="w-full h-full py-20">
-      <h2 className="pl-4 mx-auto font-sans text-xl font-bold max-w-7xl md:text-5xl text-neutral-800 dark:text-neutral-200">
+      <h2 className="pl-4 mx-auto font-sans text-xl font-bold max-w-7xl md:text-5xl text-neutral-800 ">
         Get to know your Shopzy.
       </h2>
       <Carousel items={cards} />
@@ -25,7 +25,7 @@ const DummyContent = () => {
         return (
           <div
             key={"dummy-content" + index}
-            className="bg-[#F5F5F7] dark:bg-neutral-800 p-8 md:p-14 rounded-3xl mb-4"
+            className="bg-[#F5F5F7]  p-8 md:p-14 rounded-3xl mb-4"
           >
             <p className="max-w-3xl mx-auto font-sans text-base text-neutral-600 dark:text-neutral-400 md:text-2xl">
               <span className="font-bold text-neutral-700 dark:text-neutral-200">
