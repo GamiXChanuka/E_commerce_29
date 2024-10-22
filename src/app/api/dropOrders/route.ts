@@ -5,12 +5,12 @@ export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const { orderId } = reqBody;
+    console.log("🚀 ~ POST ~ orderId", orderId);
+    // Drop order
+    const message = await dropOrder(orderId);
 
-    // place order
-    await dropOrder(orderId);
-
-    // return success response
-    return NextResponse.json({ message: "Order dropped successfully!" }, { status: 200 });
+    // Return success response
+    return NextResponse.json({ message }, { status: 200 });
 
   } catch (error: any) {
     console.log("🚀 ~ POST ~ error:", error);

@@ -5,3 +5,64 @@ Content-Type: application/json
 {
   "ProductCategoryID": 1
 }
+
+### Place Order
+POST http://localhost:3000/api/placeOrder
+Content-Type: application/json
+
+{
+  "userid": 1,
+  "cartId": 1,
+  "DeliveryType": "delivery",
+  "PaymentMethod": "COD",
+  "AddressID": 1
+}
+
+### Drop Order
+POST http://localhost:3000/api/dropOrders
+Content-Type: application/json
+
+{
+  "orderId": 4
+}
+### Get Orders
+POST http://localhost:3000/api/getOrders
+Content-Type: application/json
+
+{
+  "userId": 1
+}
+### Get Product Attribute
+POST http://localhost:3000/api/getAttribute
+Content-Type: application/json
+
+{
+  "VariantID": 1
+}
+
+### Get Product Variants
+POST http://localhost:3000/api/getProductVariants
+Content-Type: application/json
+
+{
+  "ProductID": 1
+}
+
+### Get Variant
+POST http://localhost:3000/api/UnRegCart
+Content-Type: application/json
+
+{
+  "VariantID": 1
+}
+
+
+### Set Cart Item
+POST http://localhost:3000/api/unRegSetCart
+Content-Type: application/json
+
+{
+  "VariantID": 1,
+  "cartId": 1,
+  "quantity": 2
+}

@@ -7,10 +7,18 @@ export async function POST(request: NextRequest) {
     const { userid, cartId, DeliveryType, PaymentMethod, AddressID } = reqBody;
 
     // place order
-    await placeOrder(userid, cartId, DeliveryType, PaymentMethod, AddressID);
+    const result: { success?: string; error?: string; status: number } = await placeOrder(userid, cartId, DeliveryType, PaymentMethod, AddressID);
 
-    // return success response
-    return NextResponse.json({ message: "Order placed successfully!" }, { status: 200 });
+    // Return the appropriate response
+    if (result && 'error' in result) {
+      return NextResponse.json({ error: result.error }, { status: result.status });
+    } else {
+      if (result) {
+        return NextResponse.json({ success: result.success }, { status: result.status });
+      } else {
+        return NextResponse.json({ error: "Unknown error" }, { status: 500 });
+      }
+    }
 
   } catch (error: any) {
     console.log("🚀 ~ POST ~ error:", error);

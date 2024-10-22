@@ -2,18 +2,21 @@ import pool from '../lib/dbConfig';
 
 export async function getVariant(VariantID) {
     try {
-      console.log("Using connection pool");
-  
-      const [rows] = await pool.execute(
-        `select v.VariantID,v.VariantName, v.Price,i.ImageLink
-        from Variant v left outer join image i on v.VariantID = i.VariantID
-        where v.VariantID= ?;`,
-        [`${VariantID}`]
-      );
+        console.log("Using connection pool");
 
-      console.log(rows);
-      return rows;
+        // Call the stored procedure
+        const [rows] = await pool.execute(`CALL GetVariant(?)`, [VariantID]);
+        console.log(rows);
+
+        // Check if the result contains an error message
+        const message = rows[0][0]?.message;
+        if (message && message.includes('Error')) {
+            throw new Error(message);
+        }
+
+        return rows[0];
     } catch (error) {
-      throw new Error(error.message);
+        console.error('Error fetching variant details:', error);
+        throw new Error('Failed to fetch variant details');
     }
-  }
+}

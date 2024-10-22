@@ -1,16 +1,14 @@
-
 import { NextResponse, NextRequest } from "next/server";
 import { unRegSetCart } from "@/models/unRegSetCartAction";
 
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
-    const {  VariantID, cartId ,quantity } = reqBody;
+    const { VariantID, cartId, quantity } = reqBody;
     console.log("🚀 ~ POST ~ reqBody", reqBody);
-    
 
     // Perform cart operation
-    const result = await unRegSetCart( VariantID, cartId, quantity);
+    const result = await unRegSetCart(VariantID, cartId, quantity);
 
     // Return the appropriate response
     if (result && result.error) {

@@ -6,20 +6,18 @@ export async function POST(request: NextRequest) {
     const reqBody = await request.json();
     const { VariantID } = reqBody;
 
-    // get cart details
+    // get variant details
     const variantDetails = await getVariant(VariantID);
-    if (!variantDetails) {
+    if (!variantDetails || variantDetails.length === 0) {
       return NextResponse.json(
-        { message: "Cart Empty !" },
+        { message: "Variant not found!" },
         { status: 409 }
       );
     }
 
     return NextResponse.json(variantDetails);
-    
-
   } catch (error: any) {
-      console.log("🚀 ~ POST ~ error:", error)
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    console.log("🚀 ~ POST ~ error:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

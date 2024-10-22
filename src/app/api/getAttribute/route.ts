@@ -6,21 +6,19 @@ export async function POST(request: NextRequest) {
     const reqBody = await request.json();
     const { VariantID } = reqBody;
 
-    // get cart details
+    // get product attributes
     const variantAttribute = await getProductAttribute(VariantID);
-    console.log("variant attribute ",variantAttribute)
-    if (!variantAttribute) {
+    console.log("variant attribute ", variantAttribute);
+    if (!variantAttribute || variantAttribute.length === 0) {
       return NextResponse.json(
-        { message: "No attributes " },
+        { message: "No attributes found" },
         { status: 409 }
       );
     }
 
     return NextResponse.json(variantAttribute);
-    
-
   } catch (error: any) {
-      console.log("🚀 ~ POST ~ error:", error)
-      return NextResponse.json({ error: error.message }, { status: 500 });
+    console.log("🚀 ~ POST ~ error:", error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
