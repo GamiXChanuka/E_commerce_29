@@ -2,15 +2,25 @@ import pool from '../lib/dbConfig';
 
 export async function dropOrder(orderId) {
     try {
-      console.log("Using connection pool");
-  
-      await pool.execute(
-        `DELETE FROM \`Order\` WHERE OrderID = ? `,
-        [`${orderId}`]
-      );
+        console.log("Using connection pool");
 
-        console.log(`Order with OrderID ${orderId} has been deleted`);
+        // Call the stored procedure
+        const [result] = await pool.execute(
+            `CALL DropOrder(?)`,
+            [orderId]
+        );
+
+        // Extract the message from the result
+        const message = result[0][0].message;
+
+        if (message.includes('Error')) {
+            throw new Error(message);
+        } else {
+            console.log(message);
+            return message;
+        }
     } catch (error) {
-      throw new Error(error.message);
+        console.error('Error dropping order:', error);
+        throw new Error('Failed to drop order');
     }
-  }
+}

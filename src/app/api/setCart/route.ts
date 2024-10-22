@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     const cartId = await getCartId(userId);
     console.log("🚀 ~ POST ~ reqBody", reqBody);
     
-
+    console.log("Cart", cartId);
     // Perform cart operation
     const result = await setCart(op, VariantID, cartId);
 

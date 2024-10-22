@@ -1,4 +1,3 @@
-
 import pool from '../lib/dbConfig';
 
 export async function setCart(op, VariantID, cartId) {
@@ -6,67 +5,25 @@ export async function setCart(op, VariantID, cartId) {
   console.log(op, VariantID, cartId);
 
   try {
+    let result;
     if (op === "add") {
-      // Fetch the variant (product) from the database using VariantID
-      const [rows] = await pool.execute(`
-        SELECT * FROM Variant WHERE VariantID = ?
-      `, [VariantID]);
-      console.log("rows ", rows);
-
-      // Check if the variant exists
-      if (rows.length === 0) {
-        return { error: 'Product variant not found', status: 404 };
-      }
-
-      const [rows2] = await pool.execute(`
-        SELECT * FROM CartItem WHERE VariantID = ? and CartID = ?
-      `, [VariantID, cartId]);
-      console.log("rows2 ", rows2);
-
-      // If the product variant is not already in the cart, add it
-      if (rows2.length === 0) {
-        const product = rows[0];  // Get product details from the query
-
-        // Insert the product variant into the CartItem table
-        const query = 'INSERT INTO CartItem (VariantID, CartID, Quantity) VALUES (?, ?, ?)';
-        await pool.execute(query, [
-          product.VariantID,
-          cartId,
-          1, // Start with quantity 1
-        ]);
-        console.log(`Added to cart: ${product.VariantID}`);
-        return { success: true, status: 200 };
-
-      } else {
-        // If the product variant is already in the cart, update the quantity
-        const query = 'UPDATE CartItem SET Quantity = Quantity + 1 WHERE VariantID = ? and CartID = ?';
-        await pool.execute(query, [VariantID, cartId]);
-        return { success: true, status: 200 };
-      }
-
+      // Call the stored procedure for adding to cart
+      [result] = await pool.execute(`CALL AddToCart(?, ?)`, [VariantID, cartId]);
     } else if (op === "remove") {
-      // Remove the product variant from the cart
-      const [rows2] = await pool.execute(`
-        SELECT * FROM CartItem WHERE VariantID = ? and CartID = ?
-      `, [VariantID, cartId]);
-
-      if (rows2[0].Quantity > 1) {
-        const query = 'UPDATE CartItem SET Quantity = Quantity - 1 WHERE VariantID = ? and CartID = ?';
-        await pool.execute(query, [VariantID, cartId]);
-      } else {
-        await pool.execute(`
-          DELETE FROM CartItem WHERE VariantID = ? and CartID = ?
-        `, [VariantID, cartId]);
-      }
-      return { success: true, status: 200 }; // Return a response after successful removal
+      // Call the stored procedure for removing from cart
+      [result] = await pool.execute(`CALL RemoveFromCart(?, ?)`, [VariantID, cartId]);
+    } else if (op === "removeAll") {
+      // Call the stored procedure for removing all from cart
+      [result] = await pool.execute(`CALL RemoveAllFromCart(?)`, [cartId]);
     }
 
-    //delete all items from cart
-    else if (op === "removeAll") {
-      await pool.execute(`
-        DELETE FROM CartItem WHERE CartID = ?
-      `, [cartId]);
-      return { success: true, status: 200 }; // Return a response after successful deletion
+    // Extract the message from the result
+    const message = result[0][0].message;
+    console.log(message);
+    if (message.includes('Error')) {
+      return { error: message, status: 500 };
+    } else {
+      return { success: message, status: 200 };
     }
   } catch (error) {
     console.error('Error in cart operation:', error);

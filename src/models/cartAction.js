@@ -4,31 +4,34 @@ export async function getCart(userId) {
     try {
         console.log("Using connection pool");
 
-        // Combined query to get CartID and related cart items using UserID
+        // Call the stored procedure
         const [rows] = await pool.execute(
-            `SELECT ci.*, v.VariantName, v.Price, i.ImageLink
-             FROM CartItem ci
-             JOIN Cart c ON ci.CartID = c.CartID
-             JOIN Variant v ON ci.VariantID = v.VariantID
-             JOIN Product p ON v.ProductID = p.ProductID
-             JOIN Image i ON i.VariantID = v.VariantID
-             WHERE c.UserID = ?`, 
+            `CALL GetCart(?)`, 
             [userId]
         );
 
-        console.log(rows);
-        return rows;
+        console.log("rows ca ",rows);
+        return rows[0];
     } catch (error) {
         console.log("Error fetching cart:", error.message);
-    }}
+        throw error;
+    }
+}
 
 
 //get cart id by user id
 export async function getCartId(userId) {
     try {
-        const [rows] = await pool.execute('SELECT CartID FROM Cart WHERE UserID = ?', [userId]);
-        return rows[0].CartID;
+        // Call the stored procedure
+        const [rows] = await pool.execute('CALL GetCartId(?)', [userId]);
+        console.log("rows cart id", rows);
+
+        // Extract the CartID from the nested array structure
+        const cartId = rows[0][0].CartID;
+
+        return cartId;
     } catch (error) {
+        console.log("Error fetching cart ID:", error.message);
         throw error;
     }
 }

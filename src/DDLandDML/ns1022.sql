@@ -1,10 +1,10 @@
-CREATE DATABASE  IF NOT EXISTS `ecommerce3` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `ecommerce2`;
--- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `ecommerce4` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `ecommerce4`;
+-- MySQL dump 10.13  Distrib 8.0.38, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: ecommerce2
+-- Host: 127.0.0.1    Database: ecommerce4
 -- ------------------------------------------------------
--- Server version	8.0.37
+-- Server version	9.0.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -32,7 +32,7 @@ CREATE TABLE `address` (
   `PostalCode` varchar(10) DEFAULT NULL,
   `District` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`AddressID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `address` (
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
-INSERT INTO `address` VALUES (1,'123','Main St','New York','10001','Manhattan'),(2,'456','Elm St','Los Angeles','90001','Downtown'),(3,'789','Maple Ave','Chicago','60601','Loop'),(4,'123','Main St','New York','10001','Manhattan'),(5,'456','Elm St','Los Angeles','90001','Downtown'),(6,'789','Maple Ave','Chicago','60601','Loop'),(7,'2','1st lane','colombo','1010','Colombo');
+INSERT INTO `address` VALUES (1,'1','suboda road','Moratuwa','12345','Colombo');
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,7 +180,7 @@ CREATE TABLE `cartitem` (
 
 LOCK TABLES `cartitem` WRITE;
 /*!40000 ALTER TABLE `cartitem` DISABLE KEYS */;
-INSERT INTO `cartitem` VALUES (1,1,3),(2,1,3),(3,1,4),(4,1,3),(7,1,3),(8,1,1),(9,1,2);
+INSERT INTO `cartitem` VALUES (1,1,2);
 /*!40000 ALTER TABLE `cartitem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -228,7 +228,7 @@ CREATE TABLE `deliverymodule` (
   KEY `AddressID` (`AddressID`),
   CONSTRAINT `deliverymodule_ibfk_1` FOREIGN KEY (`OrderID`) REFERENCES `order` (`OrderID`),
   CONSTRAINT `deliverymodule_ibfk_2` FOREIGN KEY (`AddressID`) REFERENCES `address` (`AddressID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,7 +237,6 @@ CREATE TABLE `deliverymodule` (
 
 LOCK TABLES `deliverymodule` WRITE;
 /*!40000 ALTER TABLE `deliverymodule` DISABLE KEYS */;
-INSERT INTO `deliverymodule` VALUES (1,41,'2023-09-05',1),(2,42,'2023-09-06',2);
 /*!40000 ALTER TABLE `deliverymodule` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -288,7 +287,7 @@ CREATE TABLE `order` (
   KEY `AddressID` (`AddressID`),
   CONSTRAINT `order_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`),
   CONSTRAINT `order_ibfk_2` FOREIGN KEY (`AddressID`) REFERENCES `address` (`AddressID`)
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -297,7 +296,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (41,1,'2024-10-01','delivery','card',1999.98,1),(42,1,'2024-10-02','delivery','card',2074.95,1),(45,1,'2024-10-07','delivery','card',12999.87,1);
+INSERT INTO `order` VALUES (5,1,'2024-10-22','delivery','COD',59.99,1);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -396,7 +395,7 @@ CREATE TABLE `orderitem` (
 
 LOCK TABLES `orderitem` WRITE;
 /*!40000 ALTER TABLE `orderitem` DISABLE KEYS */;
-INSERT INTO `orderitem` VALUES (41,1,2),(42,1,2),(42,6,3),(45,1,13);
+INSERT INTO `orderitem` VALUES (5,5,1);
 /*!40000 ALTER TABLE `orderitem` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -545,9 +544,55 @@ CREATE TABLE `registeredcustomer` (
 
 LOCK TABLES `registeredcustomer` WRITE;
 /*!40000 ALTER TABLE `registeredcustomer` DISABLE KEYS */;
-INSERT INTO `registeredcustomer` VALUES (1,'johndoe','john@example.com','password123',1),(2,'janesmith','jane@example.com','securepass',2),(7,'InduwaraB','abc@gmail.com','$2a$10$CGzOQOaykjGp.MuysbIdJetX7V3lVp8Se7VfX1H4B2YrpujSNvfO6',7);
+INSERT INTO `registeredcustomer` VALUES (1,'Naveen','forapikey6@gmail.com','$2a$10$xapUFuFG5nGG3thvEmNM8ujNXecxfnd6s/V6dsSrJ6jAEDBGQsCYG',1);
 /*!40000 ALTER TABLE `registeredcustomer` ENABLE KEYS */;
 UNLOCK TABLES;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `BeforeInsertRegisteredCustomer` BEFORE INSERT ON `registeredcustomer` FOR EACH ROW BEGIN
+    -- Check if the email already exists
+    IF (EXISTS (SELECT 1 FROM RegisteredCustomer WHERE Email = NEW.Email)) THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Email already exists';
+    END IF;
+
+    -- Check if the username already exists
+    IF (EXISTS (SELECT 1 FROM RegisteredCustomer WHERE UserName = NEW.UserName)) THEN
+        SIGNAL SQLSTATE '45001'
+        SET MESSAGE_TEXT = 'Username already exists';
+    END IF;
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `AfterInsertRegisteredCustomer` AFTER INSERT ON `registeredcustomer` FOR EACH ROW BEGIN
+    -- Insert a new cart for the newly registered user
+    INSERT INTO Cart (UserID)
+    VALUES (NEW.UserID);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `user`
@@ -563,7 +608,7 @@ CREATE TABLE `user` (
   `LastName` varchar(50) NOT NULL,
   `Role` enum('Registered','UnRegistered') NOT NULL,
   PRIMARY KEY (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -572,7 +617,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'1234567890','John','Doe','Registered'),(2,'0987654321','Jane','Smith','Registered'),(3,'1122334455','Alice','Johnson','UnRegistered'),(4,'1234567890','John','Doe','Registered'),(5,'0987654321','Jane','Smith','Registered'),(6,'1122334455','Alice','Johnson','UnRegistered'),(7,'0772209691','Induwara','Rathnayake','Registered');
+INSERT INTO `user` VALUES (1,'0766869075','Naveen','Jayasooriya','Registered');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -603,17 +648,64 @@ CREATE TABLE `variant` (
 
 LOCK TABLES `variant` WRITE;
 /*!40000 ALTER TABLE `variant` DISABLE KEYS */;
-INSERT INTO `variant` VALUES (1,'iPhone 14 Pro - 128GB','The latest iPhone with 128GB storage',1,'IP14P128',999.99,0),(2,'iPhone 14 Pro - 256GB','The latest iPhone with 256GB storage',1,'IP14P256',1099.99,5),(3,'MacBook Pro - 16GB RAM','MacBook Pro with M2 chip and 16GB RAM',2,'MBP16',2399.99,5),(4,'Washing Machine - 8kg','Front-load washing machine with 8kg capacity',3,'WM8KG',499.99,15),(5,'Lego Building Set - 1500 Pieces','A large Lego set for building multiple models',5,'Lego1500',59.99,10),(6,'Barbie Doll - Classic','A classic Barbie doll with accessories',6,'BarbieClassic',24.99,17),(7,'Action Figure Set - Superheroes','Set of 5 action figures from popular superhero movies',7,'AFSuperheroes',39.99,15),(8,'Educational Board Game - Math Whiz','A fun board game to learn math skills',8,'MathWhizGame',29.99,5),(9,'Redmi A3','Brand New , Sealed Pack , Fingerprint, 6.71\" Bigg Display , Type c port ',9,'R A3 bc',30.99,10),(10,'Redmi A3','Brand New , Sealed Pack , Fingerprint, 6.71\" Bigg Display , Type c port ',9,'R A3 bl',32.99,10);
+INSERT INTO `variant` VALUES (1,'iPhone 14 Pro - 128GB','The latest iPhone with 128GB storage',1,'IP14P128',999.99,0),(2,'iPhone 14 Pro - 256GB','The latest iPhone with 256GB storage',1,'IP14P256',1099.99,0),(3,'MacBook Pro - 16GB RAM','MacBook Pro with M2 chip and 16GB RAM',2,'MBP16',2399.99,0),(4,'Washing Machine - 8kg','Front-load washing machine with 8kg capacity',3,'WM8KG',499.99,7),(5,'Lego Building Set - 1500 Pieces','A large Lego set for building multiple models',5,'Lego1500',59.99,9),(6,'Barbie Doll - Classic','A classic Barbie doll with accessories',6,'BarbieClassic',24.99,17),(7,'Action Figure Set - Superheroes','Set of 5 action figures from popular superhero movies',7,'AFSuperheroes',39.99,9),(8,'Educational Board Game - Math Whiz','A fun board game to learn math skills',8,'MathWhizGame',29.99,3),(9,'Redmi A3','Brand New , Sealed Pack , Fingerprint, 6.71\" Bigg Display , Type c port ',9,'R A3 bc',30.99,6),(10,'Redmi A3','Brand New , Sealed Pack , Fingerprint, 6.71\" Bigg Display , Type c port ',9,'R A3 bl',32.99,10);
 /*!40000 ALTER TABLE `variant` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Dumping events for database 'ecommerce2'
+-- Dumping events for database 'ecommerce4'
 --
 
 --
--- Dumping routines for database 'ecommerce2'
+-- Dumping routines for database 'ecommerce4'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `AddToCart` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddToCart`(IN VID INT, IN CID INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Handle the error
+        SELECT 'Error adding to cart' AS message;
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    -- Check if the variant exists
+    IF EXISTS (SELECT * FROM Variant WHERE VariantID = VID) THEN
+
+        -- Check if the product variant is already in the cart
+        IF EXISTS (SELECT * FROM CartItem WHERE VariantID = VID AND CartID = CID) THEN
+            -- Update the quantity
+            UPDATE CartItem SET Quantity = Quantity + 1 WHERE VariantID = VID AND CartID = CID;
+        ELSE
+            -- Insert the product variant into the CartItem table
+            INSERT INTO CartItem (VariantID, CartID, Quantity) VALUES (VID, CID, 1);
+        END IF;
+
+        COMMIT;
+        SELECT 'Added to cart successfully' AS message;
+
+    ELSE
+        -- If the variant does not exist
+        SELECT 'Product variant not found' AS message;
+        ROLLBACK;
+    END IF;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `CreateUser` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -653,6 +745,271 @@ BEGIN
     -- Insert the user into the RegisteredCustomer table
     INSERT INTO RegisteredCustomer (UserID, UserName, Email, Password, AddressID)
     VALUES (userId, userName, email, password, addressId);
+
+    COMMIT;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `DropOrder` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DropOrder`(IN oID INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Handle the error
+        SELECT 'Error dropping order' AS message;
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    -- Delete the order
+    DELETE FROM `Order` WHERE OrderID = oID;
+
+    COMMIT;
+    SELECT 'Order dropped successfully' AS message;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetCart` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetCart`(IN userId INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Handle the error
+        SELECT 'Error fetching cart' AS message;
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    SELECT ci.*, v.VariantName, v.Price, i.ImageLink
+    FROM CartItem ci
+    JOIN Cart c ON ci.CartID = c.CartID
+    JOIN Variant v ON ci.VariantID = v.VariantID
+    JOIN Product p ON v.ProductID = p.ProductID
+    JOIN Image i ON i.VariantID = v.VariantID
+    WHERE c.UserID = userId;
+
+    COMMIT;
+   
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetCartId` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetCartId`(IN Id INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Handle the error
+        SELECT 'Error fetching cart ID' AS message;
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    SELECT CartID FROM Cart WHERE UserID = Id;
+
+    COMMIT;
+   
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetOrders` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetOrders`(IN userID INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Handle the error
+        SELECT 'Error fetching orders' AS message;
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    -- Fetch orders for the user
+    SELECT * FROM `Order` WHERE UserID = userID;
+
+    COMMIT;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetProductAttribute` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetProductAttribute`(IN VariantID INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Handle the error
+        SELECT 'Error fetching product attributes' AS message;
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    -- Fetch product attributes
+    SELECT pa.VariantID, pa.AttributeValue, a.AttributeName
+    FROM productattribute pa
+    LEFT JOIN attributes a ON pa.AttributeID = a.AttributeID
+    WHERE pa.VariantID = VariantID;
+
+    COMMIT;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetProductsByCategory` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetProductsByCategory`(IN categoryNamePattern VARCHAR(255))
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Handle the error
+        SELECT 'Error fetching products by category' AS message;
+    END;
+
+    -- Create a temporary table for the category tree
+    CREATE TEMPORARY TABLE IF NOT EXISTS CategoryTree (CategoryID INT);
+
+    -- Populate the CategoryTree with the root categories that match the pattern
+    INSERT INTO CategoryTree (CategoryID)
+    SELECT CategoryID
+    FROM Category
+    WHERE CategoryName LIKE categoryNamePattern;
+
+    -- Use REPEAT to insert child categories into CategoryTree recursively
+    REPEAT
+        INSERT INTO CategoryTree (CategoryID)
+        SELECT c.CategoryID
+        FROM Category c
+        INNER JOIN CategoryTree ct ON c.ParentCategoryID = ct.CategoryID
+        WHERE c.CategoryID NOT IN (SELECT CategoryID FROM CategoryTree);
+    UNTIL ROW_COUNT() = 0
+    END REPEAT;
+
+    -- Fetch the products based on the populated CategoryTree
+    SELECT 
+        v.VariantID,
+        v.Price,
+        p.ProductID, 
+        p.Title, 
+        pc.CategoryID, 
+        c.CategoryName,
+        i.ImageLink AS image_link,
+        ROW_NUMBER() OVER (PARTITION BY p.ProductID ORDER BY p.ProductID) AS row_num
+    FROM 
+        Product p
+        JOIN productCategory pc ON p.ProductID = pc.ProductID
+        JOIN Category c ON pc.CategoryID = c.CategoryID
+        JOIN variant v ON p.ProductID = v.ProductID
+        JOIN image i ON v.VariantID = i.VariantID
+    WHERE 
+        pc.CategoryID IN (SELECT CategoryID FROM CategoryTree);
+
+    -- Clean up the temporary table
+    DROP TEMPORARY TABLE IF EXISTS CategoryTree;
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetProductVariants` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetProductVariants`(IN ProductID INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Handle the error
+        SELECT 'Error fetching product variants' AS message;
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    -- Fetch product variants
+    SELECT v.*, p.*, i.*
+    FROM variant v
+    LEFT JOIN product p ON v.ProductID = p.ProductID
+    LEFT JOIN image i ON v.VariantID = i.VariantID
+    WHERE p.ProductID = ProductID;
 
     COMMIT;
 END ;;
@@ -774,6 +1131,218 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetVariant` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetVariant`(IN VariantID INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Handle the error
+        SELECT 'Error fetching variant details' AS message;
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    -- Fetch variant details
+    SELECT v.VariantID, v.VariantName, v.Price, i.ImageLink
+    FROM Variant v
+    LEFT OUTER JOIN image i ON v.VariantID = i.VariantID
+    WHERE v.VariantID = VariantID;
+
+    COMMIT;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `PlaceOrder` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `PlaceOrder`(
+    IN p_userID INT,
+    IN p_cartID INT,
+    IN p_deliveryType ENUM('storePickup', 'delivery'),
+    IN p_paymentMethod ENUM('card', 'COD'),
+    IN p_addressID INT
+)
+BEGIN
+    DECLARE totalPrice DECIMAL(10, 2);
+    DECLARE orderID INT;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Handle the error
+        SELECT 'Error placing order' AS message;
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    -- Fetch cart items and calculate total price
+    SELECT SUM(v.Price * ci.Quantity) INTO totalPrice
+    FROM CartItem ci
+    JOIN Variant v ON ci.VariantID = v.VariantID
+    WHERE ci.CartID = p_cartID;
+
+    -- Ensure totalPrice is not zero
+    IF totalPrice IS NULL OR totalPrice = 0 THEN
+        SELECT 'Total price is zero, cannot proceed with order.' AS message;
+        ROLLBACK;
+    ELSE
+        -- Insert into Orders table
+        INSERT INTO `Order` (UserID, OrderDate, DeliveryType, PaymentMethod, OrderTotal, AddressID)
+        VALUES (p_userID, CURRENT_DATE, p_deliveryType, p_paymentMethod, totalPrice, p_addressID);
+
+        SET orderID = LAST_INSERT_ID();
+
+        -- Insert into OrderItem table for each cart item
+        INSERT INTO OrderItem (OrderID, VariantID, Quantity)
+        SELECT orderID, ci.VariantID, ci.Quantity
+        FROM CartItem ci
+        WHERE ci.CartID = p_cartID;
+
+        -- Empty the cart table
+        DELETE FROM CartItem WHERE CartID = p_cartID;
+
+        COMMIT;
+        SELECT 'Order placed successfully' AS message;
+    END IF;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `RemoveAllFromCart` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveAllFromCart`(IN CID INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Handle the error
+        SELECT 'Error removing all from cart' AS message;
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    -- Remove all items from the cart
+    DELETE FROM CartItem WHERE CartID = CID;
+
+    COMMIT;
+    SELECT 'Removed all items from cart successfully' AS message;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `RemoveFromCart` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `RemoveFromCart`(IN VID INT, IN CID INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Handle the error
+        SELECT 'Error removing from cart' AS message;
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    -- Check if the product variant is in the cart
+    IF EXISTS (SELECT * FROM CartItem WHERE VariantID = VID AND CartID = CID) THEN
+        -- Check the quantity
+        IF (SELECT Quantity FROM CartItem WHERE VariantID = VID AND CartID = CID) > 1 THEN
+            -- Update the quantity
+            UPDATE CartItem SET Quantity = Quantity - 1 WHERE VariantID = VID AND CartID = CID;
+        ELSE
+            -- Remove the product variant from the cart
+            DELETE FROM CartItem WHERE VariantID = VID AND CartID = CID;
+        END IF;
+
+        COMMIT;
+        SELECT 'Removed from cart successfully' AS message;
+
+    ELSE
+        -- If the product variant is not in the cart
+        SELECT 'Product variant not found in cart' AS message;
+        ROLLBACK;
+    END IF;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `UnRegSetCart` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `UnRegSetCart`(IN VariantID INT, IN CartID INT, IN Quantity INT)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Handle the error
+        SELECT 'Error performing cart operation' AS message;
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    -- Insert or update the cart item
+    INSERT INTO CartItem (VariantID, CartID, Quantity)
+    VALUES (VariantID, CartID, Quantity)
+    ON DUPLICATE KEY UPDATE Quantity = VALUES(Quantity);
+
+    COMMIT;
+    SELECT 'Cart operation successful' AS message;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -784,4 +1353,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-17  2:45:32
+-- Dump completed on 2024-10-22 16:53:02
