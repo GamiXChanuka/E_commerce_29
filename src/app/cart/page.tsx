@@ -172,6 +172,90 @@ export default function CartPage() {
   }
 
   return (
+    <>
+
+    <div className="flex flex-col items-center py-4 bg-white border-b sm:flex-row sm:px-10 lg:px-20 xl:px-32">
+    <a href="#" className="text-2xl font-bold text-gray-900">Checkout Page</a>
+
+
+    <div className="py-2 mt-4 text-xs sm:mt-0 sm:ml-auto sm:text-base">
+      <div className="relative">
+        <ul className="relative flex items-center justify-between w-full space-x-2 sm:space-x-4">
+          <li className="flex items-center space-x-3 text-left sm:space-x-4">
+            <a
+              className="flex items-center justify-center w-6 h-6 text-xs font-semibold text-white bg-yellow-400 rounded-full ring ring-gray-600 ring-offset-2"
+              href="#"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </a>
+            <span className="font-semibold text-gray-900">Cart</span>
+          </li>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-4 h-4 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+          <li className="flex items-center space-x-3 text-left sm:space-x-4">
+            <a
+              className="flex items-center justify-center w-6 h-6 text-xs font-semibold text-white bg-gray-400 rounded-full"
+              href="#"
+            >
+              2
+            </a>
+            <span className="font-semibold text-gray-900">Checkout</span>
+          </li>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-4 h-4 text-gray-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={2}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+          <li className="flex items-center space-x-3 text-left sm:space-x-4">
+            <a
+              className="flex items-center justify-center w-6 h-6 text-xs font-semibold text-white bg-gray-400 rounded-full"
+              href="#"
+            >
+              3
+            </a>
+            <span className="font-semibold text-gray-500">Proccessed</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+  </div>
+
     <div className="flex flex-col min-h-screen md:flex-row">
       <div className="w-full p-8 md:w-2/3">
         <h2 className="mb-4 text-3xl font-bold text-black">Shopping Cart</h2>
@@ -286,5 +370,6 @@ export default function CartPage() {
         </button>
       </div>
     </div>
+    </>
   );
 }
