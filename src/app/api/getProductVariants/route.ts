@@ -8,7 +8,6 @@ export async function POST(request: NextRequest) {
 
     // get product variants
     const variantList = await getProductVariants(ProductID);
-    console.log("variant list ", variantList);
     if (!variantList || variantList.length === 0) {
       return NextResponse.json(
         { message: "No variants found" },

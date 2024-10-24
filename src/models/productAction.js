@@ -7,11 +7,11 @@ export async function getProducts(category) {
       const [rows] = await pool.execute(
                 `WITH RECURSIVE CategoryTree AS (
           SELECT CategoryID
-          FROM Category
-          WHERE CategoryName LIKE ?
+          FROM category
+          WHERE categoryName LIKE ?
           UNION ALL
-          SELECT c.CategoryID
-          FROM Category c
+          SELECT c.categoryID
+          FROM category c
           INNER JOIN CategoryTree ct ON c.ParentCategoryID = ct.CategoryID
         ),
         RankedProducts AS (
@@ -25,9 +25,9 @@ export async function getProducts(category) {
             i.ImageLink as image_link,
             ROW_NUMBER() OVER (PARTITION BY p.ProductID ORDER BY p.ProductID) AS row_num
           FROM 
-            Product p
-            JOIN productCategory pc ON p.ProductID = pc.ProductID
-            JOIN Category c ON pc.CategoryID = c.CategoryID
+            product p
+            JOIN productcategory pc ON p.ProductID = pc.ProductID
+            JOIN category c ON pc.CategoryID = c.CategoryID
             JOIN variant v ON p.ProductID = v.ProductID
             JOIN image i ON v.VariantID = i.VariantID
           WHERE 
@@ -48,7 +48,6 @@ export async function getProducts(category) {
           [`%${category}%`]
         );
 
-      console.log("products -",rows);
       return rows;
     } catch (error) {
       throw new Error(error.message);

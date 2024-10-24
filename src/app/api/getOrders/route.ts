@@ -8,7 +8,6 @@ export async function POST(request: NextRequest) {
 
     // get orders
     const orders = await getOrders(userId);
-    console.log("Orders ", orders);
 
     if (!orders || orders.length === 0) {
       return NextResponse.json(

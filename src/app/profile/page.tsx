@@ -70,8 +70,7 @@ const ProfilePage = () => {
           postalCode: data.PostalCode,
         });
       } catch (error: any) {
-        console.log("🚀 ~ fetchUserProfile ~ error:", error);
-        console.error("Error fetching user profile:", error);
+        console.log("Error fetching user profile:", error);
         setError(error.response?.data.message || error.message);
       } finally {
         setLoading(false);
@@ -97,17 +96,6 @@ const ProfilePage = () => {
       toast.error("Failed to log out. Please try again.");
     }
   };
-
-  // Handle form submission
-  // const handleSave = (event: React.FormEvent) => {
-  //   event.preventDefault();
-  //   alert('Profile saved!'); // Replace with actual save logic
-  // };
-
-  // Handle cancel action
-  // const handleCancel = () => {
-  //   window.location.href = '/'; // Redirect to home (you can customize this)
-  // };
 
   if (loading) return <Spinner />;
   if (error) return <p>{error}</p>;

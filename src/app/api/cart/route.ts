@@ -12,12 +12,9 @@ export async function GET(request: NextRequest) {
   
       const userId = await getDataFromToken(request);
       const cartItems = await getCart(userId);
-
-      console.log("🚀 ~ GET ~ cartItems", cartItems[0]);
-
       return NextResponse.json(cartItems);
   } catch (error: any) {
-      console.error("Error fetching cart:", error);
+      console.log("Error fetching cart:", error);
       return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }

@@ -10,7 +10,6 @@ export async function getCart(userId) {
             [userId]
         );
 
-        console.log("rows ca ",rows);
         return rows[0];
     } catch (error) {
         console.log("Error fetching cart:", error.message);
@@ -24,7 +23,6 @@ export async function getCartId(userId) {
     try {
         // Call the stored procedure
         const [rows] = await pool.execute('CALL GetCartId(?)', [userId]);
-        console.log("rows cart id", rows);
 
         // Extract the CartID from the nested array structure
         const cartId = rows[0][0].CartID;

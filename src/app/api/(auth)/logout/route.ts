@@ -21,5 +21,4 @@ export async function POST() {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
   
-  return response;
 }
