@@ -106,16 +106,19 @@ END $$
 
 DELIMITER ;
 
-DELIMITER $$
 
-CREATE TRIGGER AfterInsertRegisteredCustomer
-AFTER INSERT ON RegisteredCustomer
-FOR EACH ROW
-BEGIN
-    -- Insert a new cart for the newly registered user
-    INSERT INTO Cart (UserID)
-    VALUES (NEW.UserID);
-END $$
+-- I removed this  'AfterInsertRegisteredCustomer' trigger from the databse
 
-DELIMITER ;
+-- DELIMITER $$
+
+-- CREATE TRIGGER AfterInsertRegisteredCustomer
+-- AFTER INSERT ON RegisteredCustomer
+-- FOR EACH ROW
+-- BEGIN
+--     -- Insert a new cart for the newly registered user
+--     INSERT INTO Cart (UserID)
+--     VALUES (NEW.UserID);
+-- END $$
+
+-- DELIMITER ;
 

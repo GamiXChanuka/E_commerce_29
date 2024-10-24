@@ -66,3 +66,26 @@ Content-Type: application/json
   "cartId": 1,
   "quantity": 2
 }
+
+### Add Address
+POST http://localhost:3000/api/addAddress
+Content-Type: application/json
+
+{
+  "AddressNumber": 4,
+  "Lane": "Main Street",
+  "City": "Metropolis",
+  "PostalCode": "12345",
+  "District": "Anuradhpura"
+}
+
+### Add User and Get Cart ID
+POST http://localhost:3000/api/addUnregCustomer
+Content-Type: application/json
+
+{
+  "PhoneNumber": "1234567890",
+  "FirstName": "John",
+  "LastName": "Doe",
+  "Role": "Registered"
+}
