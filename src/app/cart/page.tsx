@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface CartItemData {
   VariantID: number;
@@ -9,27 +10,17 @@ interface CartItemData {
   Quantity: number;
   ImageLink: string;
 }
-interface AddressDetails {
-  addressNo: string;
-  lane: string;
-  city: string;
-  postalCode: string;
-}
+
 
 export default function CartPage() {
+  const router = useRouter();
   const [data, setData] = useState<CartItemData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [address, setAddress] = useState<AddressDetails>({
-    addressNo: "",
-    lane: "",
-    city: "",
-    postalCode: "",
-  });
   const [selectedCity, setSelectedCity] = useState<string>("");
 
 
-  var isRegistered = true; // Set this based on your auth logic
+  var isRegistered = false; // Set this based on your auth logic
 
   const fetchData = async () => {
     try {
@@ -74,6 +65,7 @@ export default function CartPage() {
   };
 
   useEffect(() => {
+    console.log("xxxxxxxx");
     fetchData();
   }, []);
 
@@ -161,29 +153,11 @@ export default function CartPage() {
     }
   };
 
-  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setAddress((prevAddress) => ({
-      ...prevAddress,
-      [name]: value,
-    }));
-  };
+  
 
   const placeOrder = async () => {
-    const userid = 1; // Replace with actual user ID
-    const DeliveryType = "delivery"; // Set your delivery type
-    const PaymentMethod = "card"; // Set your payment method
-    const AddressID = 1; // Replace with the actual Address ID
-
     try {
-      const response = await axios.post("/api/placeOrder", {
-        userid,
-        DeliveryType,
-        PaymentMethod,
-        AddressID,
-      });
-
-      console.log("Order placed successfully:", response.data);
+      router.push("/checkoutPage");
     } catch (error) {
       console.error("Error placing the order:", error);
     }
@@ -239,7 +213,7 @@ export default function CartPage() {
                 </div>
                 <div className="flex items-center justify-end w-1/3">
                     <span className="font-bold text-black">
-                    € {(item.Price * item.Quantity).toFixed(2)}
+                    Rs {(item.Price * item.Quantity).toFixed(2)}
                     </span>
                     <button
                     className="px-5 py-2 m-3 text-red-600 transition duration-300 border border-red-600 rounded-full shadow-md hover:bg-red-100"
@@ -271,10 +245,11 @@ export default function CartPage() {
             </button>
           </div>
         </div>
+        {/* ------------------------------------------------------------------------------- */}
       </div>
 
 
-      <div className="w-full p-8 bg-white rounded-lg shadow-2xl md:w-1/3">
+      <div className="w-full p-8 bg-white shadow-2xl md:w-1/3">
         <h2 className="mb-4 text-2xl font-bold text-black">Summary</h2>
         <div className="flex justify-between mb-2 text-black">
           <span>ITEMS</span>
@@ -286,8 +261,8 @@ export default function CartPage() {
           </span>
         </div>
         <div className="flex justify-between mb-4 text-black">
-          <span>SHIPPING</span>
-          <span>Standard Delivery - Rs 5.00</span>
+          <span>SHIPPING (Standard Delivery) </span>
+          <span>Rs 225.00</span>
         </div>
         <div className="flex justify-between font-bold text-black">
           <span>TOTAL PRICE</span>
@@ -297,7 +272,7 @@ export default function CartPage() {
               data.reduce(
                 (total, item) => total + item.Price * item.Quantity,
                 0
-              ) + 5.0
+              ) + 225.0
             ).toFixed(2)}
           </span>
         </div>
