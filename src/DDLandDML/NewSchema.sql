@@ -180,7 +180,7 @@ CREATE TABLE `cartitem` (
 
 LOCK TABLES `cartitem` WRITE;
 /*!40000 ALTER TABLE `cartitem` DISABLE KEYS */;
-INSERT INTO `cartitem` VALUES (1,1,2),(11,1,2);
+INSERT INTO `cartitem` VALUES (1,1,2),(11,1,2),(12,1,1);
 /*!40000 ALTER TABLE `cartitem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -475,7 +475,7 @@ CREATE TABLE `productattribute` (
   KEY `VariantID` (`VariantID`),
   CONSTRAINT `productattribute_ibfk_1` FOREIGN KEY (`AttributeID`) REFERENCES `attributes` (`AttributeID`),
   CONSTRAINT `productattribute_ibfk_2` FOREIGN KEY (`VariantID`) REFERENCES `variant` (`VariantID`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -484,7 +484,7 @@ CREATE TABLE `productattribute` (
 
 LOCK TABLES `productattribute` WRITE;
 /*!40000 ALTER TABLE `productattribute` DISABLE KEYS */;
-INSERT INTO `productattribute` VALUES (1,1,1,'Black'),(2,2,1,'128GB'),(3,1,2,'Silver'),(4,2,2,'256GB'),(5,3,3,'16GB'),(6,1,5,'Multi-Color'),(7,2,5,'1500 Pieces'),(8,1,6,'Pink'),(10,1,7,'Various'),(12,1,8,'Multi-Color'),(14,1,9,'black'),(15,1,10,'blue'),(16,2,9,'128GB'),(17,2,10,'128GB'),(18,2,11,'64GB'),(19,1,11,'Black'),(20,3,11,'4GB'),(21,1,12,'Gray'),(22,4,12,'RTX 4070'),(23,5,12,'Core i9'),(24,2,13,'128GB'),(25,1,13,'Black'),(26,3,13,'4GB'),(27,2,14,'128GB'),(28,1,14,'Black'),(29,3,14,'6GB'),(30,2,15,'64GB'),(31,1,15,'Black'),(32,3,15,'4GB'),(33,1,16,'Black'),(34,4,16,'RTX 4070'),(35,5,16,'Core i7'),(36,6,17,'43 inch'),(37,6,18,'32 inch'),(38,1,20,'Silver'),(39,2,20,'8 GB'),(40,3,20,'256 GB'),(41,6,19,'55 inch'),(42,1,19,'Black'),(43,1,22,'Black'),(44,7,22,'5.0'),(45,6,21,'44 inch'),(46,8,24,'10000mAh'),(47,1,24,'Black'),(48,8,25,'20000mAh'),(49,1,25,'White'),(50,1,23,'Blue'),(51,7,23,'4.0'),(52,1,26,'Blue'),(53,1,27,'White'),(54,1,28,'Blue'),(55,7,28,'3.0'),(56,1,29,'Blue'),(57,1,30,'Red'),(58,1,32,'White'),(59,1,33,'Black'),(60,1,31,'Red'),(61,7,31,'4.0'),(62,1,34,'White'),(63,1,35,'Multicolour'),(64,1,36,'Black'),(65,1,37,'Yellow'),(66,1,38,'Blue'),(67,1,39,'Blue'),(68,9,40,'585 pcs'),(69,9,41,'554 pcs'),(70,1,42,'White');
+INSERT INTO `productattribute` VALUES (1,1,1,'Black'),(2,2,1,'128GB'),(3,1,2,'Silver'),(4,2,2,'256GB'),(5,3,3,'16GB'),(6,1,5,'Multi-Color'),(7,2,5,'1500 Pieces'),(8,1,6,'Pink'),(10,1,7,'Various'),(12,1,8,'Multi-Color'),(14,1,9,'black'),(15,1,10,'blue'),(16,2,9,'128GB'),(17,2,10,'128GB'),(18,2,11,'64GB'),(19,1,11,'Black'),(20,3,11,'4GB'),(21,1,12,'Gray'),(22,4,12,'RTX 4070'),(23,5,12,'Core i9'),(24,2,13,'128GB'),(25,1,13,'Black'),(26,3,13,'4GB'),(27,2,14,'128GB'),(28,1,14,'Black'),(29,3,14,'6GB'),(30,2,15,'64GB'),(31,1,15,'Black'),(32,3,15,'4GB'),(33,1,16,'Black'),(34,4,16,'RTX 4070'),(35,5,16,'Core i7'),(36,6,17,'43 inch'),(37,6,18,'32 inch'),(38,1,20,'Silver'),(39,2,20,'8 GB'),(40,3,20,'256 GB'),(41,6,19,'55 inch'),(42,1,19,'Black'),(43,1,22,'Black'),(44,7,22,'5.0'),(45,6,21,'44 inch'),(46,8,24,'10000mAh'),(47,1,24,'Black'),(48,8,25,'20000mAh'),(49,1,25,'White'),(50,1,23,'Blue'),(51,7,23,'4.0'),(52,1,26,'Blue'),(53,1,27,'White'),(54,1,28,'Blue'),(55,7,28,'3.0'),(56,1,29,'Blue'),(57,1,30,'Red'),(58,1,32,'White'),(59,1,33,'Black'),(60,1,31,'Red'),(61,7,31,'4.0'),(62,1,34,'White'),(63,1,35,'Multicolour'),(64,1,36,'Black'),(65,1,37,'Yellow'),(66,1,38,'Blue'),(67,1,39,'Blue'),(68,9,40,'585 pcs'),(69,9,41,'554 pcs'),(70,1,42,'White'),(71,8,4,'7 kg');
 /*!40000 ALTER TABLE `productattribute` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -847,6 +847,46 @@ BEGIN
 
     COMMIT;
    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetDistinctVariantDetailsByTitle` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetDistinctVariantDetailsByTitle`(IN searchTerm VARCHAR(100))
+BEGIN
+    SELECT 
+        v.VariantID,
+        p.ProductID,
+        p.Title,
+        MIN(c.CategoryID) AS CategoryID,  -- Get the minimum CategoryID if multiple categories exist
+        MIN(c.CategoryName) AS CategoryName,  -- Get the minimum CategoryName if multiple categories exist
+        MIN(img.ImageLink) AS image_link,  -- Get the minimum image link if multiple images exist
+        v.Price
+    FROM 
+        product p
+    JOIN 
+        variant v ON p.ProductID = v.ProductID
+    JOIN 
+        image img ON v.VariantID = img.VariantID
+    JOIN 
+        productcategory pc ON p.ProductID = pc.ProductID
+    JOIN 
+        category c ON pc.CategoryID = c.CategoryID
+    WHERE 
+        p.Title LIKE CONCAT('%', searchTerm, '%')
+    GROUP BY 
+        v.VariantID, p.ProductID, p.Title, v.Price;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1353,4 +1393,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-23  0:50:31
+-- Dump completed on 2024-10-24 12:16:53
