@@ -3,7 +3,6 @@ import pool from '../lib/dbConfig';
 
 export async function placeOrder(userid, cartId, DeliveryType, PaymentMethod, AddressID) {
   console.log("Using connection pool");
-  console.log(userid, cartId, DeliveryType, PaymentMethod, AddressID);
 
   try {
     // Call the stored procedure
@@ -21,7 +20,7 @@ export async function placeOrder(userid, cartId, DeliveryType, PaymentMethod, Ad
       return { success: message, status: 200 };
     }
   } catch (error) {
-    console.error('Error placing order:', error);
+    console.log('Error placing order:', error);
     return { error: 'Failed to place order', status: 500 };
   }
 }

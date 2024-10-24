@@ -2,7 +2,6 @@ import pool from '../lib/dbConfig';
 
 export async function setCart(op, VariantID, cartId) {
   console.log("Using connection pool");
-  console.log(op, VariantID, cartId);
 
   try {
     let result;
@@ -26,7 +25,7 @@ export async function setCart(op, VariantID, cartId) {
       return { success: message, status: 200 };
     }
   } catch (error) {
-    console.error('Error in cart operation:', error);
+    console.log('Error in cart operation:', error);
     return { error: 'Failed to perform cart operation', status: 500 };
   }
 }

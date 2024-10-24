@@ -8,7 +8,6 @@ export async function POST(request: NextRequest) {
 
     // get product attributes
     const variantAttribute = await getProductAttribute(VariantID);
-    console.log("variant attribute ", variantAttribute);
     if (!variantAttribute || variantAttribute.length === 0) {
       return NextResponse.json(
         { message: "No attributes found" },

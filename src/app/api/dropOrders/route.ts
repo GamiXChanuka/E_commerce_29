@@ -5,7 +5,6 @@ export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const { orderId } = reqBody;
-    console.log("🚀 ~ POST ~ orderId", orderId);
     // Drop order
     const message = await dropOrder(orderId);
 

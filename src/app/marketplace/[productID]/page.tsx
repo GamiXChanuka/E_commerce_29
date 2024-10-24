@@ -51,8 +51,7 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
       const response = await axios.post("/api/getProductVariants", {
         ProductID: productID,
       });
-      console.log("response", response.data);
-
+      
       const variants = response.data;
       setProductVariants(variants);
 
@@ -113,7 +112,7 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
           toast.success("Product added to internal cart!");
         }
       } catch (error) {
-        console.error("Error adding to cart:", error);
+        console.log("Error adding to cart:", error);
         toast.error("An error occurred while adding to cart");
       }
     }

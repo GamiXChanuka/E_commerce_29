@@ -50,7 +50,7 @@ export const createUser = async (userData) => {
         };
     } catch (error) {
         await connection.rollback(); // Rollback the transaction if an error occurs
-        console.log('Error creating user:', error);
+        console.log("🚀 ~ createUser ~ error:", error)
         throw error;
     }
 };
@@ -63,6 +63,7 @@ export const getUserByEmail = async (email) => {
         const [rows] = await pool.execute(query, [email]);
         return rows[0][0];  // first[0] is the result of the procedure, second [0] is the first row of the result
     } catch (error) {
+        console.log("🚀 ~ getUserByEmail ~ error:", error)
         throw error;
     }
 };
@@ -74,6 +75,7 @@ export const getUserInfo = async (userId) => {
         const [rows] = await pool.execute(query, [userId]);
         return rows[0][0]; // Assuming there's only one user with this ID
     } catch (error) {
+        console.log("🚀 ~ getUserInfo ~ error:", error)
         throw error;
     }
 };
@@ -85,6 +87,7 @@ export const getUserNameById = async (userId) => {
         const [rows] = await pool.execute(query, [userId]);
         return rows[0][0].UserName; //rows[0][0] = {UserName: 'username'} , rows[0][0].UserName = 'username'
     } catch (error) {
+        console.log("🚀 ~ getUserNameById ~ error:", error)
         throw error;
     }
 };

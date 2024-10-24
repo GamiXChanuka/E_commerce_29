@@ -6,7 +6,6 @@ export async function getOrders(userId) {
     try {
         // Call the stored procedure
         const [rows] = await pool.execute(`CALL GetOrders(?)`, [userId]);
-        console.log(rows);
 
         // Check if the result contains an error message
         const message = rows[0][0]?.message;
@@ -16,7 +15,7 @@ export async function getOrders(userId) {
 
         return rows[0];
     } catch (error) {
-        console.error('Error fetching orders:', error);
+        console.log('Error fetching orders:', error);
         throw new Error('Failed to fetch orders');
     }
 }
