@@ -91,3 +91,34 @@ export const getUserNameById = async (userId) => {
         throw error;
     }
 };
+
+
+export async function addUserAndGetCartID(user) {
+    const { PhoneNumber, FirstName, LastName, Role } = user;
+
+    try {
+        console.log("Using connection pool");
+
+        // Call the stored procedure to add the user and get the cart ID
+        const [rows] = await pool.execute(
+            `CALL AddUserAndGetCartID(?, ?, ?, ?, @UserID, @CartID)`,
+            [PhoneNumber, FirstName, LastName, Role]
+        );
+        console.log(rows);
+        // Extract the message, UserID, and CartID from the result
+        const message = rows[0][0].message;
+        const UserID = rows[0][0].UserID;
+        const CartID = rows[0][0].CartID;
+
+        
+
+        if (message.includes('Error')) {
+            throw new Error(message);
+        }
+
+        return { message, UserID, CartID };
+    } catch (error) {
+        console.error('Error adding user and cart:', error);
+        throw new Error('Failed to add user and cart');
+    }
+}
