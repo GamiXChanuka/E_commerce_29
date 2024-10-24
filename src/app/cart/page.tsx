@@ -20,7 +20,7 @@ export default function CartPage() {
   const [selectedCity, setSelectedCity] = useState<string>("");
 
 
-  var isRegistered = false; // Set this based on your auth logic
+  var isRegistered = true; // Set this based on your auth logic
 
   const fetchData = async () => {
     try {
