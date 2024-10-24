@@ -198,26 +198,26 @@ export default function CartPage() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row  min-h-screen">
-      <div className="w-full md:w-2/3 p-8">
-        <h2 className="text-3xl font-bold mb-4 text-black">Shopping Cart</h2>
+    <div className="flex flex-col min-h-screen md:flex-row">
+      <div className="w-full p-8 md:w-2/3">
+        <h2 className="mb-4 text-3xl font-bold text-black">Shopping Cart</h2>
         <h3 className="text-lg text-gray-700">{data.length} items</h3>
-        <div className="bg-white shadow-md rounded-lg p-4 mt-4">
+        <div className="p-4 mt-4 bg-white rounded-lg shadow-md">
           {data.length > 0 ? (
             data.map((item) => (
               <div
                 key={item.VariantID}
-                className="flex items-center justify-between border border-black py-2 px-4 mb-2 rounded-lg bg-white shadow-xl"
+                className="flex items-center justify-between px-4 py-2 mb-2 bg-white border border-black rounded-lg shadow-xl"
               >
                 <div className="flex items-center w-1/3">
                   <img
                     src={item.ImageLink}
                     alt={item.VariantName}
-                    className="w-16 h-16 object-cover mr-4 rounded-lg"
+                    className="object-cover w-16 h-16 mr-4 rounded-lg"
                   />
                   <h4 className="font-semibold text-black">{item.VariantName}</h4>
                 </div>
-                <div className="flex items-center w-1/3 justify-center">
+                <div className="flex items-center justify-center w-1/3">
                   <button
                     className="px-2 bg-[#004581] text-white rounded-lg hover:bg-[#018ABD]"
                     onClick={() => removeFromCart(item.VariantID)}
@@ -237,12 +237,12 @@ export default function CartPage() {
                     +
                   </button>
                 </div>
-                <div className="flex items-center w-1/3 justify-end">
+                <div className="flex items-center justify-end w-1/3">
                     <span className="font-bold text-black">
                     € {(item.Price * item.Quantity).toFixed(2)}
                     </span>
                     <button
-                    className="m-3 px-5 py-2 rounded-full border border-red-600 text-red-600 hover:bg-red-100 transition duration-300 shadow-md"
+                    className="px-5 py-2 m-3 text-red-600 transition duration-300 border border-red-600 rounded-full shadow-md hover:bg-red-100"
                     onClick={() => removeFromCart(item.VariantID)}
                     >
                     X
@@ -261,7 +261,7 @@ export default function CartPage() {
               Back to shop
             </button>
             <button
-              className="px-6 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-100 transition duration-300 shadow-md"
+              className="px-6 py-2 text-red-600 transition duration-300 border border-red-600 rounded-md shadow-md hover:bg-red-100"
               onClick={() => {
                 setData([]);
                 removeAll();
@@ -274,12 +274,12 @@ export default function CartPage() {
       </div>
 
 
-      <div className="w-full md:w-1/3 p-8 rounded-lg shadow-2xl bg-white">
-        <h2 className="text-2xl font-bold mb-4 text-black">Summary</h2>
+      <div className="w-full p-8 bg-white rounded-lg shadow-2xl md:w-1/3">
+        <h2 className="mb-4 text-2xl font-bold text-black">Summary</h2>
         <div className="flex justify-between mb-2 text-black">
           <span>ITEMS</span>
           <span>
-            €{" "}
+            Rs{" "}
             {data
               .reduce((total, item) => total + item.Price * item.Quantity, 0)
               .toFixed(2)}
@@ -287,12 +287,12 @@ export default function CartPage() {
         </div>
         <div className="flex justify-between mb-4 text-black">
           <span>SHIPPING</span>
-          <span>Standard Delivery - € 5.00</span>
+          <span>Standard Delivery - Rs 5.00</span>
         </div>
         <div className="flex justify-between font-bold text-black">
           <span>TOTAL PRICE</span>
           <span>
-            €{" "}
+            Rs{" "}
             {(
               data.reduce(
                 (total, item) => total + item.Price * item.Quantity,
@@ -301,49 +301,8 @@ export default function CartPage() {
             ).toFixed(2)}
           </span>
         </div>
-        <div className="mt-4 mb-2">
-          <h3 className="text-lg font-bold text-black">Delivery Address</h3>
-          <input
-            type="text"
-            name="addressNo"
-            value={address.addressNo}
-            onChange={handleAddressChange}
-            placeholder="addressNo"
-            className="mt-3 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
-            />
-            <input
-            type="text"
-            name="lane"
-            value={address.lane}
-            onChange={handleAddressChange}
-            placeholder="Lane"
-            className="mt-3 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
-            />
-          <input
-            type="text"
-            name="postalCode"
-            value={address.postalCode}
-            onChange={handleAddressChange}
-            placeholder="Postal Code"
-            className="mt-3 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
-            />
-        </div>
-        <div className="mt-4">
-          <label htmlFor="city" className="block text-black font-bold mb-2">
-            Select City
-          </label>
-          <select
-            id="city"
-            value={selectedCity}
-            onChange={(e) => setSelectedCity(e.target.value)}
-            className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
-            >
-            <option value="">Select a city</option>
-            <option value="City1">City1</option>
-            <option value="City2">City2</option>
-            <option value="City3">City3</option>
-          </select>
-        </div>
+
+
         <button
           className="bg-[#004581] text-white p-2 rounded-lg w-full mt-4 hover:bg-[#018ABD]"
           onClick={placeOrder}

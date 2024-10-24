@@ -182,6 +182,7 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showVariant,setShovariant]=useState(true)
 
   useEffect(() => {
     if (productID) {
@@ -226,6 +227,7 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
   // Handle variant button click
   const handleVariantClick = (variant: Variant) => {
     setSelectedVariant(variant);
+    setShovariant(!showVariant)
   };
 
   // Add selected variant to cart
@@ -320,24 +322,28 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
             </div>
 
             <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
-              {productVariants.length > 0 && (
-                <div>
-                  <h3 className="text-lg font-semibold text-black">Choose a variant:</h3>
-                  {productVariants.map((variant, index) => (
-                    <button
-                    key={index}
-                    className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 focus:ring-blue-800"
-                    onClick={() => handleVariantClick(variant)} // When clicked, call handleVariantClick with the variant
-                  >
-                    {variant.Attributes?.map(
-                      (attr) => `${attr.AttributeName}: ${attr.AttributeValue}`
-                    ).join(", ")}
-                  </button>
+  {productVariants.length > 0 && (
+    <div>
+      <h3 className="text-lg font-semibold text-black">Choose a variant:</h3>
+      {productVariants.map((variant, index) => (
+        <button
+          key={index}
+          className={`${
+            selectedVariant?.VariantID === variant.VariantID
+              ? "bg-blue-700 text-white border-blue-700"
+              : "bg-gray-200 text-blue-700 border hover:bg-blue-800 hover:text-white"
+          } transition-colors border rounded-lg p-2 mt-2 mr-2 focus:outline-none`}
+          onClick={() => handleVariantClick(variant)} // Handle click to select the variant
+        >
+          {variant.Attributes?.map(
+            (attr) => `${attr.AttributeName}: ${attr.AttributeValue}`
+          ).join(", ")}
+        </button>
+      ))}
+    </div>
+  )}
+</div>
 
-                  ))}
-                </div>
-              )}
-            </div>
 
             <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
                 <button
