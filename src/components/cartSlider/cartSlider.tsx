@@ -92,10 +92,10 @@ export default function CartSlider() {
           <h2 className="text-2xl font-semibold text-black">Your Cart</h2>
           <button
             type="button"
-            className="p-3 transition duration-300 bg-red-300 border border-red-600 rounded-full shadow-lg hover:bg-red-100"
+            className="p-2 text-white transition duration-300 bg-red-600 border border-red-600 rounded-md shadow-lg hover:bg-red-100"
             onClick={toggleCart}
           >
-            X
+            Cancel
           </button>
         </div>
 
