@@ -4,9 +4,10 @@ import Header from './header/Header'
 
 function hero() {
   return (
-    <>
-    <Header/>
+  <>
     <Banner />
+
+    <Header/>
   </>
 
   )

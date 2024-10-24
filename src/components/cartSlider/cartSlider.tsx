@@ -48,6 +48,8 @@ export default function CartSlider() {
   // Function to visit cart page
   const visitCart = () => {
     router.push("/cart");
+    setIsOpen(!isOpen);
+
   };
 
   return (
@@ -61,7 +63,7 @@ export default function CartSlider() {
         <div className="indicator">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-7 w-7 text-gray-800"
+            className="text-gray-800 h-7 w-7"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -73,7 +75,7 @@ export default function CartSlider() {
               d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
             />
           </svg>
-          <span className="badge badge-sm indicator-item bg-red-500 text-white">
+          <span className="text-white bg-red-500 badge badge-sm indicator-item">
             {cartItems.length}
           </span>
         </div>
@@ -86,22 +88,26 @@ export default function CartSlider() {
         }`}
       >
         <div className="p-4">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-2xl font-semibold text-black">Your Cart</h2>
           <button
             type="button"
-            className="px-6 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-100 transition duration-300 shadow-md mb-5"
+            className="p-3 transition duration-300 bg-red-300 border border-red-600 rounded-full shadow-lg hover:bg-red-100"
             onClick={toggleCart}
           >
-            Cancel
+            X
           </button>
-          <h2 className="text-2xl font-semibold mb-4 text-black">Your Cart</h2>
+        </div>
+
+
           {cartItems.length > 0 ? (
             <>
-              <div className="flex justify-between items-center mb-4">
+              <div className="flex items-center justify-between mb-4">
                 <span className="text-lg font-bold text-black">
                   {cartItems.length} Items
                 </span>
                 <span className="text-gray-700">
-                  Subtotal: €{" "}
+                  Subtotal: Rs {" "} 
                   {cartItems
                     .reduce(
                       (total, item) => total + item.Price * item.Quantity,
@@ -113,19 +119,19 @@ export default function CartSlider() {
               {cartItems.map((item) => (
                 <div
                   key={item.VariantID}
-                  className="flex justify-between items-center py-2 border-b"
+                  className="flex items-center justify-between py-2 border-b"
                 >
                   <div className="flex items-center space-x-4">
                     <img
                       src={item.ImageLink}
                       alt={item.VariantName}
-                      className="w-12 h-12 object-cover rounded-lg"
+                      className="object-cover w-12 h-12 rounded-lg"
                     />
                     <div className="flex flex-col">
                       <p className="font-medium text-black">
                         {item.VariantName}
                       </p>
-                      <p className="text-gray-500">€{item.Price}</p>
+                      <p className="text-gray-500">Rs {item.Price}</p>
                     </div>
                   </div>
                   <span className="text-black">{item.Quantity}</span>
@@ -135,7 +141,7 @@ export default function CartSlider() {
                 className="btn btn-primary w-full mt-3 bg-[#004581] hover:bg-[#018ABD] text-white font-semibold py-2 rounded-lg transition"
                 onClick={visitCart}
               >
-                View Cart
+                Go To Checkout
               </button>
             </>
           ) : (
@@ -148,7 +154,7 @@ export default function CartSlider() {
       {isOpen && (
         <div
           onClick={toggleCart}
-          className="fixed inset-0 bg-black opacity-50 z-40"
+          className="fixed inset-0 z-40 bg-black opacity-50"
         />
       )}
     </>

@@ -71,15 +71,24 @@ export default function NavBar() {
       }`}
     >
       <div className="container flex items-center justify-between mx-auto">
-        {/* Logo */}
-        <div className="text-3xl font-bold text-gray-800">
-          <a href="./">Shopzy</a>
-        </div>
+
+      {/* Logo and Text */}
+      <div className="flex items-center space-x-2 text-3xl font-bold text-gray-800">
+        <a href="./" className="flex items-center space-x-2">
+          <img 
+            src="/login.png" // Path to your logo inside the public folder
+            alt="Shopzy Logo"
+            className="w-auto h-16" // Adjust height and width as needed
+          />
+          <span>Shopzy</span> {/* Text next to the logo */}
+        </a>
+      </div>
+
 
         {/* Navigation Links */}
         <div className="flex items-center space-x-6">
             <Link
-            className="text-lg font-medium text-gray-800 hover:text-gray-600 relative group"
+            className="relative text-lg font-medium text-gray-800 hover:text-gray-600 group"
             href="/"
             >
             Home
@@ -87,14 +96,14 @@ export default function NavBar() {
             </Link>
             <Link
             href="/marketplace"
-            className="text-lg font-medium text-gray-800 hover:text-gray-600 relative group"
+            className="relative text-lg font-medium text-gray-800 hover:text-gray-600 group"
             >
             Marketplace
             <span className="block h-0.5 bg-gray-800 absolute bottom-0 left-0 w-0 group-hover:w-full transition-all duration-300"></span>
             </Link>
             <Link
             href="/about"
-            className="text-lg font-medium text-gray-800 hover:text-gray-600 relative group"
+            className="relative text-lg font-medium text-gray-800 hover:text-gray-600 group"
             >
             About
             <span className="block h-0.5 bg-gray-800 absolute bottom-0 left-0 w-0 group-hover:w-full transition-all duration-300"></span>
@@ -139,7 +148,7 @@ export default function NavBar() {
                     <li>
                       <button
                         onClick={handleLogout}
-                        className="px-6 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-100 transition duration-300 shadow-md"
+                        className="px-6 py-2 text-red-600 transition duration-300 border border-red-600 rounded-md shadow-md hover:bg-red-100"
                         >
                         Logout
                       </button>
