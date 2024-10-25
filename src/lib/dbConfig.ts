@@ -9,10 +9,9 @@ const connectionParams = {
     charset: 'utf8mb4',
     
     // Pool options
-    connectionLimit: 10,  // Adjust based on your needs (default is 10)
+    connectionLimit: 100,  // Adjust based on your needs (default is 10)
     queueLimit: 0,        // Unlimited queue (or set a limit if needed)
     waitForConnections: true,  // Wait for free connections when pool is full
-    idleTimeoutMillis: 10 * 1000,  // Close idle connections after 10 seconds
 }
 let pool: mysql.Pool;
 
