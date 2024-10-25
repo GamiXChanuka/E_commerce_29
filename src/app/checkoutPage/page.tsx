@@ -26,7 +26,7 @@ const CheckoutPage = () => {
 
 
     // ----------------------------------------------------------------------------------------------------------
-    const [isRegistered, setisRegistered] = useState(false);
+    const isRegistered  =localStorage.getItem("isRegistered");
 
     // const isRegistered = true; // Set this based on your auth logic
 
@@ -290,7 +290,7 @@ const CheckoutPage = () => {
 
 
 
-              {isRegistered === false && (
+              {isRegistered === 'false' && (
 
               <div>
 

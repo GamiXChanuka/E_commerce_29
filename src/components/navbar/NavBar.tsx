@@ -42,6 +42,7 @@ export default function NavBar() {
       toast.success("Logged out successfully");
       setLoggedIn(false);
       setUserName(null);
+      localStorage.setItem("isRegistered", "false");
       router.push("/");
     } catch (error: any) {
       toast.error("Failed to logout");

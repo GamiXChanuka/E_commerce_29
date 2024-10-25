@@ -19,8 +19,9 @@ export default function CartPage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedCity, setSelectedCity] = useState<string>("");
 
-
-  var isRegistered = true; // Set this based on your auth logic
+  const isRegistered  = localStorage.getItem("isRegistered");
+  console.log(isRegistered);
+  // var isRegistered = true; // Set this based on your auth logic
 
   const fetchData = async () => {
     try {
@@ -34,6 +35,7 @@ export default function CartPage() {
       } else {
         // For unregistered users, fetch cart from localStorage
         const cart = JSON.parse(localStorage.getItem("internalCart") || "[]");
+        
         const updatedCart = [];
 
         for (const item of cart) {
