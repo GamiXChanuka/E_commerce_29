@@ -165,6 +165,14 @@ export default function CartPage() {
     }
   };
 
+  const backToShop = () => {  
+    try {
+      router.push("/marketplace");
+    } catch (error) {
+      console.error("Error going back to shop:", error);
+    }
+  }
+
   if (loading) {
     return <p>Loading data...</p>;
   }
@@ -316,7 +324,7 @@ export default function CartPage() {
           <div className="flex justify-between mt-4">
             <button
               className="px-6 py-2 bg-[#004581] text-white rounded-md hover:bg-[#018ABD] transition duration=300 shadow-md"
-              onClick={() => (window.location.href = "/shop")}
+              onClick={backToShop}
             >
               Back to shop
             </button>
