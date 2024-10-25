@@ -48,7 +48,7 @@ const LoginPage = () => {
         success: <b>Login successful</b>,
         error: <b>Login failed</b>,
       });
-      
+      localStorage.setItem("isRegistered", "true");
       window.location.href = "/"; // Redirect to home page
     } catch (error: any) {
       toast.error(error.response?.data.message || error.message);

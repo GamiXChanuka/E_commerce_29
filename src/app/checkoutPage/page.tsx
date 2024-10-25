@@ -296,7 +296,6 @@ const CheckoutPage = () => {
 
 <p className="mt-8 text-xl font-medium text-black">User Details</p>
 
-                {/* Cardholder Name */}
                 <label htmlFor="card-holder" className="block mt-4 mb-2 text-sm font-medium text-gray-900 ">First Name</label>
                 <input
                   type="text"
@@ -306,7 +305,6 @@ const CheckoutPage = () => {
                   placeholder="Your full name here"
                 />
 
-                {/* Card Details */}
                 <label htmlFor="card-no" className="block mt-4 mb-2 text-sm font-medium text-gray-900 ">Last Name</label>
                 <div className="flex">
                   <input
@@ -318,6 +316,15 @@ const CheckoutPage = () => {
                   />
 
                 </div>
+                <label htmlFor="card-no" className="block mt-4 mb-2 text-sm font-medium text-gray-900 ">Phone No</label>
+
+                <input
+                    type="text"
+                    id="card-no"
+                    name="card-no"
+                    className="w-full px-4 py-3 text-sm bg-gray-200 border border-gray-200 rounded-md shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                    placeholder="Your last name here"
+                  />
 
               </div>
 
@@ -444,37 +451,6 @@ const CheckoutPage = () => {
 
 )}
 
-          <p className="mt-8 text-xl font-medium text-black">User Details</p>
-
-          {isRegistered === false && (
-
-          <div>
-            {/* Cardholder Name */}
-            <label htmlFor="card-holder" className="block mt-4 mb-2 text-sm font-medium text-gray-900 ">First Name</label>
-            <input
-              type="text"
-              id="card-holder"
-              name="card-holder"
-              className="w-full px-4 py-3 text-sm bg-gray-200 border border-gray-200 rounded-md shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-              placeholder="Your full name here"
-            />
-
-            {/* Card Details */}
-            <label htmlFor="card-no" className="block mt-4 mb-2 text-sm font-medium text-gray-900 ">Last Name</label>
-            <div className="flex">
-              <input
-                type="text"
-                id="card-no"
-                name="card-no"
-                className="w-full px-4 py-3 text-sm bg-gray-200 border border-gray-200 rounded-md shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                placeholder="Your last name here"
-              />
-
-            </div>
-
-          </div>
-
-          )}
 
 
 
