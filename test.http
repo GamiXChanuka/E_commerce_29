@@ -89,3 +89,19 @@ Content-Type: application/json
   "LastName": "Doe",
   "Role": "Registered"
 }
+
+### Get User Cart ID
+POST http://localhost:3000/api/getUserCartId
+Content-Type: application/json
+
+{
+  "userId": 16
+}
+
+### Get User Info
+POST http://localhost:3000/api/getUserInfo
+Content-Type: application/json
+
+{
+  "userId": 16
+}

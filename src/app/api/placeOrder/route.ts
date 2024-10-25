@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const { userid, cartId, DeliveryType, PaymentMethod, AddressID } = reqBody;
-    console.log("userid", userid);
+    console.log("userid", userid , "cartId", cartId, "DeliveryType", DeliveryType, "PaymentMethod", PaymentMethod, "AddressID", AddressID);
 
     // place order
     const result: { success?: string; error?: string; status: number } = await placeOrder(userid, cartId, DeliveryType, PaymentMethod, AddressID);

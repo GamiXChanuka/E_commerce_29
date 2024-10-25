@@ -16,7 +16,6 @@ const CheckoutPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedCity, setSelectedCity] = useState<string>("");
-  
 
   // Set COD as the default payment method
   const [paymentMethod, setPaymentMethod] = useState("COD");
@@ -87,8 +86,7 @@ const CheckoutPage = () => {
 
   const addCartItemtoCart = async (c: number) => {
     // Add the item to the cart
-    console.log("Unregistered customer added:", userId);
-    console.log("Unregistered customer added:", cartId);
+
     const cart = JSON.parse(localStorage.getItem("internalCart") || "[]");
     for (const item of cart) {
       await axios.post("/api/unRegSetCart", {
@@ -100,6 +98,8 @@ const CheckoutPage = () => {
     // Clean the local storage cart
     localStorage.removeItem("internalCart");
   };
+
+  /////////////////////////////////////////////////////////////////////////////
 
   const createAddress = async () => {
     // Prepare address data
@@ -131,58 +131,135 @@ const CheckoutPage = () => {
       setUserId(result.UserID);
       setCartId(result.CartID);
       console.log("Unregistered customer added:", result.UserID);
-        console.log("Unregistered customer added:", result.CartID);
-      await addCartItemtoCart(result.CartID);
+      console.log("Unregistered customer added:", result.CartID);
+
+      const cart = JSON.parse(localStorage.getItem("internalCart") || "[]");
+      for (const item of cart) {
+        await axios.post("/api/unRegSetCart", {
+          VariantID: item.VariantID,
+          cartId: result.CartID,
+          quantity: item.quantity,
+        });
+      }
+      // Clean the local storage cart
+      localStorage.removeItem("internalCart");
+
+
+
+
+      const addressData = {
+        AddressNumber: AddressNumber,
+        Lane: Lane,
+        City: City,
+        PostalCode: PostalCode,
+        District: District,
+      };
+      // Send address data to backend
+      const response3 = await axios.post("/api/addAddress", addressData);
+
+      console.log("Address created successfully:", response3.data);
+      setAddressId(response3.data.AddressID);
+
+      const orderData = {
+        userid: result.UserID,
+        cartId: result.CartID,
+        DeliveryType: deliveryMethod,
+        PaymentMethod: paymentMethod,
+        AddressID: response3.data.AddressID,
+      };
+      const response2 = await axios.post("/api/placeOrder", orderData);
+
+      console.log("Order placed successfully:", response2.data);
+      alert("Order placed successfully");
     } catch (err) {
       console.error("Error adding unregistered customer:", err);
       alert("An error occurred while adding the unregistered customer");
     }
   };
 
+  ////////////////////////////////////////////////////////////////////////////////////////
+
+  const getUserCartId = async (userId: number) => {
+    try {
+      const response = await axios.post("/api/getUserCartId", {
+        userId,
+      });
+
+      const result = response.data;
+      console.log("Cart ID retrieved:", result);
+
+      const addressData = {
+        AddressNumber,
+        Lane,
+        City,
+        PostalCode,
+        District,
+      };
+
+      // Send address data to backend
+      const response3 = await axios.post("/api/addAddress", addressData);
+
+      console.log("Address created successfully:", response3.data);
+      setAddressId(response3.data.AddressID);
+
+      const orderData = {
+        userid: userId,
+        cartId: result.CartID,
+        DeliveryType: deliveryMethod,
+        PaymentMethod: paymentMethod,
+        AddressID: response3.data.AddressID,
+      };
+
+      // Send order data to backend
+      const response2 = await axios.post("/api/placeOrder", orderData);
+
+      console.log("Order placed successfully:", response2.data);
+      alert("Order placed successfully");
+
+      if (result.CartID) {
+        setCartId(result.CartID);
+      } else {
+        throw new Error("Failed to retrieve CartID");
+      }
+    } catch (err) {
+      console.error("Error retrieving cart ID:", err);
+      alert("An error occurred while retrieving the cart ID");
+    }
+  };
+  ////////////////////////////////////////////////////////////////////
+
   const handlePlaceOrder = async () => {
+    console.log("yydadyyy");
     console.log("handel place order");
     try {
       if (isRegistered === "false") {
+        console.log("yyyyy");
         // Add unregistered customer first
 
         await addUnregCustomer();
 
         // Create address first
-        await createAddress();
-        
+        // await createAddress();
 
-        // Add cart items to backend
-        
+        // // Add cart items to backend
 
-        // Prepare order data
-        const orderData = {
-          userid: userId,
-          cartId: cartId,
-          DeliveryType: deliveryMethod,
-          PaymentMethod: paymentMethod,
-          AddressID: addressId,
-        };
+        // // Prepare order data
+        // const orderData = {
+        //   userid: userId,
+        //   cartId: cartId,
+        //   DeliveryType: deliveryMethod,
+        //   PaymentMethod: paymentMethod,
+        //   AddressID: addressId,
+        // };
 
         // Send order data to backend
-        const response = await axios.post("/api/placeOrder", orderData);
-
-        console.log("Order placed successfully:", response.data);
-        alert("Order placed successfully");
       } else {
         // Prepare order data for registered users
-        const orderData = {
-          userid: userId,
-          cartId: cartId,
-          DeliveryType: deliveryMethod,
-          PaymentMethod: paymentMethod,
-          AddressID: addressId,
-        };
 
-        // Send order data to backend
-        const response = await axios.post("/api/placeOrder", orderData);
+        console.log("xxxxxx");
+        await createAddress();
 
-        console.log("Order placed successfully:", response.data);
-        alert("Order placed successfully");
+        await getUserCartId(16);
       }
     } catch (err) {
       console.error("Error placing order:", err);
