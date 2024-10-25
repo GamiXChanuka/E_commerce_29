@@ -19,9 +19,9 @@ export default function CartPage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedCity, setSelectedCity] = useState<string>("");
 
-  const isRegistered  = localStorage.getItem("isRegistered");
-  console.log(isRegistered);
-  // var isRegistered = true; // Set this based on your auth logic
+  // const isRegistered  = localStorage.getItem("isRegistered");
+  // console.log(isRegistered);
+  var isRegistered = false; // Set this based on your auth logic
 
   const fetchData = async () => {
     try {

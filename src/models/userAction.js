@@ -122,3 +122,15 @@ export async function addUserAndGetCartID(user) {
         throw new Error('Failed to add user and cart');
     }
 }
+
+//get cart id by user id
+export const getUserCartId = async (userId) => {
+    try {
+        const query = 'select CartID from cart where UserID= ?;';
+        const [rows] = await pool.execute(query, [userId]);
+        return rows[0]; //
+    } catch (error) {
+        console.log("🚀 ~ getUserNameById ~ error:", error)
+        throw error;
+    }
+};
