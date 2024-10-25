@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   MapPinIcon,
   UserIcon,
@@ -32,6 +33,7 @@ type FormFields = {
 };
 
 const ProfilePage = () => {
+  const router = useRouter();
   // State for form inputs
   const [formData, setFormData] = useState<FormFields>({
     firstName: "",
@@ -48,6 +50,7 @@ const ProfilePage = () => {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
 
   // Fetch user data from the API
   useEffect(() => {
@@ -97,6 +100,7 @@ const ProfilePage = () => {
     }
   };
 
+
   if (loading) return <Spinner />;
   if (error) return <p>{error}</p>;
 
@@ -114,7 +118,7 @@ const ProfilePage = () => {
               </Link>
             </li>
             <li>
-              <Link href="#" className="flex items-center text-[#97CBDC] hover:text-[#018ABD] transition duration-300">
+              <Link href="profile/my-orders" className="flex items-center text-[#97CBDC] hover:text-[#018ABD] transition duration-300">
                   <ShoppingBagIcon className="w-5 h-5 mr-2" /> Your Orders
               </Link>
             </li>

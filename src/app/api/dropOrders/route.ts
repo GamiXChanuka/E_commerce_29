@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { dropOrder } from "../../../models/dropOrders";
 
-export async function POST(request: NextRequest) {
+export async function DELETE(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const { orderId } = reqBody;
