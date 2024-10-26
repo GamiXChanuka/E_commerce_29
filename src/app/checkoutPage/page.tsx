@@ -35,11 +35,11 @@ const CheckoutPage = () => {
   const [cartId, setCartId] = useState<number>(0);
   const [addressId, setAddressId] = useState<number>(0);
 
-  const [isRegistered, setIsRegistered] = useState<string>("false"); // Set this based on your auth logic
+  const [isRegistered, setIsRegistered] = useState<string>("true"); // Set this based on your auth logic
 
   const fetchData = async () => {
     try {
-      if (isRegistered) {
+      if (isRegistered === "true") {
         // For registered users, fetch cart data from backend using token
         const response = await axios.get("/api/cart");
 
@@ -84,150 +84,6 @@ const CheckoutPage = () => {
     fetchData();
   }, []);
 
-  const addCartItemtoCart = async (c: number) => {
-    // Add the item to the cart
-
-    const cart = JSON.parse(localStorage.getItem("internalCart") || "[]");
-    for (const item of cart) {
-      await axios.post("/api/unRegSetCart", {
-        VariantID: item.VariantID,
-        cartId: c,
-        quantity: item.quantity,
-      });
-    }
-    // Clean the local storage cart
-    localStorage.removeItem("internalCart");
-  };
-
-  /////////////////////////////////////////////////////////////////////////////
-
-  const createAddress = async () => {
-    // Prepare address data
-    const addressData = {
-      AddressNumber,
-      Lane,
-      City,
-      PostalCode,
-      District,
-    };
-
-    // Send address data to backend
-    const response = await axios.post("/api/addAddress", addressData);
-
-    console.log("Address created successfully:", response.data);
-    setAddressId(response.data.AddressID);
-  };
-  const addUnregCustomer = async () => {
-    try {
-      const response = await axios.post("/api/addUnregCustomer", {
-        PhoneNumber,
-        FirstName,
-        LastName,
-        Role: "UnRegistered",
-      });
-
-      const result = response.data;
-
-      setUserId(result.UserID);
-      setCartId(result.CartID);
-      console.log("Unregistered customer added:", result.UserID);
-      console.log("Unregistered customer added:", result.CartID);
-
-      const cart = JSON.parse(localStorage.getItem("internalCart") || "[]");
-      for (const item of cart) {
-        await axios.post("/api/unRegSetCart", {
-          VariantID: item.VariantID,
-          cartId: result.CartID,
-          quantity: item.quantity,
-        });
-      }
-      // Clean the local storage cart
-      localStorage.removeItem("internalCart");
-
-
-
-
-      const addressData = {
-        AddressNumber: AddressNumber,
-        Lane: Lane,
-        City: City,
-        PostalCode: PostalCode,
-        District: District,
-      };
-      // Send address data to backend
-      const response3 = await axios.post("/api/addAddress", addressData);
-
-      console.log("Address created successfully:", response3.data);
-      setAddressId(response3.data.AddressID);
-
-      const orderData = {
-        userid: result.UserID,
-        cartId: result.CartID,
-        DeliveryType: deliveryMethod,
-        PaymentMethod: paymentMethod,
-        AddressID: response3.data.AddressID,
-      };
-      const response2 = await axios.post("/api/placeOrder", orderData);
-
-      console.log("Order placed successfully:", response2.data);
-      alert("Order placed successfully");
-    } catch (err) {
-      console.error("Error adding unregistered customer:", err);
-      alert("An error occurred while adding the unregistered customer");
-    }
-  };
-
-  ////////////////////////////////////////////////////////////////////////////////////////
-
-  const getUserCartId = async (userId: number) => {
-    try {
-      const response = await axios.post("/api/getUserCartId", {
-        userId,
-      });
-
-      const result = response.data;
-      console.log("Cart ID retrieved:", result);
-
-      const addressData = {
-        AddressNumber,
-        Lane,
-        City,
-        PostalCode,
-        District,
-      };
-
-      // Send address data to backend
-      const response3 = await axios.post("/api/addAddress", addressData);
-
-      console.log("Address created successfully:", response3.data);
-      setAddressId(response3.data.AddressID);
-
-      const orderData = {
-        userid: userId,
-        cartId: result.CartID,
-        DeliveryType: deliveryMethod,
-        PaymentMethod: paymentMethod,
-        AddressID: response3.data.AddressID,
-      };
-
-      // Send order data to backend
-      const response2 = await axios.post("/api/placeOrder", orderData);
-
-      console.log("Order placed successfully:", response2.data);
-      alert("Order placed successfully");
-
-      if (result.CartID) {
-        setCartId(result.CartID);
-      } else {
-        throw new Error("Failed to retrieve CartID");
-      }
-    } catch (err) {
-      console.error("Error retrieving cart ID:", err);
-      alert("An error occurred while retrieving the cart ID");
-    }
-  };
-  ////////////////////////////////////////////////////////////////////
-
   const handlePlaceOrder = async () => {
     console.log("yydadyyy");
     console.log("handel place order");
@@ -236,30 +92,114 @@ const CheckoutPage = () => {
         console.log("yyyyy");
         // Add unregistered customer first
 
-        await addUnregCustomer();
+        // await addUnregCustomer();
 
-        // Create address first
-        // await createAddress();
+        try {
+          const response = await axios.post("/api/addUnregCustomer", {
+            PhoneNumber,
+            FirstName,
+            LastName,
+            Role: "UnRegistered",
+          });
 
-        // // Add cart items to backend
+          const result = response.data;
 
-        // // Prepare order data
-        // const orderData = {
-        //   userid: userId,
-        //   cartId: cartId,
-        //   DeliveryType: deliveryMethod,
-        //   PaymentMethod: paymentMethod,
-        //   AddressID: addressId,
-        // };
+          setUserId(result.UserID);
+          setCartId(result.CartID);
+          console.log("Unregistered customer added:", result.UserID);
+          console.log("Unregistered customer added:", result.CartID);
+
+          const cart = JSON.parse(localStorage.getItem("internalCart") || "[]");
+          for (const item of cart) {
+            await axios.post("/api/unRegSetCart", {
+              VariantID: item.VariantID,
+              cartId: result.CartID,
+              quantity: item.quantity,
+            });
+          }
+          // Clean the local storage cart
+          localStorage.removeItem("internalCart");
+
+          const addressData = {
+            AddressNumber: AddressNumber,
+            Lane: Lane,
+            City: City,
+            PostalCode: PostalCode,
+            District: District,
+          };
+          // Send address data to backend
+          const response3 = await axios.post("/api/addAddress", addressData);
+
+          console.log("Address created successfully:", response3.data);
+          setAddressId(response3.data.AddressID);
+
+          const orderData = {
+            userid: result.UserID,
+            cartId: result.CartID,
+            DeliveryType: deliveryMethod,
+            PaymentMethod: paymentMethod,
+            AddressID: response3.data.AddressID,
+          };
+          const response2 = await axios.post("/api/placeOrder", orderData);
+
+          console.log("Order placed successfully:", response2.data);
+          alert("Order placed successfully");
+        } catch (err) {
+          console.error("Error adding unregistered customer:", err);
+          alert("An error occurred while adding the unregistered customer");
+        }
 
         // Send order data to backend
       } else {
         // Prepare order data for registered users
 
         console.log("xxxxxx");
-        await createAddress();
 
-        await getUserCartId(16);
+        try {
+          const response = await axios.post("/api/getUserCartId", {
+            userId: 16,
+          });
+
+          const result = response.data;
+          console.log("Cart ID retrieved:", result);
+
+          const addressData = {
+            AddressNumber,
+            Lane,
+            City,
+            PostalCode,
+            District,
+          };
+
+          // Send address data to backend
+          const response3 = await axios.post("/api/addAddress", addressData);
+
+          console.log("Address created successfully:", response3.data);
+          setAddressId(response3.data.AddressID);
+
+          const orderData = {
+            userid: 16,
+            cartId: result.CartID,
+            DeliveryType: deliveryMethod,
+            PaymentMethod: paymentMethod,
+            AddressID: response3.data.AddressID,
+          };
+
+          // Send order data to backend
+          const response2 = await axios.post("/api/placeOrder", orderData);
+
+          console.log("Order placed successfully:", response2.data);
+          alert("Order placed successfully");
+
+          if (result.CartID) {
+            setCartId(result.CartID);
+          } else {
+            throw new Error("Failed to retrieve CartID");
+          }
+        } catch (err) {
+          console.error("Error retrieving cart ID:", err);
+          alert("An error occurred while retrieving the cart ID");
+        }
       }
     } catch (err) {
       console.error("Error placing order:", err);

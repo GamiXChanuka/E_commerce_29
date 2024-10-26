@@ -36,7 +36,7 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showVariant, setShowVariant] = useState(true);
-  const isRegistered = false; // Set this based on your auth logic
+  const isRegistered = true; // Set this based on your auth logic
 
   useEffect(() => {
     if (productID) {

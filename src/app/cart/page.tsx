@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { tree } from "next/dist/build/templates/app-page";
 
 interface CartItemData {
   VariantID: number;
@@ -21,7 +22,7 @@ export default function CartPage() {
 
   // const isRegistered  = localStorage.getItem("isRegistered");
   // console.log(isRegistered);
-  var isRegistered = false; // Set this based on your auth logic
+  var isRegistered = true; // Set this based on your auth logic
 
   const fetchData = async () => {
     try {
