@@ -101,7 +101,7 @@ const GetOrdersPage = () => {
             transition={{ duration: 0.5 }}
             className="min-w-full bg-[#dde8f0] shadow-md rounded-lg border border-gray-200"
           >
-            <thead>
+            <thead className="text-xs">
               <tr className="bg-[#004581] text-white text-left">
                 <th className="p-4">Order Date</th>
                 <th className="p-4">Payment Method</th>
@@ -132,19 +132,19 @@ const GetOrdersPage = () => {
                       .join(", ")}
                   </td>
                   <td className="p-4">{order.PostalCode}</td>
-                  <td className="p-4">
+                  <td className="p-4 flex flex-row">
 
 
                     <button
                       onClick={() => handleDelete(order.OrderID)}
-                      className="mx-2 px-6 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-100 transition duration-300 shadow-md"
+                      className="mx-2 px-6 py-2 text-red-600 transition duration-300 border border-red-600 rounded-md shadow-md hover:bg-red-100 bg-white"
                       >
                       <TrashIcon className="w-5 h-5 inline" /> Delete
                     </button>
 
                     <button
                   onClick={() => router.push(`/profile/orderdetails/${order.OrderID}`)}
-                  className="px-6 py-2 bg-[#004581] text-white rounded-md hover:bg-[#018ABD] transition duration=300 shadow-md"
+                  className="px-4 py-2 bg-[#004581] text-white rounded-md hover:bg-[#018ABD] transition duration=300 shadow-md"
                   >
                   View Details
                 </button>
