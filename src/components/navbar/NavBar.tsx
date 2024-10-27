@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FaUserCircle } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Image from "next/image";
 import toast from "react-hot-toast";
 import Search from "@/components/search/Search";
 import CartSlider from "@/components/cartSlider/cartSlider"; // Import the Cart component
@@ -126,12 +127,13 @@ export default function NavBar() {
                   role="button"
                   className="ml-1 btn btn-ghost btn-circle avatar"
                 >
-                  <div className="rounded-full w-11">
-                    <img
+                    <Image
                       alt="User Avatar"
-                      src="./user.jpeg"
+                      src="/user.jpeg"
+                      width={44} // Adjust width as needed
+                      height={44} // Adjust height as needed
+                      className="rounded-full border shadow-md"
                     />
-                  </div>
                 </div>
                 <div>
                   <ul
