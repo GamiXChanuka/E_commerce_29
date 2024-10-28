@@ -199,7 +199,10 @@ const CheckoutPage = () => {
 
           console.log("Order placed successfully:", response2.data);
           alert("Order placed successfully");
-
+          router.push({
+            pathname: '/thank-you',
+            query: { orderId: response2.data.OrderID, userId: 16 },
+          });      
           if (result.CartID) {
             setCartId(result.CartID);
           } else {
@@ -350,7 +353,7 @@ const CheckoutPage = () => {
                   id="radio_1"
                   type="radio"
                   name="radio"
-                  checked={deliveryMethod === "Fedex"}
+                  checked={deliveryMethod === "delivery"}
                   onChange={() => setDeliveryMethod("delivery")}
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
@@ -416,7 +419,7 @@ const CheckoutPage = () => {
                   type="radio"
                   name="radio"
                   defaultChecked
-                  checked={paymentMethod === "cod"}
+                  checked={paymentMethod === "COD"}
                   onChange={() => setPaymentMethod("COD")}
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
@@ -441,8 +444,8 @@ const CheckoutPage = () => {
                   id="radio_4"
                   type="radio"
                   name="radio"
-                  checked={paymentMethod === "card"}
-                  onChange={() => setPaymentMethod("COD")}
+                  checked={paymentMethod === "Card"}
+                  onChange={() => setPaymentMethod("Card")}
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label
@@ -626,7 +629,7 @@ const CheckoutPage = () => {
 
           <p className="text-xl font-medium text-black">Payment Details</p>
 
-          {paymentMethod === "card" && (
+          {paymentMethod === "Card" && (
             <div>
               {/* Cardholder Name */}
               <label
