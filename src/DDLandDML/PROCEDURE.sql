@@ -112,3 +112,64 @@ BEGIN
 END$$
 DELIMITER ;
 
+-------------------------------------------------------
+-- new search procedure  ------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE GetProductVariantsByCategory(IN categoryNameInput VARCHAR(50))
+BEGIN
+    -- Step 1: Recursive CTE to find the category tree (including parents and children)
+    WITH RECURSIVE CategoryTree AS (
+        -- Find the category matching the input name with wildcards for partial match
+        SELECT CategoryID
+        FROM category
+        WHERE CategoryName LIKE CONCAT('%', categoryNameInput, '%')  -- Added wildcards
+        
+        UNION ALL
+        
+        -- Recursively find parent categories and their children
+        SELECT c.CategoryID
+        FROM category c
+        INNER JOIN CategoryTree ct ON c.ParentCategoryID = ct.CategoryID
+    ),
+
+    -- Step 2: Get ranked products with variants and images
+    RankedProducts AS (
+        SELECT 
+            v.VariantID,
+            v.Price,
+            p.ProductID, 
+            p.Title, 
+            pc.CategoryID, 
+            c.CategoryName,
+            i.ImageLink AS image_link,
+            ROW_NUMBER() OVER (PARTITION BY p.ProductID ORDER BY p.ProductID) AS row_num
+        FROM 
+            product p
+            JOIN productcategory pc ON p.ProductID = pc.ProductID
+            JOIN category c ON pc.CategoryID = c.CategoryID
+            JOIN variant v ON p.ProductID = v.ProductID
+            JOIN image i ON v.VariantID = i.VariantID
+        WHERE 
+            pc.CategoryID IN (SELECT CategoryID FROM CategoryTree)  -- Categories from the CTE
+    )
+
+    -- Step 3: Select the required product information
+    SELECT 
+        ProductID, 
+        Title, 
+        CategoryID, 
+        CategoryName, 
+        image_link,
+        VariantID,
+        Price
+    FROM 
+        RankedProducts
+    WHERE 
+        row_num = 1;  -- Get only one variant per product
+
+END$$
+
+DELIMITER ;
+
