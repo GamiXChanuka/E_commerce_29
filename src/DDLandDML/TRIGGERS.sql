@@ -122,3 +122,38 @@ DELIMITER ;
 
 -- DELIMITER ;
 
+DELIMITER //
+
+CREATE TRIGGER update_deliverymodule_after_order_insert
+AFTER INSERT ON `order`
+FOR EACH ROW
+BEGIN
+  DECLARE city_exists INT;
+  DECLARE is_backorder INT;
+  DECLARE estimated_days INT;
+  DECLARE order_city VARCHAR(50);
+
+  -- Get the city from the address of the new order
+  SELECT City INTO order_city FROM address WHERE AddressID = NEW.AddressID;
+
+  -- Check if the city exists in the city_table
+  SELECT COUNT(*) INTO city_exists FROM city_table WHERE LOWER(city) = LOWER(order_city);
+
+  -- Check if the OrderID exists in the backorders table
+  SELECT COUNT(*) INTO is_backorder FROM backorders WHERE OrderID = NEW.OrderID;
+
+  -- Determine the estimated delivery days based on the conditions
+  IF is_backorder > 0 AND city_exists = 0 THEN
+    SET estimated_days = 10;
+  ELSEIF is_backorder = 0 AND city_exists = 0 THEN
+    SET estimated_days = 7;
+  ELSEIF is_backorder = 0 AND city_exists > 0 THEN
+    SET estimated_days = 5;
+  END IF;
+
+  -- Insert data into the deliverymodule table with the calculated estimate date
+  INSERT INTO deliverymodule (OrderID, EstimateDate, AddressID)
+  VALUES (NEW.OrderID, DATE_ADD(CURDATE(), INTERVAL estimated_days DAY), NEW.AddressID);
+END //
+
+DELIMITER ;

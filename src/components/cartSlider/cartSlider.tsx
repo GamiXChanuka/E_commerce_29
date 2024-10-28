@@ -14,14 +14,52 @@ export default function CartSlider() {
   const [cartItems, setCartItems] = useState<CartItemData[]>([]);
   const [isOpen, setIsOpen] = useState(false); // To control the slider visibility
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Determine if the user is registered
+  const isRegistered = localStorage.getItem("isRegistered") === "true";
 
   // Fetch cart data from the API
   const fetchCartData = async () => {
     try {
-      const response = await axios.get("/api/cart");
-      setCartItems(response.data);
-    } catch (error) {
-      console.error("Error fetching cart data:", error);
+      if (isRegistered) {
+        // For registered users, fetch cart data from backend using token
+        const response = await axios.get("/api/cart");
+        const result = response.data;
+        console.log("Cart data slider t:", result);
+        setCartItems(result);
+      } else {
+        console.log("Unregistered user");
+        // For unregistered users, fetch cart from localStorage
+        const cart = JSON.parse(localStorage.getItem("internalCart") || "[]");
+        const updatedCart = [];
+
+        for (const item of cart) {
+          const response = await axios.post("/api/UnRegCart", {
+            VariantID: item.VariantID,
+          });
+
+          const variantDetailsArray = response.data;
+          const variantDetails = variantDetailsArray[0]; // Assuming the response is an array with one object
+
+          updatedCart.push({
+            VariantID: variantDetails.VariantID,
+            VariantName: variantDetails.VariantName,
+            Price: variantDetails.Price,
+            Quantity: item.quantity,
+            ImageLink: variantDetails.ImageLink,
+          });
+        }
+
+        console.log("Cart data slider t:=", updatedCart);
+        setCartItems(updatedCart); // Update state with cart items for unregistered users
+      }
+    } catch (err) {
+      console.error("Error fetching data:", err);
+      setError(err instanceof Error ? err.message : "An error occurred");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -49,7 +87,6 @@ export default function CartSlider() {
   const visitCart = () => {
     router.push("/cart");
     setIsOpen(!isOpen);
-
   };
 
   return (
@@ -88,17 +125,16 @@ export default function CartSlider() {
         }`}
       >
         <div className="p-4">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-2xl font-semibold text-black">Your Cart</h2>
-          <button
-            type="button"
-            className="p-2 text-white transition duration-300 bg-red-600 border border-red-600 rounded-md shadow-lg hover:bg-red-100"
-            onClick={toggleCart}
-          >
-            Cancel
-          </button>
-        </div>
-
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-semibold text-black">Your Cart</h2>
+            <button
+              type="button"
+              className="p-2 text-white transition duration-300 bg-red-600 border border-red-600 rounded-md shadow-lg hover:bg-red-100"
+              onClick={toggleCart}
+            >
+              Cancel
+            </button>
+          </div>
 
           {cartItems.length > 0 ? (
             <>
@@ -107,7 +143,7 @@ export default function CartSlider() {
                   {cartItems.length} Items
                 </span>
                 <span className="text-gray-700">
-                  Subtotal: Rs {" "} 
+                  Subtotal: Rs{" "}
                   {cartItems
                     .reduce(
                       (total, item) => total + item.Price * item.Quantity,

@@ -53,7 +53,7 @@ POST http://localhost:3000/api/UnRegCart
 Content-Type: application/json
 
 {
-  "VariantID": 1
+  "VariantID": 10
 }
 
 
