@@ -35,7 +35,7 @@ const CheckoutPage = () => {
   const [cartId, setCartId] = useState<number>(0);
   const [addressId, setAddressId] = useState<number>(0);
 
-  const [isRegistered, setIsRegistered] = useState<string>("false"); // Set this based on your auth logic
+  const [isRegistered, setIsRegistered] = useState<string>("true"); // Set this based on your auth logic
 
   const fetchData = async () => {
     try {
