@@ -32,7 +32,7 @@ CREATE TABLE `address` (
   `PostalCode` varchar(10) DEFAULT NULL,
   `District` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`AddressID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `address` (
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
-INSERT INTO `address` VALUES (1,'1','suboda road','Moratuwa','12345','Colombo');
+INSERT INTO `address` VALUES (1,'1','suboda road','Moratuwa','12345','Colombo'),(2,'2','suboda','Piliyandala','9999','Colombo'),(3,'3','Main Street','Metropolis','12345','Anuradhpura'),(4,'4','Main Street','Metropolis','12345','Anuradhpura'),(5,'1','suboda road','Moratuwa','12345','Colombo'),(8,'1','suboda road','Moratuwa','12345','Colombo'),(9,'','','','',''),(10,'1','jsjfdfjn','amhbdh','1231231','colombo'),(11,'1','jsjfdfjn','amhbdh','1231231','colombo'),(12,'1','jsjfdfjn','amhbdh','1231231','colombo'),(13,'1','jsjfdfjn','amhbdh','1231231','colombo'),(14,'1','2','3','4','5'),(15,'1','2','3','4','5'),(16,'1','2','3','4','5'),(17,'1','2','3','4','5'),(18,'4','5','6','7','6'),(19,'4','b mn a','hbasj','7112','hbASHB'),(20,'1','sadfa','afda','2314','asfasf'),(21,'1','sadfa','afda','2314','asfasf'),(22,'1231','asd','afda','1231','zvads'),(23,'1231','asd','afda','1231','zvads'),(24,'1','asdf','afeda','3214','sdafa'),(25,'1','asdf','afeda','3214','sdafa'),(26,'2','adf','efa','123','adfasf'),(27,'2','adf','affwef','123','adfa'),(28,'2','asdf','affwef','3214','asfasf'),(29,'3','SDF','sdfgs','341','zdg'),(30,'1','fdsgs','afas','2321','adss'),(31,'1','fdsgs','afas','2321','adss'),(32,'1','fdsgs','afas','2321','adss'),(33,'1','fdsgs','afas','2321','adss'),(34,'1','fdsgs','afas','2321','adss'),(35,'1','fdsgs','afas','2321','adss'),(36,'1','fdsgs','afas','2321','adss'),(37,'1','fdsgs','afas','2321','adss'),(38,'1','fdsgs','afas','2321','adss'),(39,'3','asdfa','asasf','231','1341323'),(40,'3','asdf','asdf','2341','adsfa'),(41,'2','sadf','adfsa','1324','asdff'),(42,'2','sadf','adfsa','1324','asdff'),(43,'2','sadf','adfsa','1324','asdff'),(44,'1','asd','afeda','1231','adfa'),(45,'1','asd','afeda','1231','adfa'),(46,'1231','asdf','asdf','23412','SDFas'),(47,'1231','asdf','asdf','23412','SDFas'),(48,'3','asdf','asdf','1243','sdf'),(49,'32','eaf','affffffewqaw','234','afaefrew'),(50,'2','adsfa','adsf','234','dsfa'),(51,'2','daf','saffa','123','afa'),(52,'2','fad','afdqew','1241','afqa'),(53,'2','adf','afwe','12312','adfsre'),(54,'2','asdf','aesf','1234','dsfgasf'),(55,'2','asdf','aesf','1234','dsfgasf'),(56,'2','sadfa','afsef','23313','dafcsd'),(57,'2','sadfa','afsef','23313','dafcsd'),(58,'2','asd','SAC','123','assd'),(59,'2','asd','SAC','123','assd'),(60,'1','ffwre','adsffw','3214','adfasf');
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +142,7 @@ CREATE TABLE `cart` (
   PRIMARY KEY (`CartID`),
   KEY `UserID` (`UserID`),
   CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,7 +151,7 @@ CREATE TABLE `cart` (
 
 LOCK TABLES `cart` WRITE;
 /*!40000 ALTER TABLE `cart` DISABLE KEYS */;
-INSERT INTO `cart` VALUES (1,1);
+INSERT INTO `cart` VALUES (1,1),(2,2),(3,3),(4,4),(5,4),(6,5),(7,5),(8,6),(9,6),(10,7),(11,7),(12,8),(13,8),(14,9),(15,9),(16,10),(17,10),(18,11),(19,12),(20,16),(21,17),(22,18),(23,19),(24,20),(25,21),(26,22),(27,23),(28,24),(29,25),(30,26),(31,27),(32,28),(33,29),(34,30),(35,31),(36,32),(37,33),(38,34),(39,35),(40,36),(41,37),(42,38),(43,39),(44,40),(45,41),(46,42),(47,43),(48,44),(49,45),(50,46),(51,47),(52,48);
 /*!40000 ALTER TABLE `cart` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,7 +180,7 @@ CREATE TABLE `cartitem` (
 
 LOCK TABLES `cartitem` WRITE;
 /*!40000 ALTER TABLE `cartitem` DISABLE KEYS */;
-INSERT INTO `cartitem` VALUES (1,1,2),(11,1,2),(12,1,1);
+INSERT INTO `cartitem` VALUES (1,1,2),(1,23,1),(3,23,4),(4,23,1),(5,31,1),(5,45,1),(6,39,1),(6,40,2),(6,42,1),(6,43,1),(6,44,1),(6,47,1),(7,41,2),(40,31,1),(40,45,1),(41,45,1);
 /*!40000 ALTER TABLE `cartitem` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -287,7 +287,7 @@ CREATE TABLE `order` (
   KEY `AddressID` (`AddressID`),
   CONSTRAINT `order_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`),
   CONSTRAINT `order_ibfk_2` FOREIGN KEY (`AddressID`) REFERENCES `address` (`AddressID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -296,7 +296,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (5,1,'2024-10-22','delivery','COD',59.99,1);
+INSERT INTO `order` VALUES (5,1,'2024-10-22','delivery','COD',59.99,1),(6,1,'2024-10-24','delivery','COD',953451.97,1),(7,16,'2024-10-25','delivery','COD',32514.99,1),(8,29,'2024-10-25','delivery','COD',59.99,20),(9,31,'2024-10-25','delivery','COD',24.99,22),(10,33,'2024-10-25','delivery','COD',24.99,24),(12,16,'2024-10-26','delivery','COD',55.98,43),(13,16,'2024-10-26','delivery','COD',9481.98,45),(15,44,'2024-10-26','delivery','COD',24.99,49),(16,45,'2024-10-26','delivery','COD',448025.95,50),(17,46,'2024-10-26','delivery','COD',630.99,51),(18,47,'2024-10-26','delivery','COD',228605.00,52),(19,48,'2024-10-26','delivery','COD',30.99,53),(21,16,'2024-10-26','delivery','COD',30.99,55),(22,16,'2024-10-26','delivery','COD',24.99,57),(23,16,'2024-10-28','delivery','COD',3355.00,59),(24,16,'2024-10-28','delivery','COD',59.99,60);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -395,7 +395,7 @@ CREATE TABLE `orderitem` (
 
 LOCK TABLES `orderitem` WRITE;
 /*!40000 ALTER TABLE `orderitem` DISABLE KEYS */;
-INSERT INTO `orderitem` VALUES (5,5,1);
+INSERT INTO `orderitem` VALUES (5,5,1),(6,1,3),(6,11,2),(6,12,1),(7,6,1),(7,11,1),(8,5,1),(9,6,1),(10,6,1),(12,6,1),(12,9,1),(13,5,1),(13,6,1),(13,40,1),(13,41,1),(15,6,1),(16,5,1),(16,6,1),(16,8,1),(16,9,1),(16,10,1),(16,19,1),(16,21,1),(16,29,1),(16,30,1),(16,32,1),(16,40,1),(16,41,1),(17,9,1),(17,26,1),(18,19,1),(19,9,1),(21,9,1),(22,6,1),(23,29,1),(24,5,1);
 /*!40000 ALTER TABLE `orderitem` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -544,7 +544,7 @@ CREATE TABLE `registeredcustomer` (
 
 LOCK TABLES `registeredcustomer` WRITE;
 /*!40000 ALTER TABLE `registeredcustomer` DISABLE KEYS */;
-INSERT INTO `registeredcustomer` VALUES (1,'Naveen','forapikey6@gmail.com','$2a$10$xapUFuFG5nGG3thvEmNM8ujNXecxfnd6s/V6dsSrJ6jAEDBGQsCYG',1);
+INSERT INTO `registeredcustomer` VALUES (13,'Naveen','forapikey6@gmail.com','$2a$10$GkBTo80rN5kse/ECdLJ5HeaWTW/EHvXVC8pVn0qmmg6Q4rFGaswR.',5),(16,'Assassin\'s','forapi6@gmail.com','$2a$10$wI/uWWybZzeQd9DAGbYKNeozh/M3BfyJKgXZO91umsLIHbdi0k9x2',8);
 /*!40000 ALTER TABLE `registeredcustomer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -574,25 +574,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `AfterInsertRegisteredCustomer` AFTER INSERT ON `registeredcustomer` FOR EACH ROW BEGIN
-    -- Insert a new cart for the newly registered user
-    INSERT INTO Cart (UserID)
-    VALUES (NEW.UserID);
-END */;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Table structure for table `user`
@@ -608,7 +589,7 @@ CREATE TABLE `user` (
   `LastName` varchar(50) NOT NULL,
   `Role` enum('Registered','UnRegistered') NOT NULL,
   PRIMARY KEY (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -617,7 +598,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'0766869075','Naveen','Jayasooriya','Registered');
+INSERT INTO `user` VALUES (1,'0766869075','Naveen','Jayasooriya','Registered'),(2,'0706869075','Naveen ','Sandaruwan','Registered'),(3,'0766869075','gamith','chanuka','UnRegistered'),(4,'0761412412','saman','kumara','UnRegistered'),(5,'1234567890','John','Doe','Registered'),(6,'1234567890','John','Doe','Registered'),(7,'1234567890','John','Doe','Registered'),(8,'1234567890','John','Doe','Registered'),(9,'1234567890','John','Doe','Registered'),(10,'1234567890','John','Doe','Registered'),(11,'1234567890','John','Doe','Registered'),(12,'1234567890','John','Doe','Registered'),(13,'0766869075','Naveen','Jayasooriya','Registered'),(16,'0766869075','Naveen','Jayasooriya','Registered'),(17,'1234567890','John','Doe','Registered'),(18,'','','','UnRegistered'),(19,'0766923841','naveen','Sandaruwan','UnRegistered'),(20,'0766923841','naveen','Sandaruwan','UnRegistered'),(21,'0766923841','naveen','Sandaruwan','UnRegistered'),(22,'0766923841','naveen','Sandaruwan','UnRegistered'),(23,'3','1','2','UnRegistered'),(24,'3','1','2','UnRegistered'),(25,'3','1','2','UnRegistered'),(26,'3','1','2','UnRegistered'),(27,'3','1','2','UnRegistered'),(28,'67836','hbhmsd','sahdbc','UnRegistered'),(29,'12312','sdaf','adsfa','UnRegistered'),(30,'12312','sdaf','adsfa','UnRegistered'),(31,'asfa','adf','afda','UnRegistered'),(32,'asfa','adf','afda','UnRegistered'),(33,'121312','wqere','asdfa','UnRegistered'),(34,'121312','wqere','asdfa','UnRegistered'),(35,'341234','afw','aefa','UnRegistered'),(36,'12312','sgafa','advaf','UnRegistered'),(37,'12312','hbhmsd','asdfa','UnRegistered'),(38,'3','1','2','UnRegistered'),(39,'','ddscc','CXZC','UnRegistered'),(40,'134','dsfsd','sdsd','UnRegistered'),(41,'413241','hbhmsd','jhbjh ,m ','UnRegistered'),(42,'413241','hbhmsd','jhbjh ,m ','UnRegistered'),(43,'12341','wqere','afda','UnRegistered'),(44,'1324','hbhmsd','adsfa','UnRegistered'),(45,'2134','hbhmsd','sahdbc','UnRegistered'),(46,'3241','hbhmsd','jhbjh ,m ','UnRegistered'),(47,'2331','hbhmsd','asdfa','UnRegistered'),(48,'2134','sdaf','sahdbc','UnRegistered');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -648,7 +629,7 @@ CREATE TABLE `variant` (
 
 LOCK TABLES `variant` WRITE;
 /*!40000 ALTER TABLE `variant` DISABLE KEYS */;
-INSERT INTO `variant` VALUES (1,'iPhone 14 Pro - 128GB','The latest iPhone with 128GB storage',1,'IP14P128',999.99,0),(2,'iPhone 14 Pro - 256GB','The latest iPhone with 256GB storage',1,'IP14P256',1099.99,0),(3,'MacBook Pro - 16GB RAM','MacBook Pro with M2 chip and 16GB RAM',2,'MBP16',2399.99,0),(4,'Washing Machine - 8kg','Front-load washing machine with 8kg capacity',3,'WM8KG',499.99,7),(5,'Lego Building Set - 1500 Pieces','A large Lego set for building multiple models',5,'Lego1500',59.99,9),(6,'Barbie Doll - Classic','A classic Barbie doll with accessories',6,'BarbieClassic',24.99,17),(7,'Action Figure Set - Superheroes','Set of 5 action figures from popular superhero movies',7,'AFSuperheroes',39.99,9),(8,'Educational Board Game - Math Whiz','A fun board game to learn math skills',8,'MathWhizGame',29.99,3),(9,'Redmi A3','Brand New , Sealed Pack , Fingerprint, 6.71\" Bigg Display , Type c port ',9,'R A3 bc',30.99,6),(10,'Redmi A3','Brand New , Sealed Pack , Fingerprint, 6.71\" Bigg Display , Type c port ',9,'R A3 bl',32.99,10),(11,'Samsung Galaxy A05','Samsung Galaxy A05 4GB 64GB (Brand New, Sealed pack)',10,'SAM-A05-4GB-64GB',32490.00,20),(12,'MSI Vector 16 HX','Experience unparalleled performance with the MSI Vector 16 HX A14V. Powered by the latest Intel Core i9 14th Gen processor and NVIDIA GeForce RTX 4070 graphics, this laptop is designed for gamers and professionals who demand the best.',11,'MSI-V16HX-A14V-4070',885472.00,5),(13,'Samsung Galaxy A05','Powered by the Mediatek Helio G85 processor and featuring a 6.7-inch display, this smartphone is perfect for everyday use. With 4GB RAM and storage options of 64GB or 128GB, expandable via microSD, you’ll have plenty of space for all your needs. Capture stunning photos with the 50MP dual rear cameras and enjoy long-lasting battery life with the 5000mAh battery and 25W fast charging. Running on Android 13, the Galaxy A05 offers the latest features and security updates.',10,'SAM-A05-4GB-128GB',34980.00,10),(14,'Samsung Galaxy A15','Powered by the Mediatek Helio G85 processor and featuring a 6.5-inch Super AMOLED display, this smartphone is perfect for both work and play. With 6GB RAM and 128GB storage, expandable via microSD, you’ll have ample space for all your needs. Capture stunning photos with the triple camera setup, including a 50MP main sensor. Enjoy long-lasting battery life with the 5000mAh battery and fast charging capabilities. Running on the latest Android OS, the Galaxy A15 offers cutting-edge features and security updates.',12,'SAM-A15-6GB-128GB',49990.00,20),(15,'Samsung Galaxy A15','Powered by the Mediatek Helio G85 processor and featuring a 6.5-inch Super AMOLED display, this smartphone is perfect for both work and play. With 4GB RAM and 64GB storage, expandable via microSD, you’ll have ample space for all your needs. Capture stunning photos with the triple camera setup, including a 50MP main sensor. Enjoy long-lasting battery life with the 5000mAh battery and fast charging capabilities. Running on the latest Android OS, the Galaxy A15 offers cutting-edge features and security updates.',12,'SAM-A15-4GB-64GB',45990.00,20),(16,'MSI Vector 17 HX','Experience unparalleled performance with the MSI Vector 17 HX. Powered by the latest Intel Core i7 14th Gen processor and NVIDIA GeForce RTX 4070 graphics, this laptop is designed for gamers and professionals who demand the best.',11,'MSI-V17HX-A14V-4070',999995.00,2),(17,'Solstar 43\" FHD LED Digital Television','Experience stunning visuals with the Solstar 43\" FHD LED TV. With a 43-inch Full HD display and multiple connectivity options (HDMI, USB, VGA), it’s perfect for all your entertainment needs. Enjoy high-quality audio with 2x6W speakers and a sleek design that fits any space.',13,'SOL-LED43HD6100SS',73990.00,20),(18,'Solstar 32\" FHD LED Digital Television','Experience stunning visuals with the Solstar 32\" FHD LED TV. With a 32-inch Full HD display and multiple connectivity options (HDMI, USB, VGA), it’s perfect for all your entertainment needs. Enjoy high-quality audio with 2x6W speakers and a sleek design that fits any space.',13,'SOL-LED32HD6100SS',63990.00,20),(19,'Samsung Crystal UHD Smart TV','Experience breathtaking visuals with the Samsung 55\" Crystal UHD Smart TV. Featuring a 4K UHD resolution and Dynamic Crystal Color technology, this TV delivers vibrant and lifelike images. The Crystal Processor 4K ensures smooth performance, while the sleek AirSlim design adds a modern touch to any room. Enjoy seamless streaming and smart features powered by Tizen OS.',14,'SAM-UA55BU8100KXXT',228605.00,20),(20,'Apple Macbook Air M1','Experience the power of the Apple MacBook Air M1. With 8GB RAM, 256GB SSD, and the M1 chip, it delivers exceptional performance and stunning visuals in a sleek, portable design.',2,'APP-MBA-M1-8GB-256GB',277550.00,4),(21,'Samsung HDR 4K Smart TV','This TV features Quantum Dot technology, delivering 100% Color Volume for vivid, lifelike colors at any brightness level. The Quantum Processor Lite with 4K Upscaling enhances clarity and depth in every scene. Dual LED backlights provide balanced colors and stronger contrast. Quantum HDR goes beyond standard HDR to create deep blacks and impressive contrast. Motion Xcelerator ensures smooth motion and improved clarity for high-intensity sports, movies, and games.',14,'QN43Q60CAFXZA',199990.00,15),(22,'M19 Earbuds Mic Full Set with Box','Enjoy high-quality sound with the M19 Earbuds. Featuring Bluetooth 5.0 for a stable connection, these earbuds offer stereo sound, a built-in mic, and a flashlight. Perfect for on-the-go use, they come with a charging case for convenience.',15,'M19-TWS-BT50',1500.00,20),(23,'M10 TWS Wireless Earbuds','Enjoy high-fidelity sound with the M10 TWS Wireless Earbuds. Featuring Bluetooth 4.0, touch control, and an LED digital display, these earbuds offer a seamless audio experience. With a built-in microphone and power bank, they are perfect for on-the-go use.',15,'M10-TWS-BT50',2350.00,2),(24,'ASPOR A323 Powerbank','The ASPOR A323 Powerbank offers 10000mAh capacity, fast charging, dual USB outputs, LED display, and two input options (Micro USB and Type-C) for versatile recharging.',17,'A323',1779.00,20),(25,'ASPOR A324 Powerbank','The ASPOR A324 Powerbank offers 20000mAh capacity, fast charging, dual USB outputs, LED display, and two input options (Micro USB and Type-C) for versatile recharging.',17,'A324',1979.00,20),(26,'13-Piece Multi-Jointed Shapeshift Robot','Unleash creativity with this 13-piece Multi-Jointed Shapeshift Robot 3D Printed Action Figure Set. Perfect for kids, adults, and parent-child bonding, these highly articulated action figures offer endless fun. Designed to mimic real-life movements, each figure is fully customizable and ideal for imaginative games, DIY crafting, or collector\'s display.',18,'MJ-SR-13-2024',600.00,20),(27,'13-Piece Multi-Jointed Shapeshift Robot','Unleash creativity with this 13-piece Multi-Jointed Shapeshift Robot 3D Printed Action Figure Set. Perfect for kids, adults, and parent-child bonding, these highly articulated action figures offer endless fun. Designed to mimic real-life movements, each figure is fully customizable and ideal for imaginative games, DIY crafting, or collector\'s display.',18,'MJ-SR-13-2024',500.00,10),(28,'Airpods Pro- Blue','Experience Adaptive Audio, Active Noise Cancellation, and Personalized Spatial Audio with AirPods Pro 2. Dust, sweat, and water-resistant, with MagSafe Charging Case for up to 6 hours of listening.',20,'AP-PRO2-ADPT-AUD',12300.00,10),(29,'MSI Wired Gaming Headset','Wired gaming headset with 120° adjustable noise-cancelling microphone, compatible with PS4, PS5, Xbox, smartphones, and PCs. Provides immersive sound and comfortable design for long sessions.',19,'GH120NC',3355.00,20),(30,'MSI Wired Gaming Headset','Wired gaming headset with 120° adjustable noise-cancelling microphone, compatible with PS4, PS5, Xbox, smartphones, and PCs. Provides immersive sound and comfortable design for long sessions.',19,'GH120NC',3465.00,20),(31,'Airpods Pro - Red','Experience the ultimate in audio innovation with the AirPods Pro 3. Featuring Adaptive Audio, Active Noise Cancellation, and Personalized Spatial Audio with dynamic head tracking, these earbuds offer an immersive listening experience. Dust, sweat, and water resistant, with a MagSafe Charging Case (USB-C) that includes a speaker and lanyard loop, they provide up to 6 hours of listening time on a single charge.',20,'AP-PRO3-ADPT-AUD',12500.00,10),(32,'MSI Wired Gaming Headset','Wired gaming headset with 120° adjustable noise-cancelling microphone, compatible with PS4, PS5, Xbox, smartphones, and PCs. Provides immersive sound and comfortable design for long sessions.',19,'GH120NC',3035.00,20),(33,'Marvel Superhero Iron Spider','Bring the excitement of Marvel superheroes to life with these building block action figures featuring Gwen Stacy, Miles Morales, and Iron Spider. Perfect for children and collectors alike, these figures are designed to be compatible with major building block sets. Made with high-quality materials, they’re great for imaginative play or as part of a display collection.',21,'KT1069-MSF',800.00,10),(34,'Marvel Superhero Iron Spider','Bring the excitement of Marvel superheroes to life with these building block action figures featuring Gwen Stacy, Miles Morales, and Iron Spider. Perfect for children and collectors alike, these figures are designed to be compatible with major building block sets. Made with high-quality materials, they’re great for imaginative play or as part of a display collection.',21,'KT1069-MSF',800.00,10),(35,'Rubic Cube','Professional 3x3x3 speed cube with 5.6 cm size, high-quality rotation, and durable design.',22,'SC5603',199.00,20),(36,'Wired USB PC Game Controller','Master your games with the Wired USB PC Game Controller. Compatible with Windows XP, 7, 8, and 10, this gamepad offers a comfortable and ergonomic design. Featuring plug-and-play functionality, it provides precise control with its responsive buttons and joystick. Perfect for PC gaming, this black game controller ensures an immersive gaming experience.',23,'USB-GAMEPAD-WIN',5500.00,5),(37,'Children Montessori Clock','Colorful Montessori clock toy for kids to learn hours, minutes, and seconds.',24,'MCET123Y',522.00,20),(38,'Children Montessori Clock','Colorful Montessori clock toy for kids to learn hours, minutes, and seconds.',24,'MCET123B',540.00,20),(39,'DualShock Wireless Controller','Elevate your gaming experience with the PS4 DualShock Wireless Controller. Designed for PlayStation, PC, laptops, and mobile devices, this AAA-grade controller offers precise control and comfort. With Bluetooth connectivity, it ensures seamless gameplay across multiple platforms.',23,'DS4-WL-AAA',7700.00,10),(40,'Lego set 585Pcs City Police Station SWAT Truck','SWAT Truck Car Building Blocks DIY Toys for Boys. Compatible with Lego and perfect for boys who love building their city police stations.',5,'LB585SWATp',5001.00,20),(41,'Lego set 585Pcs City Police Station SWAT Truck','SWAT Truck Car Building Blocks DIY Toys for Boys. Compatible with Lego and perfect for boys who love building their city police stations.',5,'LB554SWATp',4396.00,20),(42,'Mini 3D Glasses VR Headset','Immerse yourself in virtual reality with the BOX 5 Mini 3D Glasses. Designed for use with smartphones, this white VR headset offers a 360° unobstructed view and adjustable lenses for optimal comfort. Made from durable ABS material, it is lightweight and portable, perfect for on-the-go entertainment.',25,'BOX5-VR-WHT',3699.00,5);
+INSERT INTO `variant` VALUES (1,'iPhone 14 Pro - 128GB','The latest iPhone with 128GB storage',1,'IP14P128',999.99,0),(2,'iPhone 14 Pro - 256GB','The latest iPhone with 256GB storage',1,'IP14P256',1099.99,0),(3,'MacBook Pro - 16GB RAM','MacBook Pro with M2 chip and 16GB RAM',2,'MBP16',2399.99,0),(4,'Washing Machine - 8kg','Front-load washing machine with 8kg capacity',3,'WM8KG',499.99,7),(5,'Lego Building Set - 1500 Pieces','A large Lego set for building multiple models',5,'Lego1500',59.99,5),(6,'Barbie Doll - Classic','A classic Barbie doll with accessories',6,'BarbieClassic',24.99,9),(7,'Action Figure Set - Superheroes','Set of 5 action figures from popular superhero movies',7,'AFSuperheroes',39.99,9),(8,'Educational Board Game - Math Whiz','A fun board game to learn math skills',8,'MathWhizGame',29.99,2),(9,'Redmi A3','Brand New , Sealed Pack , Fingerprint, 6.71\" Bigg Display , Type c port ',9,'R A3 bc',30.99,1),(10,'Redmi A3','Brand New , Sealed Pack , Fingerprint, 6.71\" Bigg Display , Type c port ',9,'R A3 bl',32.99,9),(11,'Samsung Galaxy A05','Samsung Galaxy A05 4GB 64GB (Brand New, Sealed pack)',10,'SAM-A05-4GB-64GB',32490.00,17),(12,'MSI Vector 16 HX','Experience unparalleled performance with the MSI Vector 16 HX A14V. Powered by the latest Intel Core i9 14th Gen processor and NVIDIA GeForce RTX 4070 graphics, this laptop is designed for gamers and professionals who demand the best.',11,'MSI-V16HX-A14V-4070',885472.00,4),(13,'Samsung Galaxy A05','Powered by the Mediatek Helio G85 processor and featuring a 6.7-inch display, this smartphone is perfect for everyday use. With 4GB RAM and storage options of 64GB or 128GB, expandable via microSD, you’ll have plenty of space for all your needs. Capture stunning photos with the 50MP dual rear cameras and enjoy long-lasting battery life with the 5000mAh battery and 25W fast charging. Running on Android 13, the Galaxy A05 offers the latest features and security updates.',10,'SAM-A05-4GB-128GB',34980.00,10),(14,'Samsung Galaxy A15','Powered by the Mediatek Helio G85 processor and featuring a 6.5-inch Super AMOLED display, this smartphone is perfect for both work and play. With 6GB RAM and 128GB storage, expandable via microSD, you’ll have ample space for all your needs. Capture stunning photos with the triple camera setup, including a 50MP main sensor. Enjoy long-lasting battery life with the 5000mAh battery and fast charging capabilities. Running on the latest Android OS, the Galaxy A15 offers cutting-edge features and security updates.',12,'SAM-A15-6GB-128GB',49990.00,20),(15,'Samsung Galaxy A15','Powered by the Mediatek Helio G85 processor and featuring a 6.5-inch Super AMOLED display, this smartphone is perfect for both work and play. With 4GB RAM and 64GB storage, expandable via microSD, you’ll have ample space for all your needs. Capture stunning photos with the triple camera setup, including a 50MP main sensor. Enjoy long-lasting battery life with the 5000mAh battery and fast charging capabilities. Running on the latest Android OS, the Galaxy A15 offers cutting-edge features and security updates.',12,'SAM-A15-4GB-64GB',45990.00,20),(16,'MSI Vector 17 HX','Experience unparalleled performance with the MSI Vector 17 HX. Powered by the latest Intel Core i7 14th Gen processor and NVIDIA GeForce RTX 4070 graphics, this laptop is designed for gamers and professionals who demand the best.',11,'MSI-V17HX-A14V-4070',999995.00,2),(17,'Solstar 43\" FHD LED Digital Television','Experience stunning visuals with the Solstar 43\" FHD LED TV. With a 43-inch Full HD display and multiple connectivity options (HDMI, USB, VGA), it’s perfect for all your entertainment needs. Enjoy high-quality audio with 2x6W speakers and a sleek design that fits any space.',13,'SOL-LED43HD6100SS',73990.00,20),(18,'Solstar 32\" FHD LED Digital Television','Experience stunning visuals with the Solstar 32\" FHD LED TV. With a 32-inch Full HD display and multiple connectivity options (HDMI, USB, VGA), it’s perfect for all your entertainment needs. Enjoy high-quality audio with 2x6W speakers and a sleek design that fits any space.',13,'SOL-LED32HD6100SS',63990.00,20),(19,'Samsung Crystal UHD Smart TV','Experience breathtaking visuals with the Samsung 55\" Crystal UHD Smart TV. Featuring a 4K UHD resolution and Dynamic Crystal Color technology, this TV delivers vibrant and lifelike images. The Crystal Processor 4K ensures smooth performance, while the sleek AirSlim design adds a modern touch to any room. Enjoy seamless streaming and smart features powered by Tizen OS.',14,'SAM-UA55BU8100KXXT',228605.00,18),(20,'Apple Macbook Air M1','Experience the power of the Apple MacBook Air M1. With 8GB RAM, 256GB SSD, and the M1 chip, it delivers exceptional performance and stunning visuals in a sleek, portable design.',2,'APP-MBA-M1-8GB-256GB',277550.00,4),(21,'Samsung HDR 4K Smart TV','This TV features Quantum Dot technology, delivering 100% Color Volume for vivid, lifelike colors at any brightness level. The Quantum Processor Lite with 4K Upscaling enhances clarity and depth in every scene. Dual LED backlights provide balanced colors and stronger contrast. Quantum HDR goes beyond standard HDR to create deep blacks and impressive contrast. Motion Xcelerator ensures smooth motion and improved clarity for high-intensity sports, movies, and games.',14,'QN43Q60CAFXZA',199990.00,14),(22,'M19 Earbuds Mic Full Set with Box','Enjoy high-quality sound with the M19 Earbuds. Featuring Bluetooth 5.0 for a stable connection, these earbuds offer stereo sound, a built-in mic, and a flashlight. Perfect for on-the-go use, they come with a charging case for convenience.',15,'M19-TWS-BT50',1500.00,20),(23,'M10 TWS Wireless Earbuds','Enjoy high-fidelity sound with the M10 TWS Wireless Earbuds. Featuring Bluetooth 4.0, touch control, and an LED digital display, these earbuds offer a seamless audio experience. With a built-in microphone and power bank, they are perfect for on-the-go use.',15,'M10-TWS-BT50',2350.00,2),(24,'ASPOR A323 Powerbank','The ASPOR A323 Powerbank offers 10000mAh capacity, fast charging, dual USB outputs, LED display, and two input options (Micro USB and Type-C) for versatile recharging.',17,'A323',1779.00,20),(25,'ASPOR A324 Powerbank','The ASPOR A324 Powerbank offers 20000mAh capacity, fast charging, dual USB outputs, LED display, and two input options (Micro USB and Type-C) for versatile recharging.',17,'A324',1979.00,20),(26,'13-Piece Multi-Jointed Shapeshift Robot','Unleash creativity with this 13-piece Multi-Jointed Shapeshift Robot 3D Printed Action Figure Set. Perfect for kids, adults, and parent-child bonding, these highly articulated action figures offer endless fun. Designed to mimic real-life movements, each figure is fully customizable and ideal for imaginative games, DIY crafting, or collector\'s display.',18,'MJ-SR-13-2024',600.00,19),(27,'13-Piece Multi-Jointed Shapeshift Robot','Unleash creativity with this 13-piece Multi-Jointed Shapeshift Robot 3D Printed Action Figure Set. Perfect for kids, adults, and parent-child bonding, these highly articulated action figures offer endless fun. Designed to mimic real-life movements, each figure is fully customizable and ideal for imaginative games, DIY crafting, or collector\'s display.',18,'MJ-SR-13-2024',500.00,10),(28,'Airpods Pro- Blue','Experience Adaptive Audio, Active Noise Cancellation, and Personalized Spatial Audio with AirPods Pro 2. Dust, sweat, and water-resistant, with MagSafe Charging Case for up to 6 hours of listening.',20,'AP-PRO2-ADPT-AUD',12300.00,10),(29,'MSI Wired Gaming Headset','Wired gaming headset with 120° adjustable noise-cancelling microphone, compatible with PS4, PS5, Xbox, smartphones, and PCs. Provides immersive sound and comfortable design for long sessions.',19,'GH120NC',3355.00,18),(30,'MSI Wired Gaming Headset','Wired gaming headset with 120° adjustable noise-cancelling microphone, compatible with PS4, PS5, Xbox, smartphones, and PCs. Provides immersive sound and comfortable design for long sessions.',19,'GH120NC',3465.00,19),(31,'Airpods Pro - Red','Experience the ultimate in audio innovation with the AirPods Pro 3. Featuring Adaptive Audio, Active Noise Cancellation, and Personalized Spatial Audio with dynamic head tracking, these earbuds offer an immersive listening experience. Dust, sweat, and water resistant, with a MagSafe Charging Case (USB-C) that includes a speaker and lanyard loop, they provide up to 6 hours of listening time on a single charge.',20,'AP-PRO3-ADPT-AUD',12500.00,10),(32,'MSI Wired Gaming Headset','Wired gaming headset with 120° adjustable noise-cancelling microphone, compatible with PS4, PS5, Xbox, smartphones, and PCs. Provides immersive sound and comfortable design for long sessions.',19,'GH120NC',3035.00,19),(33,'Marvel Superhero Iron Spider','Bring the excitement of Marvel superheroes to life with these building block action figures featuring Gwen Stacy, Miles Morales, and Iron Spider. Perfect for children and collectors alike, these figures are designed to be compatible with major building block sets. Made with high-quality materials, they’re great for imaginative play or as part of a display collection.',21,'KT1069-MSF',800.00,10),(34,'Marvel Superhero Iron Spider','Bring the excitement of Marvel superheroes to life with these building block action figures featuring Gwen Stacy, Miles Morales, and Iron Spider. Perfect for children and collectors alike, these figures are designed to be compatible with major building block sets. Made with high-quality materials, they’re great for imaginative play or as part of a display collection.',21,'KT1069-MSF',800.00,10),(35,'Rubic Cube','Professional 3x3x3 speed cube with 5.6 cm size, high-quality rotation, and durable design.',22,'SC5603',199.00,20),(36,'Wired USB PC Game Controller','Master your games with the Wired USB PC Game Controller. Compatible with Windows XP, 7, 8, and 10, this gamepad offers a comfortable and ergonomic design. Featuring plug-and-play functionality, it provides precise control with its responsive buttons and joystick. Perfect for PC gaming, this black game controller ensures an immersive gaming experience.',23,'USB-GAMEPAD-WIN',5500.00,5),(37,'Children Montessori Clock','Colorful Montessori clock toy for kids to learn hours, minutes, and seconds.',24,'MCET123Y',522.00,20),(38,'Children Montessori Clock','Colorful Montessori clock toy for kids to learn hours, minutes, and seconds.',24,'MCET123B',540.00,20),(39,'DualShock Wireless Controller','Elevate your gaming experience with the PS4 DualShock Wireless Controller. Designed for PlayStation, PC, laptops, and mobile devices, this AAA-grade controller offers precise control and comfort. With Bluetooth connectivity, it ensures seamless gameplay across multiple platforms.',23,'DS4-WL-AAA',7700.00,10),(40,'Lego set 585Pcs City Police Station SWAT Truck','SWAT Truck Car Building Blocks DIY Toys for Boys. Compatible with Lego and perfect for boys who love building their city police stations.',5,'LB585SWATp',5001.00,18),(41,'Lego set 585Pcs City Police Station SWAT Truck','SWAT Truck Car Building Blocks DIY Toys for Boys. Compatible with Lego and perfect for boys who love building their city police stations.',5,'LB554SWATp',4396.00,18),(42,'Mini 3D Glasses VR Headset','Immerse yourself in virtual reality with the BOX 5 Mini 3D Glasses. Designed for use with smartphones, this white VR headset offers a 360° unobstructed view and adjustable lenses for optimal comfort. Made from durable ABS material, it is lightweight and portable, perfect for on-the-go entertainment.',25,'BOX5-VR-WHT',3699.00,5);
 /*!40000 ALTER TABLE `variant` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -659,6 +640,49 @@ UNLOCK TABLES;
 --
 -- Dumping routines for database 'ecommerce4'
 --
+/*!50003 DROP PROCEDURE IF EXISTS `AddAddress` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddAddress`(
+    IN AddressNumber VARCHAR(10),
+    IN Lane VARCHAR(50),
+    IN City VARCHAR(50),
+    IN PostalCode VARCHAR(10),
+    IN District VARCHAR(50),
+    OUT AddressID INT
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Handle the error
+        SELECT 'Error adding address' AS message;
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    -- Insert the new address
+    INSERT INTO `address` (AddressNumber, Lane, City, PostalCode, District)
+    VALUES (AddressNumber, Lane, City, PostalCode, District);
+
+    -- Get the last inserted AddressID
+    SET AddressID = LAST_INSERT_ID();
+
+    COMMIT;
+    SELECT 'Address added successfully' AS message, AddressID;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `AddToCart` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -706,6 +730,56 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `AddUserAndGetCartID` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `AddUserAndGetCartID`(
+    IN PhoneNumber CHAR(10),
+    IN FirstName VARCHAR(50),
+    IN LastName VARCHAR(50),
+    IN Role ENUM('Registered', 'UnRegistered'),
+    OUT UserID INT,
+    OUT CartID INT
+)
+BEGIN
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Handle the error
+        SELECT 'Error adding user' AS message;
+        ROLLBACK;
+    END;
+
+    START TRANSACTION;
+
+    -- Insert the new user
+    INSERT INTO `user` (PhoneNumber, FirstName, LastName, Role)
+    VALUES (PhoneNumber, FirstName, LastName, Role);
+
+    -- Get the last inserted UserID
+    SET UserID = LAST_INSERT_ID();
+
+    -- Insert a new cart for the newly registered user
+    INSERT INTO Cart (UserID)
+    VALUES (UserID);
+
+    -- Get the last inserted CartID
+    SET CartID = LAST_INSERT_ID();
+
+    COMMIT;
+    SELECT 'User and cart added successfully' AS message, UserID, CartID;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `CreateUser` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -745,6 +819,12 @@ BEGIN
     -- Insert the user into the RegisteredCustomer table
     INSERT INTO RegisteredCustomer (UserID, UserName, Email, Password, AddressID)
     VALUES (userId, userName, email, password, addressId);
+    
+   
+
+    -- Insert a new cart for the newly registered user
+    INSERT INTO Cart (UserID)
+    VALUES (userId);
 
     COMMIT;
 END ;;
@@ -1058,6 +1138,74 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetProductVariantsByCategory` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetProductVariantsByCategory`(IN categoryNameInput VARCHAR(50))
+BEGIN
+    -- Step 1: Recursive CTE to find the category tree (including parents and children)
+    WITH RECURSIVE CategoryTree AS (
+        -- Find the category matching the input name with wildcards for partial match
+        SELECT CategoryID
+        FROM category
+        WHERE CategoryName LIKE CONCAT('%', categoryNameInput, '%')  -- Added wildcards
+        
+        UNION ALL
+        
+        -- Recursively find parent categories and their children
+        SELECT c.CategoryID
+        FROM category c
+        INNER JOIN CategoryTree ct ON c.ParentCategoryID = ct.CategoryID
+    ),
+
+    -- Step 2: Get ranked products with variants and images
+    RankedProducts AS (
+        SELECT 
+            v.VariantID,
+            v.Price,
+            p.ProductID, 
+            p.Title, 
+            pc.CategoryID, 
+            c.CategoryName,
+            i.ImageLink AS image_link,
+            ROW_NUMBER() OVER (PARTITION BY p.ProductID ORDER BY p.ProductID) AS row_num
+        FROM 
+            product p
+            JOIN productcategory pc ON p.ProductID = pc.ProductID
+            JOIN category c ON pc.CategoryID = c.CategoryID
+            JOIN variant v ON p.ProductID = v.ProductID
+            JOIN image i ON v.VariantID = i.VariantID
+        WHERE 
+            pc.CategoryID IN (SELECT CategoryID FROM CategoryTree)  -- Categories from the CTE
+    )
+
+    -- Step 3: Select the required product information
+    SELECT 
+        ProductID, 
+        Title, 
+        CategoryID, 
+        CategoryName, 
+        image_link,
+        VariantID,
+        Price
+    FROM 
+        RankedProducts
+    WHERE 
+        row_num = 1;  -- Get only one variant per product
+
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `GetUserByEmail` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1199,6 +1347,65 @@ BEGIN
     WHERE v.VariantID = VariantID;
 
     COMMIT;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `GetVariantsByCategoryName` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_0900_ai_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetVariantsByCategoryName`(IN category_name VARCHAR(50))
+BEGIN
+    -- Temporary table to store category IDs matching the given category name and its children
+    WITH RECURSIVE CategoryTree AS (
+        SELECT CategoryID
+        FROM category
+        WHERE CategoryName LIKE category_name
+        UNION ALL
+        SELECT c.CategoryID
+        FROM category c
+        INNER JOIN CategoryTree ct ON c.ParentCategoryID = ct.CategoryID
+    ),
+    RankedProducts AS (
+        SELECT 
+            v.VariantID,
+            v.Price,
+            p.ProductID, 
+            p.Title, 
+            pc.CategoryID, 
+            c.CategoryName,
+            i.ImageLink as image_link,
+            ROW_NUMBER() OVER (PARTITION BY p.ProductID ORDER BY p.ProductID) AS row_num
+        FROM 
+            product p
+            JOIN productcategory pc ON p.ProductID = pc.ProductID
+            JOIN category c ON pc.CategoryID = c.CategoryID
+            JOIN variant v ON p.ProductID = v.ProductID
+            JOIN image i ON v.VariantID = i.VariantID
+        WHERE 
+            pc.CategoryID IN (SELECT CategoryID FROM CategoryTree)
+    )
+    SELECT 
+        ProductID, 
+        Title, 
+        CategoryID, 
+        CategoryName, 
+        image_link,
+        VariantID,
+        Price
+    FROM 
+        RankedProducts
+    WHERE 
+        row_num = 1;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1393,4 +1600,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-24 12:16:53
+-- Dump completed on 2024-10-28 18:32:38
