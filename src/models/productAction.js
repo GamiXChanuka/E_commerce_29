@@ -5,7 +5,7 @@ export async function getProducts(category) {
       console.log("Using connection pool");
   
       const [rows] = await pool.execute(
-                `call ecommerce4.GetProductVariantsByCategory(?);`,
+                `call GetProductVariantsByCategory(?);`,
           [`${category}`]
         );
         console.log(rows);
