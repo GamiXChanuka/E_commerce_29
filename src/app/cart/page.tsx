@@ -19,9 +19,9 @@ export default function CartPage() {
   const [error, setError] = useState<string | null>(null);
   const [selectedCity, setSelectedCity] = useState<string>("");
 
-  // const isRegistered  = localStorage.getItem("isRegistered");
+  const isRegistered  = localStorage.getItem("isRegistered")==="true";
   // console.log(isRegistered);
-  var isRegistered = false; // Set this based on your auth logic
+  // var isRegistered = false; // Set this based on your auth logic
 
   const fetchData = async () => {
     try {
@@ -30,9 +30,10 @@ export default function CartPage() {
         const response = await axios.get("/api/cart");
 
         const result = response.data;
-        console.log("Cart data:", result);
+        console.log("Cart data cart t:", result);
         setData(result);
       } else {
+        console.log("Unregistered user");
         // For unregistered users, fetch cart from localStorage
         const cart = JSON.parse(localStorage.getItem("internalCart") || "[]");
         
@@ -55,7 +56,7 @@ export default function CartPage() {
           });
         }
 
-        console.log("Cart data:=", updatedCart);
+        console.log("Cart data cart f:=", updatedCart);
         setData(updatedCart); // Update state with cart items for unregistered users
       }
     } catch (err) {

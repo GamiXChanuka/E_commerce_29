@@ -36,7 +36,7 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showVariant, setShowVariant] = useState(true);
-  const isRegistered = true; // Set this based on your auth logic
+  const isRegistered = localStorage.getItem("isRegistered") === "true";
 
   useEffect(() => {
     if (productID) {
