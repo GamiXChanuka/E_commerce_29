@@ -1,8 +1,7 @@
 "use client";
-import router, { useRouter } from "next/router";
+import router, { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
 
 interface CartItemData {
   VariantID: string;
@@ -13,6 +12,7 @@ interface CartItemData {
 }
 
 const CheckoutPage = () => {
+  const router = useRouter();
   const [data, setData] = useState<CartItemData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -151,13 +151,8 @@ const CheckoutPage = () => {
           console.log("Order placed successfully:", response2.data);
           // alert("Order placed successfully");
 
-
-        // Redirect to thank-you page with order and invoice data
-        router.push({
-          pathname: '/thank-you',
-          query: { orderId: response2.data.OrderID, userId: 16 },
-        });          
-          
+          // Redirect to thank-you page with order and invoice data
+          router.push(`/thank-you?orderId=${response2.data.OrderID}&userId=16`);
         } catch (err) {
           console.error("Error adding unregistered customer:", err);
           alert("An error occurred while adding the unregistered customer");
@@ -356,7 +351,7 @@ const CheckoutPage = () => {
                   type="radio"
                   name="radio"
                   checked={deliveryMethod === "Fedex"}
-                  onChange={() => setDeliveryMethod("Fedex")}
+                  onChange={() => setDeliveryMethod("delivery")}
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label
@@ -386,7 +381,7 @@ const CheckoutPage = () => {
                   type="radio"
                   name="radio"
                   checked={deliveryMethod === "DHL"}
-                  onChange={() => setDeliveryMethod("DHL")}
+                  onChange={() => setDeliveryMethod("dilivery")}
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label
@@ -422,7 +417,7 @@ const CheckoutPage = () => {
                   name="radio"
                   defaultChecked
                   checked={paymentMethod === "cod"}
-                  onChange={() => setPaymentMethod("cod")}
+                  onChange={() => setPaymentMethod("COD")}
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label
@@ -447,7 +442,7 @@ const CheckoutPage = () => {
                   type="radio"
                   name="radio"
                   checked={paymentMethod === "card"}
-                  onChange={() => setPaymentMethod("card")}
+                  onChange={() => setPaymentMethod("COD")}
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label
