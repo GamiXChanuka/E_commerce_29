@@ -194,10 +194,7 @@ const CheckoutPage = () => {
 
           console.log("Order placed successfully:", response2.data);
           alert("Order placed successfully");
-          router.push({
-            pathname: '/thank-you',
-            query: { orderId: response2.data.OrderID, userId: 16 },
-          });      
+
           if (result.CartID) {
             setCartId(result.CartID);
           } else {
