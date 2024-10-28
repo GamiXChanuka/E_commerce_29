@@ -36,18 +36,16 @@ const CheckoutPage = () => {
   const [cartId, setCartId] = useState<number>(0);
   const [addressId, setAddressId] = useState<number>(0);
 
-  const isRegistered = localStorage.getItem("isRegistered") === "true";
+  const [isRegistered, setIsRegistered] = useState<string>("true"); // Set this based on your auth logic
 
   const fetchData = async () => {
     try {
-      console.log(" cart isRegistered:", isRegistered);
-
-      if (isRegistered) {
+      if (isRegistered === "true") {
         // For registered users, fetch cart data from backend using token
         const response = await axios.get("/api/cart");
 
         const result = response.data;
-        console.log("Cart data in check out t:", result);
+        console.log("Cart data:", result);
         setData(result);
       } else {
         // For unregistered users, fetch cart from localStorage
@@ -71,7 +69,7 @@ const CheckoutPage = () => {
           });
         }
 
-        console.log("Cart data in chek out f:=", updatedCart);
+        console.log("Cart data:=", updatedCart);
         setData(updatedCart); // Update state with cart items for unregistered users
       }
     } catch (err) {
@@ -91,7 +89,7 @@ const CheckoutPage = () => {
     console.log("yydadyyy");
     console.log("handel place order");
     try {
-      if (!isRegistered) {
+      if (isRegistered === "false") {
         console.log("yyyyy");
         // Add unregistered customer first
 
@@ -143,9 +141,6 @@ const CheckoutPage = () => {
             PaymentMethod: paymentMethod,
             AddressID: response3.data.AddressID,
           };
-
-          // add locle strorage data to cart bu calling unRegSetCart api for each item in cart
-
           const response2 = await axios.post("/api/placeOrder", orderData);
 
           console.log("Order placed successfully:", response2.data);
@@ -356,7 +351,7 @@ const CheckoutPage = () => {
                   type="radio"
                   name="radio"
                   checked={deliveryMethod === "Fedex"}
-                  onChange={() => setDeliveryMethod("Fedex")}
+                  onChange={() => setDeliveryMethod("delivery")}
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label
@@ -386,7 +381,7 @@ const CheckoutPage = () => {
                   type="radio"
                   name="radio"
                   checked={deliveryMethod === "DHL"}
-                  onChange={() => setDeliveryMethod("DHL")}
+                  onChange={() => setDeliveryMethod("delivery")}
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label
@@ -422,7 +417,7 @@ const CheckoutPage = () => {
                   name="radio"
                   defaultChecked
                   checked={paymentMethod === "cod"}
-                  onChange={() => setPaymentMethod("cod")}
+                  onChange={() => setPaymentMethod("COD")}
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label
@@ -447,7 +442,7 @@ const CheckoutPage = () => {
                   type="radio"
                   name="radio"
                   checked={paymentMethod === "card"}
-                  onChange={() => setPaymentMethod("card")}
+                  onChange={() => setPaymentMethod("COD")}
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label
@@ -473,7 +468,7 @@ const CheckoutPage = () => {
         {/*------------------------------- form Section --------------------------------------------------------------------------*/}
 
         <div className="px-4 pt-8 mt-10 bg-gray-50 lg:mt-0">
-          {!isRegistered && (
+          {isRegistered === "false" && (
             <div>
               <p className="mt-8 text-xl font-medium text-black">
                 User Details
