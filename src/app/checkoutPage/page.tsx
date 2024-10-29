@@ -37,11 +37,11 @@ const CheckoutPage = () => {
   const [cartId, setCartId] = useState<number>(0);
   const [addressId, setAddressId] = useState<number>(0);
 
-  const [isRegistered, setIsRegistered] = useState<string>("true"); // Set this based on your auth logic
+  const isRegistered  = localStorage.getItem("isRegistered")==="true";
 
   const fetchData = async () => {
     try {
-      if (isRegistered === "true") {
+      if (isRegistered) {
         // For registered users, fetch cart data from backend using token
         const response = await axios.get("/api/cart");
 
@@ -90,7 +90,7 @@ const CheckoutPage = () => {
     console.log("yydadyyy");
     console.log("handel place order");
     try {
-      if (isRegistered === "false") {
+      if (!isRegistered) {
         console.log("yyyyy");
         // Add unregistered customer first
 
@@ -152,8 +152,6 @@ const CheckoutPage = () => {
 
               const orderID = response2.data.orderID; // Extract orderID from response
               console.log("Order ID:", orderID); // Now you can use this orderID as needed
-              // You can save it to state if you want to use it elsewhere in the component
-              // router.push('/thank-you');
               router.push(`/thank-you?orderId=${orderID}`);
 
             } else {
@@ -162,7 +160,6 @@ const CheckoutPage = () => {
           } catch (error) {
             console.error("Error placing order:", error);
           }
-// ----------------------------------------------------------------------------------------------------
 
           // console.log("Order placed successfully:", response2.data);
           // // alert("Order placed successfully");
@@ -177,7 +174,8 @@ const CheckoutPage = () => {
 
         // Send order data to backend
       } else {
-        // Prepare order data for registered users
+// ---------------------------------------------------------------------------------------------------------------------
+//----------------------- Prepare order data for registered users-----------------------------------------------------
 
         console.log("xxxxxx");
         const token = localStorage.getItem("user");
