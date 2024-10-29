@@ -212,7 +212,7 @@ function AboutUs() {
             whileHover={{ scale: 1.1 }}
             transition={{ duration: 0.5 }}
           >
-            Contact Us Today
+            Contact Us Today  
           </motion.a>
         </div>
       </section>
