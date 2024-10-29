@@ -220,7 +220,7 @@ const MarketplacePage = () => {
                 </figure>
                 <div className="p-4">
                   <h2 className="text-lg font-semibold text-center text-gray-800 dark:text-gray-600">{product.Title}</h2>
-                  <p className="text-center text-gray-600 dark:text-gray-500">Price: € {product.Price}</p>
+                  <p className="text-center text-gray-600 dark:text-gray-500">Price: Rs {product.Price}</p>
                   <div className="flex justify-center mt-2">
 
                       <Link href={`/marketplace/${product.ProductID}`}  className="bg-[#004581] text-white p-2 rounded-lg w-full mt-4 hover:bg-[#018ABD] text-center"  >View Product</Link>

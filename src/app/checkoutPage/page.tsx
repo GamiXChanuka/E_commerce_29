@@ -141,13 +141,34 @@ const CheckoutPage = () => {
             PaymentMethod: paymentMethod,
             AddressID: response3.data.AddressID,
           };
-          const response2 = await axios.post("/api/placeOrder", orderData);
+          // const response2 = await axios.post("/api/placeOrder", orderData);
 
-          console.log("Order placed successfully:", response2.data);
-          // alert("Order placed successfully");
+// -----------------------------------------------------------------------------------------------
+          try {
+            const response2 = await axios.post("/api/placeOrder", orderData);
+        
+            if (response2.data.status === 200) {
+
+              const orderID = response2.data.orderID; // Extract orderID from response
+              console.log("Order ID:", orderID); // Now you can use this orderID as needed
+              // You can save it to state if you want to use it elsewhere in the component
+              // router.push('/thank-you');
+              router.push(`/thank-you?orderId=${orderID}`);
+
+            } else {
+              console.error("Failed to place order:", response.data.success);
+            }
+          } catch (error) {
+            console.error("Error placing order:", error);
+          }
+// ----------------------------------------------------------------------------------------------------
+
+          // console.log("Order placed successfully:", response2.data);
+          // // alert("Order placed successfully");
+          // router.push('/thank-you');
 
           // Redirect to thank-you page with order and invoice data
-          router.push(`/thank-you?orderId=${response2.data.OrderID}&userId=16`);
+          // router.push(`/thank-you?orderId=${response2.data.OrderID}&userId=16`);
         } catch (err) {
           console.error("Error adding unregistered customer:", err);
           alert("An error occurred while adding the unregistered customer");
@@ -161,7 +182,7 @@ const CheckoutPage = () => {
 
         try {
           const response = await axios.post("/api/getUserCartId", {
-            userId: 9,
+            userId: 13,
           });
 
           const result = response.data;
@@ -182,18 +203,38 @@ const CheckoutPage = () => {
           setAddressId(response3.data.AddressID);
 
           const orderData = {
-            userid: 9,
+            userid: 13,
             cartId: result.CartID,
             DeliveryType: deliveryMethod,
             PaymentMethod: paymentMethod,
             AddressID: response3.data.AddressID,
           };
 
-          // Send order data to backend
-          const response2 = await axios.post("/api/placeOrder", orderData);
+          // // Send order data to backend
+          // const response2 = await axios.post("/api/placeOrder", orderData);
 
-          console.log("Order placed successfully:", response2.data);
-          alert("Order placed successfully");
+          // console.log("Order placed successfully:", response2.data);
+          // alert("Order placed successfully");
+          // router.push('/thank-you');
+
+
+          try {
+            const response2 = await axios.post("/api/placeOrder", orderData);
+        
+            if (response2.data.status === 200) {
+
+              const orderID = response2.data.orderID; // Extract orderID from response
+              console.log("Order ID:", orderID); // Now you can use this orderID as needed
+              // You can save it to state if you want to use it elsewhere in the component
+              // router.push('/thank-you');
+              router.push(`/thank-you?orderId=${orderID}`);
+
+            } else {
+              console.error("Failed to place order:", response.data.success);
+            }
+          } catch (error) {
+            console.error("Error placing order:", error);
+          }
 
           if (result.CartID) {
             setCartId(result.CartID);
@@ -214,7 +255,7 @@ const CheckoutPage = () => {
   return (
     <>
       {/* ----------------------------------------------------------Nabvar ---------------------------------------- */}
-      <div className="flex flex-col items-center py-4 bg-white border-b sm:flex-row sm:px-10 lg:px-20 xl:px-32">
+      <div className="flex flex-col items-center py-4 bg-white border-b h-fit sm:flex-row sm:px-10 lg:px-20 xl:px-32">
         <a href="#" className="text-2xl font-bold text-gray-800">
           Checkout Page
         </a>

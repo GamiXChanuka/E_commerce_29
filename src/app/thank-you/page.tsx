@@ -6,6 +6,9 @@ import Spinner from "@/components/spinner/Spinner";
 import { ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/outline";
 import domtoimage from "dom-to-image";
 import { jsPDF } from "jspdf";
+import { useSearchParams } from 'next/navigation';
+
+
 
 interface OrderItem {
   VariantName: string;
@@ -22,12 +25,22 @@ interface OrderDetails {
   items: OrderItem[];
 }
 
+interface InvoiceProps {
+  orderId: number;
+}
+
 const Invoice = () => {
   const router = useRouter();
-  const orderId = 16; // hardcoded order ID
+  // const orderId = 16; // hardcoded order ID
   const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get('orderId'); // Retrieve the orderID
+
+  console.log("Order ID:", orderId); // Now you can use orderId as needed
 
 
   const invoiceRef = useRef(null);

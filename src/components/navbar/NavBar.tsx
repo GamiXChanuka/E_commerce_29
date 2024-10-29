@@ -132,7 +132,7 @@ export default function NavBar() {
                       src="/user.jpeg"
                       width={44} // Adjust width as needed
                       height={44} // Adjust height as needed
-                      className="rounded-full border shadow-md"
+                      className="border rounded-full shadow-md"
                     />
                 </div>
                 <div>
@@ -141,12 +141,14 @@ export default function NavBar() {
                     className="menu menu-sm dropdown-content bg-white z-[1] mt-3 w-52 shadow-lg gap-3"
                   >
                     <li>
+                    <Link href="/profile">
+
                       <div className="shadow-lg hover:bg-[#dde8f0] ">
                         <FaUserCircle className="inline-block w-6 h-6 text-gray-800" />
-                        <Link href="/profile">
                           <div className="justify-between">{userName}</div>
-                        </Link>
                       </div>
+                      </Link>
+
                     </li>
                     <li>
                       <button
