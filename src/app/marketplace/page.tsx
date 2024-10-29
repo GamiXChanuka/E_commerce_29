@@ -1,14 +1,25 @@
 "use client";
 
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import router from 'next/router';
 
 const MarketplacePage = () => {
+  const router = useRouter(); // useRouter from 'next/navigation' for client-side routing
+
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('search'); // Get the search query from the URL
-  
+  const [searchTerm, setSearchTerm] = useState(searchQuery || '');
+
+  const handleClear = () => {
+    setSearchTerm(''); // Clear the input
+    router.push('/marketplace'); // Reset the URL
+  };
+
+
   interface Product {
     
     ProductID: number;
@@ -22,8 +33,31 @@ const MarketplacePage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc'); // State to manage sort order
+
+    // Function to sort products
+  const sortProducts = () => {
+    const sortedProducts = [...products].sort((a, b) => {
+      if (sortOrder === 'asc') {
+        return a.Title.localeCompare(b.Title); // Sort by Title
+      } else {
+        return b.Title.localeCompare(a.Title);
+      }
+    });
+    setProducts(sortedProducts);
+    // Toggle sort order for next click
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+  };
+
+  const capitalizeWords = (str: string) => {
+    return str.replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+
 
   useEffect(() => {
+
+
+
     // Fetch products based on the search query using axios POST
     const fetchProducts = async () => {
       try {
@@ -133,17 +167,26 @@ const MarketplacePage = () => {
                     <svg className="w-5 h-5 text-gray-400 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                     </svg>
-                    <span className="ml-1 text-sm font-medium text-black dark:text-black md:ml-2">Electronics</span>
+                    <span className="ml-1 text-sm font-medium text-black dark:text-black md:ml-2">{capitalizeWords(searchQuery || '')}</span>
                   </div>
                 </li>
+                <li>
+                {searchQuery && (
+                <button onClick={handleClear}   className="px-3 py-1 ml-2 text-sm font-medium text-white bg-red-500 border border-red-500 rounded hover:bg-red-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-300"
+>
+                  Clear 
+                </button>
+      )}
+                </li>
+                
               </ol>
             </nav>
-            <h2 className="mt-3 text-xl font-semibold text-gray-900 dark:text-gray-800 sm:text-2xl">Electronics</h2>
+            <h2 className="mt-3 text-xl font-semibold text-gray-900 dark:text-gray-800 sm:text-2xl">Products</h2>
           </div>
 
           {/* Filters and Sort */}
           <div className="flex items-center space-x-4">
-            <button
+            {/* <button
               type="button"
               className="flex items-center justify-center px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-primary-700 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-white dark:hover:text-white"
             >
@@ -151,16 +194,10 @@ const MarketplacePage = () => {
                 <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M18.796 4H5.204a1 1 0 00-.753 1.659l5.302 6.058a1 1 0 01.247.659v4.874a.5.5 0 00.2.4l3 2.25a.5.5 0 00.8-.4v-7.124a1 1 0 01.247-.659l5.302-6.059c.566-.646.106-1.658-.753-1.658z" />
               </svg>
               Filters
-            </button>
+            </button> */}
 
-            <button
-              type="button"
-              className="flex items-center justify-center px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-primary-700 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
-            >
-              <svg className="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M7 4l3 3M7 4L4 7m9-3h6l-6 6h6m-6.5 10l3.5-7 3.5 7M14 18h4" />
-              </svg>
-              Sort
+            <button onClick={sortProducts} className="px-3 py-1 mb-4 text-white bg-black rounded-lg">
+              Sort by Title {sortOrder === 'asc' ? '🔼' : '🔽'}
             </button>
           </div>
         </div>

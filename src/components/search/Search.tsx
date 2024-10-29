@@ -17,7 +17,7 @@ const SearchComponent = () => {
         // Otherwise, update the URL with the search term
         router.push(`/marketplace?search=${searchTerm}`);
       }
-    }, 500); // Debounce delay of 500ms
+    }, 300); // Debounce delay of 500ms
 
     return () => clearTimeout(delayDebounceFn);
   }, [searchTerm, router]);
