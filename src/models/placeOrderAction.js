@@ -13,11 +13,12 @@ export async function placeOrder(userid, cartId, DeliveryType, PaymentMethod, Ad
 
     // Extract the message from the result
     const message = result[0][0].message;
-
+    const orderID = result[0][0].OrderID;
+    console.log('Order ID:', orderID);
     if (message.includes('Error')) {
       return { error: message, status: 500 };
     } else {
-      return { success: message, status: 200 };
+      return { success: message, status: 200, orderID: orderID };
     }
   } catch (error) {
     console.log('Error placing order:', error);

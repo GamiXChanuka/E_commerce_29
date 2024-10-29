@@ -11,11 +11,11 @@ POST http://localhost:3000/api/placeOrder
 Content-Type: application/json
 
 {
-  "userid": 16,
-  "cartId": 20,
+  "userid": 9,
+  "cartId": 4,
   "DeliveryType": "delivery",
   "PaymentMethod": "COD",
-  "AddressID": 1
+  "AddressID": 4
 }
 
 ### Drop Order
