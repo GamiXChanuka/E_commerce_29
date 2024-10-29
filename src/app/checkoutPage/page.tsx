@@ -161,7 +161,7 @@ const CheckoutPage = () => {
 
         try {
           const response = await axios.post("/api/getUserCartId", {
-            userId: 16,
+            userId: 9,
           });
 
           const result = response.data;
@@ -182,7 +182,7 @@ const CheckoutPage = () => {
           setAddressId(response3.data.AddressID);
 
           const orderData = {
-            userid: 16,
+            userid: 9,
             cartId: result.CartID,
             DeliveryType: deliveryMethod,
             PaymentMethod: paymentMethod,

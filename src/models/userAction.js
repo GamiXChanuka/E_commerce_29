@@ -126,7 +126,7 @@ export async function addUserAndGetCartID(user) {
 //get cart id by user id
 export const getUserCartId = async (userId) => {
     try {
-        const query = 'select CartID from cart where UserID= ?;';
+        const query = 'CALL GetCartIDByUserID(?);';
         const [rows] = await pool.execute(query, [userId]);
         return rows[0]; //
     } catch (error) {
