@@ -32,7 +32,10 @@ const OrderDetailsPage = () => {
       if (!orderId) return;
 
       try {
+        console.log("--------------------------------------------------------------------",orderId);
+
         const response = await axios.post("/api/getOrderDetails", {
+         
           orderId: Number(orderId),
         });
         setOrderDetails(response.data);
@@ -72,15 +75,15 @@ const OrderDetailsPage = () => {
       </aside>
 
       {/* Main Content */}
-      <div className="w-4/5 p-10 bg-white shadow-lg rounded-lg">
+      <div className="w-4/5 p-10 bg-white rounded-lg shadow-lg">
     <div>
       <h2 className="text-3xl font-semibold mb-6 text-[#004581]">Order Details</h2>
       <div className="mb-4 flex flex-col items-center p-4 bg-[#e6e7eb] border border-blue-300 rounded-md focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black">
-        <div className="w-full flex justify-between">
+        <div className="flex justify-between w-full">
         <p className="text-lg"><strong>Order Date:</strong> {new Date(orderDetails.OrderDate).toLocaleDateString()}</p>
         <p className="text-lg"><strong>Payment Method:</strong> {orderDetails.PaymentMethod}</p>
         </div>
-        <div className="w-full flex justify-between">
+        <div className="flex justify-between w-full">
         <p className="text-lg"><strong>Order Total:</strong> {orderDetails.OrderTotal}</p>
         <p className="text-lg"><strong>Delivery Type:</strong> {orderDetails.DeliveryType}</p>
         </div>
@@ -91,7 +94,7 @@ const OrderDetailsPage = () => {
         <ul className="space-y-4">
           {orderDetails.items.map((item, index) => (
             <li key={index} className="flex items-center p-4  bg-[#e6e7eb] border border-blue-300 rounded-md focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black">
-              <img src={item.ImageLink} alt={item.VariantName} className="w-24 h-24 object-cover mr-4 rounded" />
+              <img src={item.ImageLink} alt={item.VariantName} className="object-cover w-24 h-24 mr-4 rounded" />
               <div className="flex-grow">
                 <p className="font-bold">{item.VariantName}</p>
                 <p>Unit Price: {item.Price}</p>
