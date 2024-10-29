@@ -3,6 +3,9 @@ import router, { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { getUserID } from "@/helpers/getDataFromToken";
+import { toast } from "react-hot-toast";
+
+
 
 interface CartItemData {
   VariantID: string;
@@ -92,6 +95,8 @@ const CheckoutPage = () => {
     try {
       if (!isRegistered) {
         console.log("yyyyy");
+        toast.success("Processing Your Order..");
+
         // Add unregistered customer first
 
         // await addUnregCustomer();
@@ -146,12 +151,14 @@ const CheckoutPage = () => {
 
 // -----------------------------------------------------------------------------------------------
           try {
+
             const response2 = await axios.post("/api/placeOrder", orderData);
         
             if (response2.data.status === 200) {
 
               const orderID = response2.data.orderID; // Extract orderID from response
               console.log("Order ID:", orderID); // Now you can use this orderID as needed
+
               router.push(`/thank-you?orderId=${orderID}`);
 
             } else {
@@ -180,6 +187,9 @@ const CheckoutPage = () => {
         console.log("xxxxxx");
         const token = localStorage.getItem("user");
         const userId = token ? getUserID(token) : null;
+
+        toast.success("Processing Your Order..");
+
         try {
           const response = await axios.post("/api/getUserCartId", {
             userId: userId,
@@ -219,6 +229,7 @@ const CheckoutPage = () => {
 
 
           try {
+
             const response2 = await axios.post("/api/placeOrder", orderData);
         
             if (response2.data.status === 200) {
@@ -227,6 +238,7 @@ const CheckoutPage = () => {
               console.log("Order ID:", orderID); // Now you can use this orderID as needed
               // You can save it to state if you want to use it elsewhere in the component
               // router.push('/thank-you');
+
               router.push(`/thank-you?orderId=${orderID}`);
 
             } else {
@@ -417,8 +429,8 @@ const CheckoutPage = () => {
                   id="radio_2"
                   type="radio"
                   name="radio"
-                  checked={deliveryMethod === "DHL"}
-                  onChange={() => setDeliveryMethod("dilivery")}
+                  checked={deliveryMethod === "storePickup"}
+                  onChange={() => setDeliveryMethod("storePickup")}
                   
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>

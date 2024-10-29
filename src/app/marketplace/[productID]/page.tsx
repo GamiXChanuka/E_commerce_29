@@ -161,7 +161,7 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
                   {(selectedVariant?.StockCount ?? 0) > 0 ? (
                     <span className="text-green-600">In Stock</span>
                   ) : (
-                    <span className="text-red-600">Out of Stock</span>
+                    <span className="text-red-600">Out of Stock (But you can order)</span>
                   )}
                 </p>
               </div>
@@ -194,7 +194,7 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
               <button
                 className="bg-[#004581] text-white p-2 rounded-lg w-full mt-4 hover:bg-[#018ABD] flex justify-center items-center"
                 onClick={addToCart}
-                disabled={selectedVariant?.StockCount === 0}
+                // disabled={selectedVariant?.StockCount === 0}
               >
                 <span>Add to Cart&nbsp;&nbsp;</span>
                 <FaShoppingCart />
