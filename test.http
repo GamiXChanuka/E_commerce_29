@@ -95,7 +95,7 @@ POST http://localhost:3000/api/getUserCartId
 Content-Type: application/json
 
 {
-  "userId": 16
+  "userId": 9
 }
 
 ### Get User Info
