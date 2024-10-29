@@ -20,7 +20,7 @@
     "clsx": "^2.1.1",
     "connect-mysql-session": "^0.1.1",
     "express-session": "^1.18.0",
-    "framer-motion": "^11.11.9",
+    "framer-motion": "^11.11.10",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.438.0",
     "mysql2": "^3.11.2",
