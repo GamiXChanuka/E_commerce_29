@@ -6,6 +6,7 @@ export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();
     const  userId  = reqBody.userId;
+    console.log("🚀 ~ POST ~ userId:", userId)
 
     // get orders
     const orders = await getOrders(userId);

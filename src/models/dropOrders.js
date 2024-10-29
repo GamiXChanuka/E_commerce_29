@@ -20,7 +20,7 @@ export async function dropOrder(orderId) {
             return message;
         }
     } catch (error) {
-        console.error('Error dropping order:', error);
+        console.log('Error dropping order:', error);
         throw new Error('Failed to drop order');
     }
 }

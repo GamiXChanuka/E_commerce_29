@@ -45,12 +45,14 @@ const LoginPage = () => {
   const onLogin: SubmitHandler<LoginFormInputs> = async (data) => {
     try {
       setLoading(true);
-      await toast.promise(axios.post("/api/login", data), {
+      const response = await toast.promise(axios.post("/api/login", data), {
         loading: "Logging in...",
         success: <b>Login successful</b>,
         error: <b>Login failed</b>,
       });
+      const token = response.data.token; // Assuming the token is in response.data.token
       localStorage.setItem("isRegistered", "true");
+      localStorage.setItem("user", token);
       window.location.href = "/"; // Redirect to home page
     } catch (error: any) {
       toast.error(error.response?.data.message || error.message);
