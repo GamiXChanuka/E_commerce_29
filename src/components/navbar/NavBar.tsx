@@ -7,6 +7,7 @@ import Image from "next/image";
 import toast from "react-hot-toast";
 import Search from "@/components/search/Search";
 import CartSlider from "@/components/cartSlider/cartSlider"; // Import the Cart component
+import { getUserName } from "@/helpers/getDataFromToken";
 
 export default function NavBar() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -17,13 +18,13 @@ export default function NavBar() {
   // Fetch user data
   const fetchUserData = async () => {
     try {
-      const response = await axios.get("/api/homeNav");
-      const data = response.data;
-      if (response.status === 200 && data.username) {
-        setUserName(data.username);
+      const token = localStorage.getItem("user");
+      const userName = token ? getUserName(token) : "UnAuthorized";
+      if (userName) {
+        setUserName(userName);
         setLoggedIn(true);
       } else {
-        setUserName(null);
+        setUserName("UnAuthorized");
         setLoggedIn(false);
       }
     } catch (error) {
@@ -44,6 +45,7 @@ export default function NavBar() {
       setLoggedIn(false);
       setUserName(null);
       localStorage.setItem("isRegistered", "false");
+      localStorage.removeItem("user");
       router.push("/");
     } catch (error: any) {
       toast.error("Failed to logout");
@@ -117,7 +119,7 @@ export default function NavBar() {
           {/* Searchbox */}
           <Search />
           {/* Cart Component */}
-          <CartSlider /> {/* Using Cart component here */}
+          <CartSlider /> 
           {/* Profile or Login */}
           <div className="ml-6 dropdown dropdown-end">
             {loggedIn ? (
@@ -142,12 +144,11 @@ export default function NavBar() {
                   >
                     <li>
                     <Link href="/profile">
-
-                      <div className="shadow-lg hover:bg-[#dde8f0] ">
+                      <div className="flex items-center px-8 py-2 shadow-lg hover:bg-[#dde8f0] rounded-md">
                         <FaUserCircle className="inline-block w-6 h-6 text-gray-800" />
-                          <div className="justify-between">{userName}</div>
+                        <div className="ml-2 text-gray-800">{userName}</div>
                       </div>
-                      </Link>
+                    </Link>
 
                     </li>
                     <li>

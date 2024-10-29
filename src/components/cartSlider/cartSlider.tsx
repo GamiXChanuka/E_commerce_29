@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+"use client";
+import  { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
@@ -18,10 +19,10 @@ export default function CartSlider() {
   const [error, setError] = useState<string | null>(null);
 
   // Determine if the user is registered
-  const isRegistered = localStorage.getItem("isRegistered") === "true";
-
+  
   // Fetch cart data from the API
   const fetchCartData = async () => {
+    const isRegistered = localStorage.getItem("isRegistered") === "true";
     try {
       if (isRegistered) {
         // For registered users, fetch cart data from backend using token
@@ -66,17 +67,6 @@ export default function CartSlider() {
   useEffect(() => {
     fetchCartData();
   }, []);
-
-  // Function to add item to cart
-  const addToCart = (variantId: number) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.VariantID === variantId
-          ? { ...item, Quantity: item.Quantity + 1 }
-          : item
-      )
-    );
-  };
 
   // Function to toggle the cart slider
   const toggleCart = () => {

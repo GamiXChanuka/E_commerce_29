@@ -8,7 +8,6 @@ export async function getProducts(category) {
                 `call GetProductVariantsByCategory(?);`,
           [`${category}`]
         );
-        console.log(rows);
       return rows[0];
     } catch (error) {
       throw new Error(error.message);

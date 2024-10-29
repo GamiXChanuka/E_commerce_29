@@ -1,4 +1,4 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse, NextRequest, userAgent } from "next/server";
 import bcryptjs from "bcryptjs";
 import { getUserByEmail } from "@/models/userAction";
 import jwt from "jsonwebtoken";
@@ -35,6 +35,8 @@ export async function POST(request: NextRequest) {
     const tokenData = {
       id: existingUser.UserID,
       email: existingUser.Email,
+      userName: existingUser.UserName,
+      addressId : existingUser.AddressID
     };
 
     //create a token
@@ -48,8 +50,7 @@ export async function POST(request: NextRequest) {
     );
     response.cookies.set("token", token, {
         httpOnly: true,
-        secure: true,
-        
+        secure: true, 
     });
     //store token in the local storage
     return response;

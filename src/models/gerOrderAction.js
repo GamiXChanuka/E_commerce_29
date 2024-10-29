@@ -19,3 +19,27 @@ export async function getOrders(userId) {
         throw new Error('Failed to fetch orders');
     }
 }
+
+export async function getOrderDetails(orderId) {
+  const query = `CALL GetOrderDetails(?)`;
+  const [orderDetails] = await pool.execute(query, [orderId]);
+
+  if (orderDetails[0].length === 0) {
+    throw new Error("Order not found");
+  }
+
+  const items = orderDetails[0].map((item) => ({
+    VariantName: item.VariantName,
+    Price: item.Price,
+    Quantity: item.Quantity,
+    ImageLink: item.ImageLink,
+  }));
+
+  return {
+    OrderDate: orderDetails[0][0].OrderDate,
+    DeliveryType: orderDetails[0][0].DeliveryType,
+    PaymentMethod: orderDetails[0][0].PaymentMethod,
+    OrderTotal: orderDetails[0][0].OrderTotal,
+    items,
+  };
+}

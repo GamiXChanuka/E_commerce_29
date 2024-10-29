@@ -2,6 +2,7 @@
 import router, { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { getUserID } from "@/helpers/getDataFromToken";
 
 interface CartItemData {
   VariantID: string;
@@ -179,10 +180,11 @@ const CheckoutPage = () => {
         // Prepare order data for registered users
 
         console.log("xxxxxx");
-
+        const token = localStorage.getItem("user");
+        const userId = token ? getUserID(token) : null;
         try {
           const response = await axios.post("/api/getUserCartId", {
-            userId: 13,
+            userId: userId,
           });
 
           const result = response.data;
@@ -203,7 +205,7 @@ const CheckoutPage = () => {
           setAddressId(response3.data.AddressID);
 
           const orderData = {
-            userid: 13,
+            userid: userId,
             cartId: result.CartID,
             DeliveryType: deliveryMethod,
             PaymentMethod: paymentMethod,

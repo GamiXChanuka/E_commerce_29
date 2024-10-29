@@ -11,6 +11,7 @@ import axios from "axios";
 import Spinner from "@/components/spinner/Spinner";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
+import { getUserID } from "@/helpers/getDataFromToken";
 
 interface Order {
   OrderDate: string;
@@ -31,10 +32,15 @@ const GetOrdersPage = () => {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
+  // get the user token from the local storage
+  const token = localStorage.getItem("user");
+  const userId = token ? getUserID(token) : null;
+  console.log("🚀 ~ GetOrdersPage ~ userId vdkbflkjdgboigdlbgkdg:", userId)
+  
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.post("/api/getOrders", { userId: 4 });
+        const response = await axios.post("/api/getOrders", { userId: userId });
         setOrders(response.data);
       } catch (error: any) {
         console.error("Error fetching orders:", error);

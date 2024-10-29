@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 
 ### Drop Order
-POST http://localhost:3000/api/dropOrders
+DELETE  http://localhost:3000/api/dropOrders
 Content-Type: application/json
 
 {
