@@ -128,6 +128,7 @@ export const getUserCartId = async (userId) => {
     try {
         const query = 'CALL GetCartIDByUserID(?);';
         const [rows] = await pool.execute(query, [userId]);
+        console.log(rows[0]);
         return rows[0]; //
     } catch (error) {
         console.log("🚀 ~ getUserNameById ~ error:", error)

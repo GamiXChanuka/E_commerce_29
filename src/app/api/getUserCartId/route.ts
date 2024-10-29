@@ -9,9 +9,11 @@ export async function POST(request: NextRequest) {
     // Get the cart ID for the user
     const result = await getUserCartId(userId);
 
+    console.log("res",result[0])
+
     // Return the appropriate response
     if (result) {
-      return NextResponse.json({ success: "Cart ID retrieved successfully", CartID: result.CartID }, { status: 200 });
+      return NextResponse.json({ success: "Cart ID retrieved successfully", CartID: result[0].CartID }, { status: 200 });
     } else {
       return NextResponse.json({ error: "Cart ID not found" }, { status: 404 });
     }

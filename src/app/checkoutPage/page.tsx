@@ -165,7 +165,7 @@ const CheckoutPage = () => {
           });
 
           const result = response.data;
-          console.log("Cart ID retrieved:", result);
+          console.log("Cart ID retrieved:", result.CartID);
 
           const addressData = {
             AddressNumber,
