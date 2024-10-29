@@ -163,7 +163,7 @@ const Invoice = () => {
                   <th className="py-3 font-semibold text-left text-gray-400"></th>
                   <th className="py-3 font-semibold text-center text-gray-400">Quantity    </th>
                   
-                  <th className="py-3 ml-5 font-semibold text-left text-gray-400">       Amount</th>
+                  <th className="py-3 ml-5 font-semibold text-left text-gray-400">Amount</th>
                   <th className="py-3 font-semibold text-left text-gray-400"></th>
                 </tr>
               </thead>
@@ -186,7 +186,7 @@ const Invoice = () => {
                     <td className="text-gray-600 truncate whitespace-nowrap"> {item.Quantity}</td>
                     <td className="text-gray-600 truncate whitespace-nowrap">             </td>
 
-                    <td className="text-gray-600 truncate whitespace-nowrap">${item.Price}</td>
+                    <td className="text-gray-600 truncate whitespace-nowrap">Rs {item.Price}</td>
                     </tr>
                 ))}
                 </tbody>
@@ -202,7 +202,7 @@ const Invoice = () => {
                 </div>
                 <div className="flex justify-between">
                   <p className="text-sm text-gray-500">Tax</p>
-                  <p className="text-sm text-gray-500">$0.00</p>
+                  <p className="text-sm text-gray-500">Rs 0.00</p>
                 </div>
                 <div className="flex justify-between">
                   <p className="text-sm text-gray-500">Total</p>
