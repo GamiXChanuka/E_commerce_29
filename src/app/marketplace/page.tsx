@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
-import router from 'next/router';
+import Spinner from '@/components/spinner/Spinner';
 
 const MarketplacePage = () => {
   const router = useRouter(); // useRouter from 'next/navigation' for client-side routing
@@ -55,9 +55,6 @@ const MarketplacePage = () => {
 
 
   useEffect(() => {
-
-
-
     // Fetch products based on the search query using axios POST
     const fetchProducts = async () => {
       try {
@@ -97,6 +94,10 @@ const MarketplacePage = () => {
       fetchAllProducts();
     }
   }, [searchQuery]);
+
+  if (loading) {
+    return <Spinner/>;
+  }
 
   return (
     // <div className="flex flex-col my-6">

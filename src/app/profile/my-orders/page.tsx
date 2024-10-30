@@ -61,6 +61,7 @@ const GetOrdersPage = () => {
       setOrders(orders.filter((order) => order.OrderID !== orderId));
     } catch (error) {
       console.error("Error deleting order:", error);
+      toast.error("Failed to delete order.");
     }
   };
 
