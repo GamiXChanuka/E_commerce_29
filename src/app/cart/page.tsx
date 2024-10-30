@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useCart } from "@/components/context/CartContext";
+import Spinner from "@/components/spinner/Spinner";
 
 interface CartItemData {
   VariantID: number;
@@ -11,19 +13,17 @@ interface CartItemData {
   ImageLink: string;
 }
 
-
 export default function CartPage() {
+  const { cartCount, incrementCart, decrementCart, clearCart } = useCart();
   const router = useRouter();
   const [data, setData] = useState<CartItemData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedCity, setSelectedCity] = useState<string>("");
-
-  const isRegistered  = localStorage.getItem("isRegistered")==="true";
-  // console.log(isRegistered);
-  // var isRegistered = false; // Set this based on your auth logic
+  const [isRegistered, setIsRegistered] = useState(false);
 
   const fetchData = async () => {
+    const isRegistered = localStorage.getItem("isRegistered") === "true";
+    setIsRegistered(isRegistered);
     try {
       if (isRegistered) {
         // For registered users, fetch cart data from backend using token
@@ -36,7 +36,7 @@ export default function CartPage() {
         console.log("Unregistered user");
         // For unregistered users, fetch cart from localStorage
         const cart = JSON.parse(localStorage.getItem("internalCart") || "[]");
-        
+
         const updatedCart = [];
 
         for (const item of cart) {
@@ -156,8 +156,6 @@ export default function CartPage() {
     }
   };
 
-  
-
   const placeOrder = async () => {
     try {
       router.push("/checkoutPage");
@@ -166,16 +164,16 @@ export default function CartPage() {
     }
   };
 
-  const backToShop = () => {  
+  const backToShop = () => {
     try {
       router.push("/marketplace");
     } catch (error) {
       console.error("Error going back to shop:", error);
     }
-  }
+  };
 
   if (loading) {
-    return <p>Loading data...</p>;
+    return <Spinner/>;
   }
 
   if (error) {
@@ -184,22 +182,39 @@ export default function CartPage() {
 
   return (
     <>
+      <div className="flex flex-col items-center py-4 bg-white border-b sm:flex-row sm:px-10 lg:px-20 xl:px-32">
+        <a href="#" className="text-2xl font-bold text-gray-900">
+          Checkout Page
+        </a>
 
-    <div className="flex flex-col items-center py-4 bg-white border-b sm:flex-row sm:px-10 lg:px-20 xl:px-32">
-    <a href="#" className="text-2xl font-bold text-gray-900">Checkout Page</a>
-
-
-    <div className="py-2 mt-4 text-xs sm:mt-0 sm:ml-auto sm:text-base">
-      <div className="relative">
-        <ul className="relative flex items-center justify-between w-full space-x-2 sm:space-x-4">
-          <li className="flex items-center space-x-3 text-left sm:space-x-4">
-            <a
-              className="flex items-center justify-center w-6 h-6 text-xs font-semibold text-white bg-yellow-400 rounded-full ring ring-gray-600 ring-offset-2"
-              href="#"
-            >
+        <div className="py-2 mt-4 text-xs sm:mt-0 sm:ml-auto sm:text-base">
+          <div className="relative">
+            <ul className="relative flex items-center justify-between w-full space-x-2 sm:space-x-4">
+              <li className="flex items-center space-x-3 text-left sm:space-x-4">
+                <a
+                  className="flex items-center justify-center w-6 h-6 text-xs font-semibold text-white bg-yellow-400 rounded-full ring ring-gray-600 ring-offset-2"
+                  href="#"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={2}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </a>
+                <span className="font-semibold text-gray-900">Cart</span>
+              </li>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4"
+                className="w-4 h-4 text-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -208,179 +223,171 @@ export default function CartPage() {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M5 13l4 4L19 7"
+                  d="M9 5l7 7-7 7"
                 />
               </svg>
-            </a>
-            <span className="font-semibold text-gray-900">Cart</span>
-          </li>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-4 h-4 text-gray-400"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-          <li className="flex items-center space-x-3 text-left sm:space-x-4">
-            <a
-              className="flex items-center justify-center w-6 h-6 text-xs font-semibold text-white bg-gray-400 rounded-full"
-              href="#"
-            >
-              2
-            </a>
-            <span className="font-semibold text-gray-900">Checkout</span>
-          </li>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-4 h-4 text-gray-400"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-          <li className="flex items-center space-x-3 text-left sm:space-x-4">
-            <a
-              className="flex items-center justify-center w-6 h-6 text-xs font-semibold text-white bg-gray-400 rounded-full"
-              href="#"
-            >
-              3
-            </a>
-            <span className="font-semibold text-gray-500">Proccessed</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-
-  </div>
-
-    <div className="flex flex-col min-h-screen md:flex-row">
-      <div className="w-full p-8 md:w-2/3">
-        <h2 className="mb-4 text-3xl font-bold text-black">Shopping Cart</h2>
-        <h3 className="text-lg text-gray-700">{data.length} items</h3>
-        <div className="p-4 mt-4 bg-white rounded-lg shadow-md">
-          {data.length > 0 ? (
-            data.map((item) => (
-              <div
-                key={item.VariantID}
-                className="flex items-center justify-between px-4 py-2 mb-2 bg-white border border-black rounded-lg shadow-xl"
+              <li className="flex items-center space-x-3 text-left sm:space-x-4">
+                <a
+                  className="flex items-center justify-center w-6 h-6 text-xs font-semibold text-white bg-gray-400 rounded-full"
+                  href="#"
+                >
+                  2
+                </a>
+                <span className="font-semibold text-gray-900">Checkout</span>
+              </li>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-4 h-4 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
               >
-                <div className="flex items-center w-1/3">
-                  <img
-                    src={item.ImageLink}
-                    alt={item.VariantName}
-                    className="object-cover w-16 h-16 mr-4 rounded-lg"
-                  />
-                  <h4 className="font-semibold text-black">{item.VariantName}</h4>
-                </div>
-                <div className="flex items-center justify-center w-1/3">
-                  <button
-                    className="px-2 bg-[#004581] text-white rounded-lg hover:bg-[#018ABD]"
-                    onClick={() => removeFromCart(item.VariantID)}
-                  >
-                    -
-                  </button>
-                  <input
-                    type="number"
-                    value={item.Quantity}
-                    className="w-12 text-center bg-[#004581] text-white border border-gray-300 rounded-lg mx-2"
-                    readOnly
-                  />
-                  <button
-                    className="px-2 bg-[#004581] text-white rounded-lg hover:bg-[#018ABD]"
-                    onClick={() => addToCart(item.VariantID)}
-                  >
-                    +
-                  </button>
-                </div>
-                <div className="flex items-center justify-end w-1/3">
-                    <span className="font-bold text-black">
-                    Rs {(item.Price * item.Quantity).toFixed(2)}
-                    </span>
-                    <button
-                    className="px-5 py-2 m-3 text-red-600 transition duration-300 border border-red-600 rounded-full shadow-md hover:bg-red-100"
-                    onClick={() => removeFromCart(item.VariantID)}
-                    >
-                    X
-                    </button>
-                </div>
-              </div>
-            ))
-          ) : (
-            <p className="text-gray-700">Your cart is empty</p>
-          )}
-          <div className="flex justify-between mt-4">
-            <button
-              className="px-6 py-2 bg-[#004581] text-white rounded-md hover:bg-[#018ABD] transition duration=300 shadow-md"
-              onClick={backToShop}
-            >
-              Back to shop
-            </button>
-            <button
-              className="px-6 py-2 text-red-600 transition duration-300 border border-red-600 rounded-md shadow-md hover:bg-red-100"
-              onClick={() => {
-                setData([]);
-                removeAll();
-              }}
-            >
-              Remove all
-            </button>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+              <li className="flex items-center space-x-3 text-left sm:space-x-4">
+                <a
+                  className="flex items-center justify-center w-6 h-6 text-xs font-semibold text-white bg-gray-400 rounded-full"
+                  href="#"
+                >
+                  3
+                </a>
+                <span className="font-semibold text-gray-500">Proccessed</span>
+              </li>
+            </ul>
           </div>
         </div>
-        {/* ------------------------------------------------------------------------------- */}
       </div>
 
-
-      <div className="w-full p-8 bg-white shadow-2xl md:w-1/3">
-        <h2 className="mb-4 text-2xl font-bold text-black">Summary</h2>
-        <div className="flex justify-between mb-2 text-black">
-          <span>ITEMS</span>
-          <span>
-            Rs{" "}
-            {data
-              .reduce((total, item) => total + item.Price * item.Quantity, 0)
-              .toFixed(2)}
-          </span>
+      <div className="flex flex-col min-h-screen md:flex-row">
+        <div className="w-full p-8 md:w-2/3">
+          <h2 className="mb-4 text-3xl font-bold text-black">Shopping Cart</h2>
+          <h3 className="text-lg text-gray-700">{data.length} items</h3>
+          <div className="p-4 mt-4 bg-white rounded-lg shadow-md">
+            {data.length > 0 ? (
+              data.map((item) => (
+                <div
+                  key={item.VariantID}
+                  className="flex items-center justify-between px-4 py-2 mb-2 bg-white border border-black rounded-lg shadow-xl"
+                >
+                  <div className="flex items-center w-1/3">
+                    <img
+                      src={item.ImageLink}
+                      alt={item.VariantName}
+                      className="object-cover w-16 h-16 mr-4 rounded-lg"
+                    />
+                    <h4 className="font-semibold text-black">
+                      {item.VariantName}
+                    </h4>
+                  </div>
+                  <div className="flex items-center justify-center w-1/3">
+                    <button
+                      className="px-2 bg-[#004581] text-white rounded-lg hover:bg-[#018ABD]"
+                      onClick={() => {
+                        removeFromCart(item.VariantID);
+                        decrementCart();
+                      }}
+                    >
+                      -
+                    </button>
+                    <input
+                      type="number"
+                      value={item.Quantity}
+                      className="w-12 text-center bg-[#004581] text-white border border-gray-300 rounded-lg mx-2"
+                      readOnly
+                    />
+                    <button
+                      className="px-2 bg-[#004581] text-white rounded-lg hover:bg-[#018ABD]"
+                      onClick={() => {
+                        addToCart(item.VariantID);
+                        incrementCart();
+                      }}
+                    >
+                      +
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-end w-1/3">
+                    <span className="font-bold text-black">
+                      Rs {(item.Price * item.Quantity).toFixed(2)}
+                    </span>
+                    <button
+                      className="px-5 py-2 m-3 text-red-600 transition duration-300 border border-red-600 rounded-full shadow-md hover:bg-red-100"
+                      onClick={() => {
+                        removeFromCart(item.VariantID);
+                        // decrementCart(item.Quantity);
+                        decrementCart();
+                      }}
+                    >
+                      X
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p className="text-gray-700">Your cart is empty</p>
+            )}
+            <div className="flex justify-between mt-4">
+              <button
+                className="px-6 py-2 bg-[#004581] text-white rounded-md hover:bg-[#018ABD] transition duration=300 shadow-md"
+                onClick={backToShop}
+              >
+                Back to shop
+              </button>
+              <button
+                className="px-6 py-2 text-red-600 transition duration-300 border border-red-600 rounded-md shadow-md hover:bg-red-100"
+                onClick={() => {
+                  setData([]);
+                  removeAll();
+                  clearCart();
+                }}
+              >
+                Remove all
+              </button>
+            </div>
+          </div>
+          {/* ------------------------------------------------------------------------------- */}
         </div>
-        <div className="flex justify-between mb-4 text-black">
-          <span>SHIPPING (Standard Delivery) </span>
-          <span>Rs 225.00</span>
-        </div>
-        <div className="flex justify-between font-bold text-black">
-          <span>TOTAL PRICE</span>
-          <span>
-            Rs{" "}
-            {(
-              data.reduce(
-                (total, item) => total + item.Price * item.Quantity,
-                0
-              ) + 225.0
-            ).toFixed(2)}
-          </span>
-        </div>
 
+        <div className="w-full p-8 bg-white shadow-2xl md:w-1/3">
+          <h2 className="mb-4 text-2xl font-bold text-black">Summary</h2>
+          <div className="flex justify-between mb-2 text-black">
+            <span>ITEMS</span>
+            <span>
+              Rs{" "}
+              {data
+                .reduce((total, item) => total + item.Price * item.Quantity, 0)
+                .toFixed(2)}
+            </span>
+          </div>
+          <div className="flex justify-between mb-4 text-black">
+            <span>SHIPPING (Standard Delivery) </span>
+            <span>Rs 225.00</span>
+          </div>
+          <div className="flex justify-between font-bold text-black">
+            <span>TOTAL PRICE</span>
+            <span>
+              Rs{" "}
+              {(
+                data.reduce(
+                  (total, item) => total + item.Price * item.Quantity,
+                  0
+                ) + 225.0
+              ).toFixed(2)}
+            </span>
+          </div>
 
-        <button
-          className="bg-[#004581] text-white p-2 rounded-lg w-full mt-4 hover:bg-[#018ABD]"
-          onClick={placeOrder}
-        >
-          Place Order
-        </button>
+          <button
+            className="bg-[#004581] text-white p-2 rounded-lg w-full mt-4 hover:bg-[#018ABD]"
+            onClick={placeOrder}
+          >
+            Place Order
+          </button>
+        </div>
       </div>
-    </div>
     </>
   );
 }
