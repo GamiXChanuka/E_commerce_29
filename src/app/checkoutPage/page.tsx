@@ -41,7 +41,7 @@ const CheckoutPage = () => {
   const [cartId, setCartId] = useState<number>(0);
   const [addressId, setAddressId] = useState<number>(0);
 
-  const isRegistered  = localStorage.getItem("isRegistered")==="true";
+  const isRegistered = localStorage.getItem("isRegistered") === "true";
 
   const fetchData = async () => {
     try {
@@ -153,6 +153,7 @@ const CheckoutPage = () => {
               const orderID = response2.data.orderID; // Extract orderID from response
               console.log("Order ID:", orderID); // Now you can use this orderID as needed
 
+
               toast.dismiss();
               toast.success("Order placed successfully!");
               router.push(`/thank-you?orderId=${orderID}`);
@@ -172,6 +173,7 @@ const CheckoutPage = () => {
           toast.error("An error occurred while adding the unregistered customer");
         }
       } else {
+
         console.log("xxxxxx");
         const token = localStorage.getItem("user");
         const userId = token ? getUserID(token) : null;
@@ -212,9 +214,9 @@ const CheckoutPage = () => {
             if (response2.data.status === 200) {
               const orderID = response2.data.orderID; // Extract orderID from response
               console.log("Order ID:", orderID); // Now you can use this orderID as needed
-
               toast.dismiss();
               toast.success("Order placed successfully!");
+
               router.push(`/thank-you?orderId=${orderID}`);
             } else {
               console.error("Failed to place order:", response.data.success);
@@ -381,7 +383,6 @@ const CheckoutPage = () => {
                   name="radio"
                   checked={deliveryMethod === "delivery"}
                   onChange={() => setDeliveryMethod("delivery")}
-                 
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label
@@ -410,9 +411,11 @@ const CheckoutPage = () => {
                   id="radio_2"
                   type="radio"
                   name="radio"
+
+                  checked={deliveryMethod === "DHL"}
+                  onChange={() => setDeliveryMethod("dilivery")}
                   checked={deliveryMethod === "storePickup"}
                   onChange={() => setDeliveryMethod("storePickup")}
-                  
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label

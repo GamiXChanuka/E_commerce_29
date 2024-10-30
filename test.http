@@ -105,3 +105,11 @@ Content-Type: application/json
 {
   "userId": 16
 }
+
+### Get Delivery Data
+POST http://localhost:3000/api/getDeliveryData
+Content-Type: application/json
+
+{
+  "orderId": 25
+}
