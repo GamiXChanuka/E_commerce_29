@@ -158,7 +158,7 @@ const ProfilePage = () => {
           {/* User Avatar */}
           <motion.img
             alt="User Avatar"
-            src="./user.jpeg"
+            src="./user.png"
             className="rounded-full w-28 h-28 border border-[#018ABD] shadow-md hover:scale-105 transition-transform"
           />
         </div>
