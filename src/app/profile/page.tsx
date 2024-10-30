@@ -11,8 +11,6 @@ import {
   HomeIcon,
   PhoneIcon,
   ArrowLeftStartOnRectangleIcon,
-  Cog8ToothIcon,
-  LockClosedIcon,
 } from "@heroicons/react/24/outline";
 import axios from "axios";
 import Spinner from "@/components/spinner/Spinner";
@@ -123,16 +121,6 @@ const ProfilePage = () => {
               </Link>
             </li>
             <li>
-              <Link href="#" className="flex items-center text-[#97CBDC] hover:text-[#018ABD] transition duration-300">
-                  <Cog8ToothIcon className="w-5 h-5 mr-2" /> Settings
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="flex items-center text-[#97CBDC] hover:text-[#018ABD] transition duration-300">
-                  <LockClosedIcon className="w-5 h-5 mr-2" /> Security
-              </Link>
-            </li>
-            <li>
               <button
                 onClick={onLogout}
                 className="flex items-center text-red-600 hover:text-red-400 transition duration-300"
@@ -158,7 +146,7 @@ const ProfilePage = () => {
           {/* User Avatar */}
           <motion.img
             alt="User Avatar"
-            src="./user.jpeg"
+            src="./user.png"
             className="rounded-full w-28 h-28 border border-[#018ABD] shadow-md hover:scale-105 transition-transform"
           />
         </div>
@@ -206,23 +194,6 @@ const ProfilePage = () => {
               </div>
             </motion.div>
           ))}
-
-          {/* Action Buttons */}
-          {/* <div className="flex justify-between mt-6">
-            <button
-              type="button"
-              className="px-6 py-2 border border-red-600 text-red-600 rounded-md hover:bg-red-100 transition duration-300 shadow-md"
-              onClick={handleCancel}
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-6 py-2 bg-[#004581] text-white rounded-md hover:bg-[#018ABD] transition duration=300 shadow-md"
-            >
-              Save
-            </button>
-          </div> */}
         </form>
       </div>
     </div>

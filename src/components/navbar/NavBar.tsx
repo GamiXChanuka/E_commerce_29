@@ -136,7 +136,7 @@ export default function NavBar() {
                 >
                     <Image
                       alt="User Avatar"
-                      src="/user.jpeg"
+                      src="/user.png"
                       width={44} // Adjust width as needed
                       height={44} // Adjust height as needed
                       className="border rounded-full shadow-md"
