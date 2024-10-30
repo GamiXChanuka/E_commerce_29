@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { FaShoppingCart } from "react-icons/fa";
+import { useCart } from "@/components/context/CartContext";
+import Spinner from "@/components/spinner/Spinner";
 
 interface Variant {
   VariantID: number;
@@ -30,15 +32,18 @@ interface ProductDetailsPageProps {
 }
 
 const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
+  const {incrementCart} = useCart();
   const { productID } = params; // Get productID from route params
   const [productVariants, setProductVariants] = useState<Variant[]>([]);
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showVariant, setShowVariant] = useState(true);
-  const isRegistered = localStorage.getItem("isRegistered") === "true";
-
+  const [isRegistered, setIsRegistered] = useState(false);
+  
   useEffect(() => {
+    const isRegistered = localStorage.getItem("isRegistered") === "true";
+    setIsRegistered(isRegistered);
     if (productID) {
       fetchProductDetails();
     }
@@ -119,7 +124,7 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Spinner/>;
   }
 
   if (error) {
@@ -161,7 +166,7 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
                   {(selectedVariant?.StockCount ?? 0) > 0 ? (
                     <span className="text-green-600">In Stock</span>
                   ) : (
-                    <span className="text-red-600">Out of Stock</span>
+                    <span className="text-red-600">Out of Stock (But you can order)</span>
                   )}
                 </p>
               </div>
@@ -179,7 +184,9 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
                           ? "bg-blue-700 text-white border-blue-700"
                           : "bg-gray-200 text-blue-700 border hover:bg-blue-800 hover:text-white"
                       } transition-colors border rounded-lg p-2 mt-2 mr-2 focus:outline-none`}
-                      onClick={() => handleVariantClick(variant)} // Handle click to select the variant
+                      onClick={() => {handleVariantClick(variant);
+
+                      }} // Handle click to select the variant
                     >
                       {variant.Attributes?.map(
                         (attr) => `${attr.AttributeName}: ${attr.AttributeValue}`
@@ -193,8 +200,12 @@ const ProductDetailsPage = ({ params }: ProductDetailsPageProps) => {
             <div className="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
               <button
                 className="bg-[#004581] text-white p-2 rounded-lg w-full mt-4 hover:bg-[#018ABD] flex justify-center items-center"
-                onClick={addToCart}
-                disabled={selectedVariant?.StockCount === 0}
+                onClick={() => {
+                  addToCart();
+                  incrementCart();
+                }}
+                // disabled={selectedVariant?.StockCount === 0}
+                
               >
                 <span>Add to Cart&nbsp;&nbsp;</span>
                 <FaShoppingCart />
