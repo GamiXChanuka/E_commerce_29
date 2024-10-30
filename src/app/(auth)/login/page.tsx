@@ -73,7 +73,7 @@ const LoginPage = () => {
               Welcome back!
               <br />
               <br />
-              <Image src="/login.jpg" alt="Login Image" className="object-cover rounded-full" width={150} height={150} />
+              <Image src="/login.png" alt="Login Image" className="object-cover rounded-full" width={150} height={150} />
             </p>
             <h2 className="mb-2 text-2xl font-bold">SHOPZY</h2>
             <p className="mb-6 text-black">
