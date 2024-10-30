@@ -21,7 +21,6 @@ const CheckoutPage = () => {
   const [data, setData] = useState<CartItemData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedCity, setSelectedCity] = useState<string>("");
 
   // Set COD as the default payment method
   const [paymentMethod, setPaymentMethod] = useState("COD");
@@ -42,6 +41,20 @@ const CheckoutPage = () => {
   const [addressId, setAddressId] = useState<number>(0);
 
   const isRegistered = localStorage.getItem("isRegistered") === "true";
+  const fetchAddressData = async () => {
+    try {
+      const response = await axios.get("/api/profile");  // Assuming '/api/userAddress' returns the address details
+      const { FirstName, LastName, PhoneNumber, AddressNumber, Lane, City, PostalCode, District } = response.data;
+
+      setAddressNumber(AddressNumber);
+      setLane(Lane);
+      setCity(City);
+      setPostalCode(PostalCode);
+      setDistrict(District);
+    } catch (error) {
+      console.error("Error fetching address data:", error);
+    }
+  };
 
   const fetchData = async () => {
     try {
@@ -88,6 +101,9 @@ const CheckoutPage = () => {
   useEffect(() => {
     console.log(paymentMethod);
     fetchData();
+    if (isRegistered) {
+      fetchAddressData();
+    }
   }, []);
 
   const handlePlaceOrder = async () => {
@@ -216,6 +232,7 @@ const CheckoutPage = () => {
               console.log("Order ID:", orderID); // Now you can use this orderID as needed
               toast.dismiss();
               toast.success("Order placed successfully!");
+              clearCart();
 
               router.push(`/thank-you?orderId=${orderID}`);
             } else {
@@ -414,8 +431,6 @@ const CheckoutPage = () => {
 
                   checked={deliveryMethod === "DHL"}
                   onChange={() => setDeliveryMethod("dilivery")}
-                  checked={deliveryMethod === "storePickup"}
-                  onChange={() => setDeliveryMethod("storePickup")}
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label
@@ -518,7 +533,7 @@ const CheckoutPage = () => {
                 type="text"
                 id="card-holder"
                 name="card-holder"
-                className="w-full px-4 py-3 text-sm bg-gray-200 border border-gray-200 rounded-md shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                 placeholder="Your full name here"
                 value={FirstName}
                 onChange={(e) => setFirstName(e.target.value)}
@@ -535,7 +550,7 @@ const CheckoutPage = () => {
                   type="text"
                   id="card-no"
                   name="card-no"
-                  className="w-full px-4 py-3 text-sm bg-gray-200 border border-gray-200 rounded-md shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                  className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                   placeholder="Your last name here"
                   value={LastName}
                   onChange={(e) => setLastName(e.target.value)}
@@ -552,7 +567,7 @@ const CheckoutPage = () => {
                 type="text"
                 id="card-no"
                 name="card-no"
-                className="w-full px-4 py-3 text-sm bg-gray-200 border border-gray-200 rounded-md shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                 placeholder="Your phone number here"
                 value={PhoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
@@ -575,7 +590,7 @@ const CheckoutPage = () => {
               type="text"
               id="Address-holder"
               name="Address-holder"
-              className="w-full px-4 py-3 text-sm bg-gray-200 border border-gray-200 rounded-md shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+              className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
               placeholder="Address No"
               value={AddressNumber}
               onChange={(e) => setAddressNumber(e.target.value)}
@@ -592,7 +607,7 @@ const CheckoutPage = () => {
               type="text"
               id="Lane-holder"
               name="Lane-holder"
-              className="w-full px-4 py-3 text-sm bg-gray-200 border border-gray-200 rounded-md shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+              className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
               placeholder="Lane "
               value={Lane}
               onChange={(e) => setLane(e.target.value)}
@@ -609,7 +624,7 @@ const CheckoutPage = () => {
               type="text"
               id="City-holder"
               name="City-holder"
-              className="w-full px-4 py-3 text-sm bg-gray-200 border border-gray-200 rounded-md shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+              className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
               placeholder="City "
               value={City}
               onChange={(e) => setCity(e.target.value)}
@@ -630,7 +645,7 @@ const CheckoutPage = () => {
                   type="text"
                   id="Postal-no"
                   name="Postal-no"
-                  className="w-full px-4 py-3 text-sm bg-gray-200 border border-gray-200 rounded-md shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                  className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                   placeholder="Postal code"
                   value={PostalCode}
                   onChange={(v) => setPostalCode(v.target.value)}
@@ -649,7 +664,7 @@ const CheckoutPage = () => {
                   type="text"
                   id="District-no"
                   name="District-no"
-                  className="w-full px-4 py-3 text-sm bg-gray-200 border border-gray-200 rounded-md shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                  className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                   placeholder="District"
                   value={District}
                   onChange={(e) => setDistrict(e.target.value)}
@@ -673,7 +688,7 @@ const CheckoutPage = () => {
                 type="text"
                 id="card-holder"
                 name="card-holder"
-                className="w-full px-4 py-3 text-sm bg-gray-200 border border-gray-200 rounded-md shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                 placeholder="Your full name here"
               />
 
@@ -689,13 +704,13 @@ const CheckoutPage = () => {
                   type="text"
                   id="card-no"
                   name="card-no"
-                  className="w-full px-4 py-3 text-sm bg-gray-200 border border-gray-200 rounded-md shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                  className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                   placeholder="xxxx-xxxx-xxxx-xxxx"
                 />
                 <input
                   type="text"
                   name="card-expiry"
-                  className="w-1/2 px-4 py-3 ml-2 text-sm bg-gray-200 border border-gray-200 rounded-md shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                  className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                   placeholder="MM/YY"
                 />
               </div>
@@ -711,7 +726,7 @@ const CheckoutPage = () => {
                 type="text"
                 id="cvv"
                 name="cvv"
-                className="w-full px-4 py-3 text-sm bg-gray-200 border border-gray-200 rounded-md shadow-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                className="mt-1 p-3 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                 placeholder="123"
               />
             </div>
