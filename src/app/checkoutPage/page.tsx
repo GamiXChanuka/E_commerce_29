@@ -24,7 +24,7 @@ const CheckoutPage = () => {
 
   // Set COD as the default payment method
   const [paymentMethod, setPaymentMethod] = useState("COD");
-  const [deliveryMethod, setDeliveryMethod] = useState("delivery");
+  const [deliveryMethod, setDeliveryMethod] = useState("DHL");
 
   // State variables for user inputs
   const [FirstName, setFirstName] = useState("");
@@ -398,8 +398,8 @@ const CheckoutPage = () => {
                   id="radio_1"
                   type="radio"
                   name="radio"
-                  checked={deliveryMethod === "delivery"}
-                  onChange={() => setDeliveryMethod("delivery")}
+                  checked={deliveryMethod === "Fedex"}
+                  onChange={() => setDeliveryMethod("Fedex")}
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label
@@ -416,7 +416,7 @@ const CheckoutPage = () => {
                       Fedex Delivery
                     </span>
                     <p className="text-sm leading-6 text-slate-500">
-                      Delivery: 2-4 Days
+                      Delivery: 3-15 Days
                     </p>
                   </div>
                 </label>
@@ -430,7 +430,7 @@ const CheckoutPage = () => {
                   name="radio"
 
                   checked={deliveryMethod === "DHL"}
-                  onChange={() => setDeliveryMethod("dilivery")}
+                  onChange={() => setDeliveryMethod("DHL")}
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label
@@ -445,7 +445,7 @@ const CheckoutPage = () => {
                   <div className="ml-5">
                     <span className="mt-2 font-semibold text-black"> DHL</span>
                     <p className="text-sm leading-6 text-slate-500">
-                      Delivery: 1-3 Days
+                      Delivery: 2-10 Days
                     </p>
                   </div>
                 </label>
@@ -490,8 +490,8 @@ const CheckoutPage = () => {
                   id="radio_4"
                   type="radio"
                   name="radio"
-                  checked={paymentMethod === "Card"}
-                  onChange={() => setPaymentMethod("Card")}
+                  checked={paymentMethod === "card"}
+                  onChange={() => setPaymentMethod("card")}
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label
