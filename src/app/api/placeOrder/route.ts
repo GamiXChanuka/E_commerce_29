@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     // place order
     const result: { success?: string; error?: string; status: number } = await placeOrder(userid, cartId, DeliveryType, PaymentMethod, AddressID);
     console.log("result", result);
-    
+
     // Return the appropriate response
     if (result && 'error' in result) {
       return NextResponse.json({ error: result.error }, { status: result.status });
