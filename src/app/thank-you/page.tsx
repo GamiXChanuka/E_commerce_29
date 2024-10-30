@@ -29,12 +29,24 @@ interface InvoiceProps {
   orderId: number;
 }
 
+interface deliveryData {
+  AddressNumber: string;
+  City: string;
+  District: string;
+  EstimateDate: string;
+  Lane: string;
+}
+
 const Invoice = () => {
   const router = useRouter();
   // const orderId = 16; // hardcoded order ID
   const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  
+  const [deliveryData, setDeliveryData] = useState<deliveryData | null>(null);
 
 
   const searchParams = useSearchParams();
@@ -44,6 +56,20 @@ const Invoice = () => {
 
 
   const invoiceRef = useRef(null);
+
+  let deliveryDays: number | null = null;
+  if (orderDetails && deliveryData) {
+    const orderDate = new Date(orderDetails.OrderDate);
+    const estimateDate = new Date(deliveryData.EstimateDate);
+    
+    const timeDifference = estimateDate.getTime() - orderDate.getTime();
+    deliveryDays = Math.ceil(timeDifference / (1000 * 60 * 60 * 24)); // convert ms to days
+    
+    console.log("Delivery Days:", deliveryDays);
+  }
+
+
+  
 
   const downloadPdf = () => {
     const node = invoiceRef.current;
@@ -69,7 +95,15 @@ const Invoice = () => {
       const response = await axios.post("/api/getOrderDetails", {
         orderId,
       });
+      const response_address = await axios.post("/api/getDeliveryData", {
+        orderId,
+      });
       setOrderDetails(response.data);
+      setDeliveryData(response_address.data.deliveryData[0]);
+
+      console.log("Delivery Data:-------------------------------------", response_address.data.deliveryData[0]);
+      console.log("Order ID:", response.data); // Now you can use orderId as needed
+
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -91,11 +125,15 @@ const Invoice = () => {
 
   return (
     <section className="py-20 bg-gray-100">
-
+        
       {/* Banner Section */}
       <div className="relative z-10 flex items-center justify-center py-4 font-semibold text-center text-white bg-green-500 shadow-lg px-9 md:max-w-2xl md:mx-auto md:rounded-t-md">
-        <p>Thank you for purchasing! Your delivery will arrive within the next 3 days.</p>
+      <p>Thank you for purchasing! Your delivery will arrive within the next {deliveryDays !== null ? `${deliveryDays} days` : "Calculating..."} days.</p>
       </div>
+
+
+        {/* <p>Thank you for purchasing! Your delivery will arrive within the next {deliveryDays !== null ? `${deliveryDays} days` : "Calculating..."} days.</p> */}
+ 
  
       <div className="max-w-2xl py-0 mx-auto md:py-16 " >
         <article className="overflow-hidden shadow-none md:shadow-md md:rounded-md invoice-content"  ref={invoiceRef}>
@@ -110,15 +148,15 @@ const Invoice = () => {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-400">Billed To</p>
-                      <p className="text-black">Tony Stark</p>
-                      <p className="text-black">tony@starkindustriesxyz.com</p>
-                      <p className="text-black">(02) 1234 1234</p>
+                      <p className="text-black"> {deliveryData?.Lane}</p>
+                      <p className="text-black">{deliveryData?.District}</p>
+                      <p className="text-black"></p>
                     </div>
                   </div>
                   <div className="space-y-2">
                     <div>
                       <p className="text-sm font-medium text-gray-400">Invoice Number</p>
-                      <p className="text-black">INV-MJ0001</p>
+                      <p className="text-black">INV-MJ00{orderId}</p>
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-400">Invoice Date</p>
@@ -126,7 +164,7 @@ const Invoice = () => {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-gray-400">ABN</p>
-                      <p className="text-black">57 630 182 446</p>
+                      <p className="text-black">57 {orderId} 446</p>
                     </div>
                     <div>
                       <a
@@ -159,11 +197,12 @@ const Invoice = () => {
             <table className="w-full text-sm divide-y divide-gray-200">
               <thead>
                 <tr>
-                  <th className="py-4 font-semibold text-left text-gray-400 px-9">Item</th>
+                  <th className="py-4 font-semibold text-left text-black px-9">Item</th>
                   <th className="py-3 font-semibold text-left text-gray-400"></th>
-                  <th className="py-3 font-semibold text-center text-gray-400">Quantity    </th>
-                  
-                  <th className="py-3 ml-5 font-semibold text-left text-gray-400">Amount</th>
+                  <th className="py-3 font-semibold text-center text-black">Quantity   </th>
+                  <td className="text-gray-600 truncate whitespace-nowrap">             </td>
+
+                  <th className="py-3 ml-5 font-semibold text-left text-black">Amount</th>
                   <th className="py-3 font-semibold text-left text-gray-400"></th>
                 </tr>
               </thead>
@@ -183,8 +222,10 @@ const Invoice = () => {
                         <p className="text-sm text-gray-400">Description or type of item</p>
                         </div>
                     </td>
+                    <td className="text-gray-600 truncate whitespace-nowrap">      </td>
+
                     <td className="text-gray-600 truncate whitespace-nowrap"> {item.Quantity}</td>
-                    <td className="text-gray-600 truncate whitespace-nowrap">             </td>
+                    <td className="text-gray-600 truncate whitespace-nowrap">     </td>
 
                     <td className="text-gray-600 truncate whitespace-nowrap">Rs {item.Price}</td>
                     </tr>
@@ -198,15 +239,15 @@ const Invoice = () => {
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <p className="text-sm text-gray-500">Subtotal</p>
-                  <p className="text-sm text-gray-500">{orderDetails?.OrderTotal}</p>
+                  <p className="text-sm text-gray-500">Rs.{orderDetails?.OrderTotal}</p>
                 </div>
                 <div className="flex justify-between">
                   <p className="text-sm text-gray-500">Tax</p>
-                  <p className="text-sm text-gray-500">Rs 0.00</p>
+                  <p className="text-sm text-gray-500"> 0.00</p>
                 </div>
                 <div className="flex justify-between">
                   <p className="text-sm text-gray-500">Total</p>
-                  <p className="text-sm text-gray-500">{orderDetails?.OrderTotal}</p>
+                  <p className="text-sm text-gray-500">Rs.{orderDetails?.OrderTotal}</p>
                 </div>
               </div>
             </div>
@@ -214,7 +255,7 @@ const Invoice = () => {
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <p className="text-lg font-bold text-black">Amount Due</p>
-                  <p className="text-lg font-bold text-black">{orderDetails?.OrderTotal}</p>
+                  <p className="text-lg font-bold text-black">Rs.{orderDetails?.OrderTotal}</p>
                 </div>
               </div>
             </div>
