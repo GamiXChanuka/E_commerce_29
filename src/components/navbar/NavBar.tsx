@@ -8,12 +8,15 @@ import toast from "react-hot-toast";
 import Search from "@/components/search/Search";
 import CartSlider from "@/components/cartSlider/cartSlider"; // Import the Cart component
 import { getUserName } from "@/helpers/getDataFromToken";
+import { useCart } from "../context/CartContext";
 
 export default function NavBar() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [userName, setUserName] = useState<string | null>(null);
   const [isSticky, setIsSticky] = useState(false); // New state for stickiness
   const router = useRouter();
+  const {clearCart} = useCart();
+  
 
   // Fetch user data
   const fetchUserData = async () => {
@@ -47,6 +50,7 @@ export default function NavBar() {
       setUserName(null);
       localStorage.setItem("isRegistered", "false");
       localStorage.removeItem("user");
+      clearCart();
       router.push("/");
     } catch (error: any) {
       toast.error("Failed to logout");
