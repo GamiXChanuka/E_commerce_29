@@ -37,7 +37,7 @@ const CheckoutPage = () => {
   const [cartId, setCartId] = useState<number>(0);
   const [addressId, setAddressId] = useState<number>(0);
 
-  const isRegistered  = localStorage.getItem("isRegistered")==="true";
+  const isRegistered = localStorage.getItem("isRegistered") === "true";
 
   const fetchData = async () => {
     try {
@@ -144,16 +144,14 @@ const CheckoutPage = () => {
           };
           // const response2 = await axios.post("/api/placeOrder", orderData);
 
-// -----------------------------------------------------------------------------------------------
+          // -----------------------------------------------------------------------------------------------
           try {
             const response2 = await axios.post("/api/placeOrder", orderData);
-        
-            if (response2.data.status === 200) {
 
+            if (response2.data.status === 200) {
               const orderID = response2.data.orderID; // Extract orderID from response
               console.log("Order ID:", orderID); // Now you can use this orderID as needed
               router.push(`/thank-you?orderId=${orderID}`);
-
             } else {
               console.error("Failed to place order:", response.data.success);
             }
@@ -174,8 +172,8 @@ const CheckoutPage = () => {
 
         // Send order data to backend
       } else {
-// ---------------------------------------------------------------------------------------------------------------------
-//----------------------- Prepare order data for registered users-----------------------------------------------------
+        // ---------------------------------------------------------------------------------------------------------------------
+        //----------------------- Prepare order data for registered users-----------------------------------------------------
 
         console.log("xxxxxx");
         const token = localStorage.getItem("user");
@@ -217,18 +215,15 @@ const CheckoutPage = () => {
           // alert("Order placed successfully");
           // router.push('/thank-you');
 
-
           try {
             const response2 = await axios.post("/api/placeOrder", orderData);
-        
-            if (response2.data.status === 200) {
 
+            if (response2.data.status === 200) {
               const orderID = response2.data.orderID; // Extract orderID from response
               console.log("Order ID:", orderID); // Now you can use this orderID as needed
               // You can save it to state if you want to use it elsewhere in the component
               // router.push('/thank-you');
               router.push(`/thank-you?orderId=${orderID}`);
-
             } else {
               console.error("Failed to place order:", response.data.success);
             }
@@ -388,7 +383,6 @@ const CheckoutPage = () => {
                   name="radio"
                   checked={deliveryMethod === "delivery"}
                   onChange={() => setDeliveryMethod("delivery")}
-                 
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label
@@ -419,7 +413,6 @@ const CheckoutPage = () => {
                   name="radio"
                   checked={deliveryMethod === "DHL"}
                   onChange={() => setDeliveryMethod("dilivery")}
-                  
                 />
                 <span className="box-content absolute block w-4 h-4 -translate-y-1/2 bg-white border-8 border-gray-300 rounded-full peer-checked:border-blue-700 peer-checked:bg-gray-800 right-4 top-1/2"></span>
                 <label
