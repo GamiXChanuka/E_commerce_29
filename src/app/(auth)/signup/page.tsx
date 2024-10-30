@@ -177,8 +177,8 @@ const SignupPage = () => {
                       {...register("firstName", {
                         required: "First name is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
-                    />
+                      className="p-2 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
+                      />
                     {errors.firstName && (
                       <p className="text-red-500 text-xs mt-1">
                         {errors.firstName.message}
@@ -194,8 +194,8 @@ const SignupPage = () => {
                       {...register("lastName", {
                         required: "Last name is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
-                    />
+                      className="p-2 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
+                      />
                     {errors.lastName && (
                       <p className="text-red-500 text-xs mt-1">
                         {errors.lastName.message}
@@ -211,8 +211,8 @@ const SignupPage = () => {
                       {...register("userName", {
                         required: "User name is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
-                    />
+                      className="p-2 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
+                      />
                     {errors.userName && (
                       <p className="text-red-500 text-xs mt-1">
                         {errors.userName.message}
@@ -228,8 +228,8 @@ const SignupPage = () => {
                       {...register("phoneNumber", {
                         required: "Phone number is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
-                    />
+                      className="p-2 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
+                      />
                     {errors.phoneNumber && (
                       <p className="text-red-500 text-xs mt-1">
                         {errors.phoneNumber.message}
@@ -245,8 +245,8 @@ const SignupPage = () => {
                       {...register("email", {
                         required: "Email is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
-                    />
+                      className="p-2 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
+                      />
                     {errors.email && (
                       <p className="text-red-500 text-xs mt-1">
                         {errors.email.message}
@@ -299,7 +299,7 @@ const SignupPage = () => {
                             "Password must include uppercase, lowercase, number, and special character",
                         },
                       })}
-                      className="w-full px-4 py-2 mt-1 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
+                      className="p-2 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                     />
                     {errors.password && (
                       <p className="text-red-500 text-xs mt-1">
@@ -318,7 +318,7 @@ const SignupPage = () => {
                         validate: (value) =>
                           value === watch("password") || "Passwords do not match",
                       })}
-                      className="w-full px-4 py-2 mt-1 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
+                      className="p-2 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                     />
                     {errors.confirmPassword && (
                       <p className="text-red-500 text-xs mt-1">
@@ -361,7 +361,7 @@ const SignupPage = () => {
                       {...register("addressNumber", {
                         required: "Address number is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
+                      className="p-2 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                     />
                     {errors.addressNumber && (
                       <p className="text-red-500 text-xs mt-1">
@@ -378,7 +378,7 @@ const SignupPage = () => {
                       {...register("lane", {
                         required: "Lane is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
+                      className="p-2 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                     />
                     {errors.lane && (
                       <p className="text-red-500 text-xs mt-1">
@@ -395,7 +395,7 @@ const SignupPage = () => {
                       {...register("city", {
                         required: "City is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
+                      className="p-2 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                     />
                     {errors.city && (
                       <p className="text-red-500 text-xs mt-1">
@@ -412,7 +412,7 @@ const SignupPage = () => {
                       {...register("district", {
                         required: "District is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
+                      className="p-2 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"
                     />
                     {errors.district && (
                       <p className="text-red-500 text-xs mt-1">
@@ -429,8 +429,7 @@ const SignupPage = () => {
                       {...register("postalCode", {
                         required: "Postal code is required",
                       })}
-                      className="w-full px-4 py-1.5 mt-0.8 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CBDC] bg-white text-black shadow-lg"
-                    />
+                      className="p-2 block w-full bg-[#e6e7eb] border border-blue-300 rounded-md shadow-xl focus:border-[#97CBDC] sm:text-sm hover:bg-[#dde8f0] transition duration-300 placeholder:text-gray-500 text-black"                    />
                     {errors.postalCode && (
                       <p className="text-red-500 text-xs mt-1">
                         {errors.postalCode.message}

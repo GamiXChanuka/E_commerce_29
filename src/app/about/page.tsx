@@ -125,7 +125,7 @@ function AboutUs() {
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}
           >
-            We are dedicated to providing innovative, high-quality products that enhance your everyday life. At Shopzy, shopping is not just a transaction – it's a relationship built on trust and satisfaction.
+            We are dedicated to providing innovative, high-quality products that enhance your everyday life. At Shopzy, shopping is not just a transaction it&apos;s a relationship built on trust and satisfaction.
           </motion.p>
           <motion.div
             className="inline-block mt-6 sm:mt-8 px-6 sm:px-8 py-3 sm:py-4 bg-purple-600 text-white font-semibold rounded-lg hover:bg-purple-700 transition-transform duration-300 hover:scale-105 shadow-lg"
