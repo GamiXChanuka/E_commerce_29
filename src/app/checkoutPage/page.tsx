@@ -675,7 +675,7 @@ const CheckoutPage = () => {
 
           <p className="text-xl font-medium text-black">Payment Details</p>
 
-          {paymentMethod === "Card" && (
+          {paymentMethod === "card" && (
             <div>
               {/* Cardholder Name */}
               <label
