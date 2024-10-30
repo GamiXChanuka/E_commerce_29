@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { getUserID } from "@/helpers/getDataFromToken";
 import { toast } from "react-hot-toast";
-
+import { useCart } from "@/components/context/CartContext";
 
 
 interface CartItemData {
@@ -16,6 +16,7 @@ interface CartItemData {
 }
 
 const CheckoutPage = () => {
+  const { clearCart } = useCart();
   const router = useRouter();
   const [data, setData] = useState<CartItemData[]>([]);
   const [loading, setLoading] = useState(true);
@@ -93,13 +94,9 @@ const CheckoutPage = () => {
     console.log("yydadyyy");
     console.log("handel place order");
     try {
+      toast.loading("Processing Your Order..");
       if (!isRegistered) {
         console.log("yyyyy");
-        toast.success("Processing Your Order..");
-
-        // Add unregistered customer first
-
-        // await addUnregCustomer();
 
         try {
           const response = await axios.post("/api/addUnregCustomer", {
@@ -126,6 +123,7 @@ const CheckoutPage = () => {
           }
           // Clean the local storage cart
           localStorage.removeItem("internalCart");
+          clearCart();
 
           const addressData = {
             AddressNumber: AddressNumber,
@@ -147,48 +145,36 @@ const CheckoutPage = () => {
             PaymentMethod: paymentMethod,
             AddressID: response3.data.AddressID,
           };
-          // const response2 = await axios.post("/api/placeOrder", orderData);
 
-// -----------------------------------------------------------------------------------------------
           try {
-
             const response2 = await axios.post("/api/placeOrder", orderData);
-        
-            if (response2.data.status === 200) {
 
+            if (response2.data.status === 200) {
               const orderID = response2.data.orderID; // Extract orderID from response
               console.log("Order ID:", orderID); // Now you can use this orderID as needed
 
+              toast.dismiss();
+              toast.success("Order placed successfully!");
               router.push(`/thank-you?orderId=${orderID}`);
-
             } else {
               console.error("Failed to place order:", response.data.success);
+              toast.dismiss();
+              toast.error("Failed to place order");
             }
           } catch (error) {
             console.error("Error placing order:", error);
+            toast.dismiss();
+            toast.error("Error placing order");
           }
-
-          // console.log("Order placed successfully:", response2.data);
-          // // alert("Order placed successfully");
-          // router.push('/thank-you');
-
-          // Redirect to thank-you page with order and invoice data
-          // router.push(`/thank-you?orderId=${response2.data.OrderID}&userId=16`);
         } catch (err) {
-          console.error("Error adding unregistered customer:", err);
-          alert("An error occurred while adding the unregistered customer");
+          console.log("Error adding unregistered customer:", err);
+          toast.dismiss();
+          toast.error("An error occurred while adding the unregistered customer");
         }
-
-        // Send order data to backend
       } else {
-// ---------------------------------------------------------------------------------------------------------------------
-//----------------------- Prepare order data for registered users-----------------------------------------------------
-
         console.log("xxxxxx");
         const token = localStorage.getItem("user");
         const userId = token ? getUserID(token) : null;
-
-        toast.success("Processing Your Order..");
 
         try {
           const response = await axios.post("/api/getUserCartId", {
@@ -220,32 +206,25 @@ const CheckoutPage = () => {
             AddressID: response3.data.AddressID,
           };
 
-          // // Send order data to backend
-          // const response2 = await axios.post("/api/placeOrder", orderData);
-
-          // console.log("Order placed successfully:", response2.data);
-          // alert("Order placed successfully");
-          // router.push('/thank-you');
-
-
           try {
-
             const response2 = await axios.post("/api/placeOrder", orderData);
-        
-            if (response2.data.status === 200) {
 
+            if (response2.data.status === 200) {
               const orderID = response2.data.orderID; // Extract orderID from response
               console.log("Order ID:", orderID); // Now you can use this orderID as needed
-              // You can save it to state if you want to use it elsewhere in the component
-              // router.push('/thank-you');
 
+              toast.dismiss();
+              toast.success("Order placed successfully!");
               router.push(`/thank-you?orderId=${orderID}`);
-
             } else {
               console.error("Failed to place order:", response.data.success);
+              toast.dismiss();
+              toast.error("Failed to place order");
             }
           } catch (error) {
             console.error("Error placing order:", error);
+            toast.dismiss();
+            toast.error("Error placing order");
           }
 
           if (result.CartID) {
@@ -255,12 +234,14 @@ const CheckoutPage = () => {
           }
         } catch (err) {
           console.error("Error retrieving cart ID:", err);
-          alert("An error occurred while retrieving the cart ID");
+          toast.dismiss();
+          toast.error("An error occurred while retrieving the cart ID");
         }
       }
     } catch (err) {
       console.error("Error placing order:", err);
-      alert("An error occurred while placing the order");
+      toast.dismiss();
+      toast.error("An error occurred while placing the order");
     }
   };
 

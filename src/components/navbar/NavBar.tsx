@@ -20,7 +20,8 @@ export default function NavBar() {
     try {
       const token = localStorage.getItem("user");
       const userName = token ? getUserName(token) : "UnAuthorized";
-      if (userName) {
+      const isRegistered = localStorage.getItem("isRegistered") === "true";
+      if (userName && isRegistered){
         setUserName(userName);
         setLoggedIn(true);
       } else {

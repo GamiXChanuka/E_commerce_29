@@ -1,11 +1,11 @@
-
-
+// Layout.tsx
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import LayoutWrapper from "./LayoutWrapper";
 import { Toaster } from "react-hot-toast";
-import InitializeRegistrationStatus from "@/components/isRegisterd/isRegistered"
+import InitializeRegistrationStatus from "@/components/isRegisterd/isRegistered";
+import { CartProvider } from "@/components/context/CartContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,7 +17,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -26,12 +25,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} flex flex-col min-h-screen`}>
-        {/* Use the LayoutWrapper to manage the Navbar and Footer conditionally */}
-        <LayoutWrapper>
-          {children}
-          <Toaster position="top-right" />
-        </LayoutWrapper>
-        <InitializeRegistrationStatus /> {/* Initialize on the client-side */}
+        <CartProvider>
+          <LayoutWrapper>
+            {children}
+            <Toaster position="top-right" />
+          </LayoutWrapper>
+          <InitializeRegistrationStatus />
+        </CartProvider>
       </body>
     </html>
   );

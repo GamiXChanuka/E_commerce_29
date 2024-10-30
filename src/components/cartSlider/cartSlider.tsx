@@ -2,6 +2,8 @@
 import  { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { useCart } from "../context/CartContext";
+import Spinner from "../spinner/Spinner";
 
 interface CartItemData {
   VariantID: number;
@@ -12,6 +14,7 @@ interface CartItemData {
 }
 
 export default function CartSlider() {
+  const { cartCount } = useCart();
   const [cartItems, setCartItems] = useState<CartItemData[]>([]);
   const [isOpen, setIsOpen] = useState(false); // To control the slider visibility
   const router = useRouter();
@@ -63,14 +66,13 @@ export default function CartSlider() {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    fetchCartData();
-  }, []);
-
+// if (loading) {
+//     return <Spinner />;
+//   }
   // Function to toggle the cart slider
   const toggleCart = () => {
     setIsOpen(!isOpen);
+    fetchCartData();
   };
 
   // Function to visit cart page
@@ -103,7 +105,7 @@ export default function CartSlider() {
             />
           </svg>
           <span className="text-white bg-red-500 badge badge-sm indicator-item">
-            {cartItems.length}
+            {cartCount}
           </span>
         </div>
       </div>
